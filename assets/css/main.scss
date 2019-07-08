@@ -4,6 +4,12 @@
 @import './materialdesign.scss';
 
 
+@import "./mixins.scss";
+@import "./colors.scss";
+@import "./typography.scss";
+@import "./animations.scss";
+
+
 .skip-navbar{
   padding-top : rem(64px) ;
 }

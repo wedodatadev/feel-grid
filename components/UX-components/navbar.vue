@@ -1,75 +1,167 @@
 <template>
 
+  <div>
 
-  <v-toolbar 
-    :color="'primary'" 
-    dark
-    fixed
-    >
-    <v-toolbar-side-icon></v-toolbar-side-icon>
+    <v-toolbar 
+      :color="'primary'" 
+      dark
+      fixed
+      >
+
+      <!-- <v-toolbar-side-icon></v-toolbar-side-icon> -->
+
+      <!-- BTN HOME -->
+      <!-- <v-btn 
+        icon
+        to="/">
+        <v-icon>fas fa-home</v-icon>
+      </v-btn> -->
+
+      <!-- TITLE -->
+      <!-- <v-toolbar-title 
+        class="white--text"
+        to="/">
+        {{ $t('basicDict.welcome')}}
+      </v-toolbar-title> -->
+
+      <v-spacer></v-spacer>
+
+      <v-toolbar-side-icon
+        @click.stop="drawer = !drawer"
+        >
+      </v-toolbar-side-icon>
+
+      <!-- BTN SEARCH -->
+      <!-- <v-btn icon>
+        <v-icon>search</v-icon>
+      </v-btn> -->
+
+      <!-- BTN FAVS -->
+      <!-- <v-btn icon>
+        <v-icon>favorite</v-icon>
+      </v-btn> -->
 
 
-    <v-btn 
-      icon
-      to="/">
-      <v-icon>fas fa-home</v-icon>
-    </v-btn>
+      <!-- LOCALES -->
+      <!-- <v-menu offset-y open-on-hover nudge-bottom nudge-left>
+        
+        <template v-slot:activator="{ on }">
+          <v-toolbar-title v-on="on">
+            <span>{{ locale }}</span>
+            <v-icon dark>arrow_drop_down</v-icon>
+          </v-toolbar-title>
+        </template>
 
-    <v-toolbar-title 
-      class="white--text"
-      to="/">
-      {{ $t('basicDict.welcome')}}
-    </v-toolbar-title>
+        <v-list>
 
-    <v-spacer></v-spacer>
+          <v-list-tile
+            v-for="loc in locales"
+            :key="loc.code"
+            @click="changeLocale(loc)"
+            >
+            
+            <v-list-tile-title 
+              v-text="loc.name"
+              >
+            </v-list-tile-title>
 
-    <v-btn icon>
-      <v-icon>search</v-icon>
-    </v-btn>
+          </v-list-tile>
 
-    <v-btn icon>
-      <v-icon>favorite</v-icon>
-    </v-btn>
+        </v-list>
+      </v-menu> -->
 
 
-    <!-- LOCALES -->
-    <v-menu offset-y open-on-hover nudge-bottom nudge-left>
-      
-      <template v-slot:activator="{ on }">
-        <v-toolbar-title v-on="on">
-          <span>{{ localeCode }}</span>
-          <v-icon dark>arrow_drop_down</v-icon>
-        </v-toolbar-title>
-      </template>
+      <!-- BTN MORE VERT -->
+      <!-- <v-btn icon>
+        <v-icon>more_vert</v-icon>
+      </v-btn> -->
 
-      <v-list>
 
+    </v-toolbar>
+
+
+    <!-- DRAWER -->
+    <v-navigation-drawer
+      v-model="drawer"
+      absolute
+      floating
+      right
+      class="primary"
+      dark
+      >
+
+      <!-- temporary -->
+
+      <v-list class="pt-0" dense>
+
+
+        <!-- CLOSE DRAWER -->
+        <div
+          class="text-xs-right"
+          >
+          <v-btn 
+            flat
+            icon
+            small
+            @click.stop="drawer = !drawer"
+            >
+            <v-icon>
+              close
+            </v-icon>
+          </v-btn>
+        </div>
+
+        <v-divider></v-divider>
+
+        <!-- LOCALES -->
         <v-list-tile
-          v-for="loc in locales"
-          :key="loc.code"
+          v-for="(loc, index) in locales"
+          :key="index"
           @click="changeLocale(loc)"
           >
-          
-          <v-list-tile-title 
-            v-text="loc.name"
-            >
-          </v-list-tile-title>
-
+          <v-list-tile-content>
+            <v-list-tile-title
+              :class="`text-uppercase ${ (loc.code === locale)? '' : 'font-weight-thin' }`"
+              >
+              {{ loc.code }}
+            </v-list-tile-title>
+          </v-list-tile-content>
         </v-list-tile>
 
+
+        <v-divider></v-divider>
+
+        <!-- LINNKS -->
+        <v-list-tile
+          v-for="item in items"
+          :key="item.title"
+          @click=""
+          >
+          <v-list-tile-action
+            v-if="item.icom">
+            <v-icon>
+              {{ item.icon }}
+            </v-icon>
+          </v-list-tile-action>
+
+          <!-- LINNK TITLE -->
+          <v-list-tile-content>
+            <v-list-tile-title 
+              class="text-uppercase"
+              >
+
+              {{ $t( 'drawer.'+ item.titleCode)  }}
+
+            </v-list-tile-title>
+          </v-list-tile-content>
+
+        </v-list-tile>
       </v-list>
-    </v-menu>
+    </v-navigation-drawer>
+
+  </div>
 
 
-
-
-    <v-btn icon>
-      <v-icon>more_vert</v-icon>
-    </v-btn>
-
-
-
-  </v-toolbar>
 
 </template>
 
@@ -90,6 +182,13 @@ export default {
 
   data: () => ({
 
+    drawer: null,
+    items: [
+      { titleCode: 'homepage', icon: 'home' },
+      { titleCode: 'favorites', icon: 'favorite' },
+      { titleCode: 'about', icon: 'question_answer' },
+      { titleCode: 'credits', icon: 'question_answer' }
+    ]
   }),
 
 
@@ -97,8 +196,8 @@ export default {
 
     ...mapState({
       log : state => state.log, 
+      locale : state => state.locale,
       locales : state => state.locales,
-      localeCode : state => state.locale,
     }),
 
     ...mapGetters({
@@ -113,6 +212,8 @@ export default {
       this.$i18n.locale = loc.code
       this.$store.commit('switchLocale', loc)
     },
+
+
 
   },
 

@@ -2,6 +2,15 @@
 
   "hello" : "Hello world...",
 
+  "title": {
+    "development": "DEVELOPMENT",
+    "aces": "ACES"
+  },
+
+  "intro" : {
+    "chooseLang" : "Choose your language"
+  },
+
   "basicDict" : {
     "welcome" : "Welcome to Sheet-Loads",
     "continue" : "continue"
@@ -9,6 +18,13 @@
 
   "navbar" : {
 
+  },
+
+  "drawer": {
+    "homepage"  : "homepage",
+    "favorites"  : "favorites",
+    "about"  : "about",
+    "credits"  : "credits"
   },
 
   "footer" : {

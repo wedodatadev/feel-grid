@@ -9,188 +9,67 @@
 
 <template>
 
-  <div> 
-
-    <v-container
-      class="skip-navbar-more"
-      >
-      
-      <!-- DATASETS -->
-      <v-layout
-        row
-        wrap
-        >
-        {{ $t('data.dataType') }} : {{ $t('data.datasets') }}
-        <v-flex 
-          v-for="(ds, dsIndex) in datasets"
-          :key="dsIndex"
-          xs12
-          >
-          <BasicTable
-            :dsType="'datasets'"
-            :dsId="ds.dsId"
-            :applyCorrespondance="true"
-            :tableOptions="{}"
-            >
-          </BasicTable>
-        </v-flex>
-      </v-layout>
-
-      <br>
-
-      <!-- CORREPONDANCE TABLES -->
-      <v-layout
-        row
-        wrap
-        >
-        {{ $t('data.dataType') }} : {{ $t('data.corrrespondanceDicts') }}
-        <v-flex 
-          v-for="(ds, dsIndex) in correspondanceDicts"
-          :key="dsIndex"
-          xs12
-          >
-          <BasicTable
-            :dsType="'correspondanceDicts'"
-            :dsId="ds.dsId"
-            :applyCorrespondance="false"
-            :tableOptions="{}"
-            >
-          </BasicTable>
-        </v-flex>
-      </v-layout>
-
-      <br>
-
-      <!-- DATA TYPES -->
-      <v-layout
-        row
-        wrap
-        >
-        {{ $t('data.dataType') }} : {{ $t('data.dataTypes') }}
-        <v-flex 
-          v-for="(ds, dsIndex) in dataTypes"
-          :key="dsIndex"
-          xs12
-          >
-          <BasicTable
-            :dsType="'dataTypes'"
-            :dsId="ds.dsId"
-            :applyCorrespondance="false"
-            :tableOptions="{}"
-            >
-          </BasicTable>
-        </v-flex>
-      </v-layout>
-
-
-
-
-
-    </v-container>
-
-
-
-
-
-
-
-
-
-
-    <v-layout
-      row
-      justify-center
-      class="skip-navbar"
-      >
-      <!-- align-center -->
-
-      <v-flex
-        xs4
-        sm2
-        md2
+  <v-container
+    fluid
+    class="skip-navbar-more"
+    >
+    
+    <v-layout 
+      align-center 
+      justify-center 
+      fill-height
+      class="text-xs-center"
       >
 
-        <v-card>
+      <div>
 
-          <v-card-title class="headline">
-            {{ $t('home.title') }}
-          </v-card-title>
-          
-          <v-card-text>
+        <!-- LOGO -->
+        <p>xxx logo xxx</p>
 
-            <p>
-              {{ $t('hello') }}
-            <p>
+        <h2> 
+          {{ $t('title.development') }}
+          <b>{{ $t('title.aces') }}</b>
+        </h2>
 
-            <p>
-              locale : <code> {{ locale }} </code><br><br>
-              locales : <br><code> {{ locales }} </code><br><br>
-              defaultLocale : <br><code> {{ defaultLocale }} </code><br><br>
-            </p>
+        <br>
 
-            <p>
-              {{ $t('home.introduction') }}
-            </p>
+        <!-- LOCALE SELECTION -->
+        <div v-show="!locSelected">
 
-          </v-card-text>
-
-          <v-card-actions>
-            <v-spacer />
-            <v-btn
-              color="primary"
-              flat
-              nuxt
-              to="/inspire"
+          <p>
+          {{ $t('intro.chooseLang') }}
+          </p>
+        
+          <v-btn 
+            v-for="(loc, index) in locales"
+            :key="index"
+            round 
+            color="primary" 
+            :outline="loc.code !== locale "
+            dark
+            @click="changeLocale(loc)"
             >
-            {{ $t('basicDict.continue') }}
-            </v-btn>
-          </v-card-actions>
+            {{ loc.code }}
+          </v-btn>
+        
+        </div>
 
-        </v-card>
-      </v-flex>
+        <!-- GO TO NEXT PAGE -->
+        <div  v-show="locSelected">
+          <v-btn 
+            round
+            outline
+            color="primary"
+            >
+            GO TO NEXT PAGE
+          </v-btn>
+        </div>
 
-
-      <v-flex xs4 sm3 md4>
-        <v-card>
-          <v-card-title class="headline">
-              GSheet / datasets
-          </v-card-title>
-          <v-card-text>
-            <code> {{ datasets }} </code><br><br>
-          </v-card-text>
-        </v-card>
-      </v-flex>
-
-      <v-flex xs4 sm3 md3>
-        <v-card>
-          <v-card-title class="headline">
-              GSheet / correspondanceDicts
-          </v-card-title>
-          <v-card-text>
-            <code> {{ correspondanceDicts }} </code><br><br>
-          </v-card-text>
-        </v-card>
-      </v-flex>
-
-      <v-flex xs4 sm3 md3>
-        <v-card>
-          <v-card-title class="headline">
-              GSheet / dataTypes
-          </v-card-title>
-          <v-card-text>
-            <code> {{ dataTypes }} </code><br><br>
-          </v-card-text>
-        </v-card>
-      </v-flex>
-
+      </div>
       
     </v-layout>
 
-
-
-
-  </div>
-
+  </v-container>
 
 </template>
 
@@ -199,6 +78,7 @@
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 
+import GameCardsStack from '~/components/UX-components/GameCardsStack'
 import BasicTable from '~/components/DATA-components/basic-table'
 
 export default {
@@ -207,6 +87,7 @@ export default {
 
   components: {
     BasicTable,
+    GameCardsStack
   },
 
   middleware : [
@@ -221,6 +102,7 @@ export default {
 
   data() {
     return {
+      locSelected: false,
     }
   },
 
@@ -245,6 +127,13 @@ export default {
   },
 
   methods: {
+
+    changeLocale(loc){
+      this.$i18n.locale = loc.code
+      this.$store.commit('switchLocale', loc)
+      this.locSelected = true
+    },
+
   },
 
 }
