@@ -3,8 +3,9 @@
   <div>
 
     <v-toolbar 
-      :color="'primary'" 
+      color="transparent" 
       dark
+      flat
       fixed
       >
 
@@ -27,6 +28,7 @@
       <v-spacer></v-spacer>
 
       <v-toolbar-side-icon
+        color="primary"
         @click.stop="drawer = !drawer"
         >
       </v-toolbar-side-icon>

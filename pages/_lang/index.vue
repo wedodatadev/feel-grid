@@ -9,16 +9,13 @@
 
 <template>
 
-  <v-container
-    fluid
-    class="skip-navbar-more"
-    >
+  <!-- <v-container
+    > -->
     
     <v-layout 
+      class="text-xs-center"
       align-center 
       justify-center 
-      fill-height
-      class="text-xs-center"
       >
 
       <div>
@@ -69,7 +66,7 @@
       
     </v-layout>
 
-  </v-container>
+  <!-- </v-container> -->
 
 </template>
 
