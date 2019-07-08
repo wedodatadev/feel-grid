@@ -30,11 +30,12 @@
 
         <br>
 
+
         <!-- LOCALE SELECTION -->
         <div v-show="!locSelected">
 
           <p>
-          {{ $t('intro.chooseLang') }}
+            {{ $t('intro.chooseLang') }}
           </p>
         
           <v-btn 
@@ -42,28 +43,42 @@
             :key="index"
             round 
             color="primary" 
-            :outline="loc.code !== locale "
             dark
+            outline
             @click="changeLocale(loc)"
+            @mouseover="changeLocale(loc, false)"
+            :class="`text-uppercase ${ (loc.code === locale)? '' : 'font-weight-thin' }`"
             >
+            <!-- :outline="loc.code !== locale " -->
             {{ loc.code }}
           </v-btn>
         
         </div>
 
-        <!-- GO TO NEXT PAGE -->
+        <!-- GO TO ACES PAGE -->
         <div  v-show="locSelected">
+
+          <p class="text-uppercase">
+            {{ $t('intro.catchPhrase') }}
+          </p>
+
           <v-btn 
             round
             outline
             color="primary"
+            to="/cards-stack"
             >
-            GO TO NEXT PAGE
+            <!-- @click="openRandomCard()" -->
+            {{ $t('intro.getAnAce')}}
           </v-btn>
+
         </div>
 
       </div>
-      
+
+
+
+
     </v-layout>
 
   <!-- </v-container> -->
@@ -125,11 +140,19 @@ export default {
 
   methods: {
 
-    changeLocale(loc){
+    changeLocale(loc, hover=true){
+      console.log("P-index / changeLocale ...")
       this.$i18n.locale = loc.code
       this.$store.commit('switchLocale', loc)
-      this.locSelected = true
+      if (hover){
+        this.$store.commit('setLocSelected')
+        this.locSelected = true
+      }
     },
+
+    openRandomCard(){
+      console.log("P-index / openRandomCard ...")
+    }
 
   },
 

@@ -9,28 +9,13 @@
 
 <template>
 
-  <div> 
-
-    <v-container
-      class="skip-navbar-more"
-      >
-      
-      
-      TEST
- 
-      <GameCardsStack
-        :cards="visibleCards"
-        @cardAccepted="handleCardAccepted"
-        @cardRejected="handleCardRejected"
-        @cardSkipped="handleCardSkipped"
-        @hideCard="removeCardFromDeck"
-      />
-
-    </v-container>
-
-
-  </div>
-
+  <GameCardsStack
+    :cards="allCards"
+    @cardAccepted="handleCardAccepted"
+    @cardRejected="handleCardRejected"
+    @cardSkipped="handleCardSkipped"
+    @hideCard="removeCardFromDeck"
+  />
 
 </template>
 
@@ -40,14 +25,16 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 import GameCardsStack from '~/components/UX-components/GameCardsStack'
-import BasicTable from '~/components/DATA-components/basic-table'
+// import BasicTable from '~/components/DATA-components/basic-table'
 
 export default {
 
-  name: "MainIndex",
+  name: "CardsStack",
+
+  layout : "cardLayout",
 
   components: {
-    BasicTable,
+    // BasicTable,
     GameCardsStack
   },
 
@@ -59,17 +46,20 @@ export default {
 
   beforeMount : function(){
     console.log("P-index / beforeMount....")
+    this.allCards = this.getConcatenatedDatasets('datasets')
   },
 
   data() {
     return {
-      visibleCards: ["Test", "Vue.js", "Webpack"]
+      // visibleCards: ["Test", "Vue.js", "Webpack"],
+      allCards: undefined
     }
   },
 
   computed: {
 
     ...mapState({
+
       log : state => state.log, 
 
       locale : state => state.locale,
@@ -84,10 +74,12 @@ export default {
 
     ...mapGetters({
 
+      getConcatenatedDatasets : 'data/getConcatenatedDatasets'
     }),
   },
 
   methods: {
+
 
     handleCardAccepted() {
       console.log("handleCardAccepted");

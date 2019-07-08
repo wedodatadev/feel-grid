@@ -1,4 +1,5 @@
 <template>
+  
   <div
     v-if="isShowing"
     ref="interactElement"
@@ -8,12 +9,23 @@
     }"
     class="card"
     :style="{ transform: transformString }"
-  >
-    <h3 class="cardTitle">{{ card }}</h3>
+    >
+
+    <h3 class="cardTitle">
+      {{ card['content-fr'] }}
+    </h3>
+
+    <p class="text-xs-center text-uppercase">
+      {{ $t('cards.findMore')}}
+    </p>
+
   </div>
+
 </template>
 
 <script>
+
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 import interact from "interactjs"
 const ACCEPT_CARD = "cardAccepted"
@@ -55,6 +67,12 @@ export default {
   },
 
   computed: {
+
+    ...mapState({
+      log : state => state.log, 
+      locale : state => state.locale,
+    }),
+
     transformString() {
       if (!this.isInteractAnimating || this.isInteractDragged) {
         const { x, y, rotation } = this.interactPosition;

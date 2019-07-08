@@ -43,6 +43,19 @@ export const getters = {
       return d.dsId === dsId
     })
   },
+
+  getConcatenatedDatasets: state => datasetName => {
+    console.log("S-data-G-getConcatenatedDatasets ... ")
+    let concatenated = []
+    for (let dt of state[ datasetName ]){
+      console.log("S-data-G-getConcatenatedDatasets / dt :", dt)
+      let dtRows = dt.dataRows
+      console.log("S-data-G-getConcatenatedDatasets / dtRows :", dtRows)
+      concatenated = concatenated.concat( ...dtRows )
+    }
+    return concatenated
+  },
+
   getConcatenatedDataTypes: state => {
     console.log("S-data-G-getConcatenatedDataTypes ... ")
     let concatenated = []

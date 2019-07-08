@@ -18,28 +18,39 @@
 
     <!-- FOOTER INDEX -->
     <v-footer 
-      v-show="locSelected" 
       color="transparent"
       class="ma-3 pb-5"
       >
-
-      <v-layout 
-        justify-center
-        >
       
         <v-btn 
-          v-for="(btn, indexBtn) in footerBtns"
-          round
-          outline
-          color="primary"
+          v-for="(btn, indexBtn) in footerBtnsLeft"
           :key="indexBtn"
           :to="btn.to"
+          icon
+          outline
+          color="primary"
           >
-          {{ $t('links.' + btn.textCode) }}
+          <v-icon>
+            {{ btn.icon }}
+          </v-icon>
         </v-btn>
 
-      </v-layout>
-      
+        <v-spacer></v-spacer>
+
+        <v-btn 
+          v-for="(btn, indexBtn) in footerBtnsRight"
+          :key="indexBtn"
+          :to="btn.to"
+          icon
+          outline
+          color="primary"
+          >
+          <v-icon>
+            {{ btn.icon }}
+          </v-icon>
+        </v-btn>
+
+
     </v-footer>
 
   </v-app>
@@ -71,9 +82,14 @@ export default {
   data() {
 
     return {
-      footerBtns: [
-        { textCode: "about", to: "/about" },
-        { textCode: "credits", to: "/credits" },
+      footerBtnsLeft: [
+        { textCode: "twitter", icon: "fab fa-twitter", to: "/about" },
+        { textCode: "facebook", icon: "fab fa-facebook", to: "/credits" },
+        { textCode: "screenshot", icon: "fas fa-camera", to: "/credits" },
+      ],
+
+      footerBtnsRight : [
+        { textCode: "favorite", icon: "favorite", to: "/favorites" },
       ]
     }
 

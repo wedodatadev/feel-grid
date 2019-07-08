@@ -27,6 +27,14 @@
 
       <v-spacer></v-spacer>
 
+      <v-toolbar-title
+        class="primary--text"
+        >
+        {{ mainLogoUrl }}
+      </v-toolbar-title>
+
+      <v-spacer></v-spacer>
+
       <v-toolbar-side-icon
         color="primary"
         @click.stop="drawer = !drawer"
@@ -200,6 +208,8 @@ export default {
       log : state => state.log, 
       locale : state => state.locale,
       locales : state => state.locales,
+
+      mainLogoUrl : state => state.mainLogoUrl, 
     }),
 
     ...mapGetters({

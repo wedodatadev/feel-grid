@@ -7,10 +7,14 @@ export const state = () => ({
   runMode : process.env.MODE_APP,
   log : process.env.LOG,
 
+  // LOGO IMG URL
+  mainLogoUrl: "xxx logo AFD app xxx",
+
   // FOR TRANSLATIONS
   defaultLocale: undefined, 
   locale: undefined, 
   locales: undefined, 
+  locSelected : false,
 
   // UX OPTIONS
   showNav : false,
@@ -58,7 +62,10 @@ export const mutations = {
     // this.$i18n.locale = localeObject.code
   },
 
-
+  setLocSelected(state) {
+    console.log("S-index-M-setLocSelected ...")
+    state.locSelected = true
+  },
 
 
   // UX OPTIONS-RELATED

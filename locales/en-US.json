@@ -8,7 +8,9 @@
   },
 
   "intro" : {
-    "chooseLang" : "Choose your language"
+    "chooseLang" : "Choose your language",
+    "catchPhrase" : "Use the development ACES cards from AFD to boost your creativity",
+    "getAnAce" : "Get an ACE"
   },
 
   "basicDict" : {
@@ -27,13 +29,14 @@
     "credits"  : "credits"
   },
 
-  "footer" : {
+  "footers" : {
 
   },
 
   "links": {
     "home": "Home",
     "about": "About",
+    "credits": "Credits",
     "english": "English version",
     "french": "French version"
   },
@@ -41,6 +44,10 @@
   "home": {
     "title": "Welcome",
     "introduction": "This is an introduction in English."
+  },
+
+  "cards" : {
+    "findMore": "find more"
   },
 
   "about": {

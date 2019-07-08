@@ -8,7 +8,9 @@
   },
 
   "intro" : {
-    "chooseLang" : "choisissez une langue"
+    "chooseLang" : "choisissez une langue",
+    "catchPhrase" : "Boostez votre créativité grâce aux cartes de développement ACES de l'AFD",
+    "getAnAce" : "voir une carte"
   },
 
   "basicDict"  : {
@@ -34,6 +36,7 @@
   "links" : {
     "home" : "Accueil",
     "about" : "À propos",
+    "credits": "Crédits",
     "english" : "Version Anglaise",
     "french" : "Version Française"
   },
@@ -41,6 +44,10 @@
   "home" : {
     "title" : "Bienvenue",
     "introduction" : "Ceci est un texte d'introduction en Français."
+  },
+
+  "cards" : {
+    "findMore": "en savoir plus"
   },
 
   "about" : {

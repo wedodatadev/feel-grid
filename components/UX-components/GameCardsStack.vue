@@ -1,5 +1,10 @@
 <template>
-  <div class="cards">
+
+  <v-container
+    fill-height 
+    class="cards"
+    >
+
     <GameCard
       v-for="(card, index) in cards"
       :key="card"
@@ -10,11 +15,13 @@
       @cardSkipped="$emit('cardSkipped');"
       @hideCard="$emit('hideCard');"
     />
-  </div>
+
+  </v-container>
+
 </template>
 
 <script>
-import GameCard from "@/components/UX-components/GameCard";
+import GameCard from "@/components/UX-components/GameCard"
 
 export default {
   components: {
