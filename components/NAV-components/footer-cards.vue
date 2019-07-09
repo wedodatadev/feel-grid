@@ -6,9 +6,10 @@
     class="ma-4 pb-2"
     >
     
+    <!-- LEFT SIDE ICONS -->
     <v-btn 
       v-for="(btn, indexBtn) in footerBtnsLeft"
-      :key="indexBtn"
+      :key="btn.textCode"
       :to="btn.to"
       icon
       outline
@@ -21,13 +22,14 @@
 
     <v-spacer></v-spacer>
 
+    <!-- RIGHT SIDE ICONS  -->
     <v-btn 
       v-for="(btn, indexBtn) in footerBtnsRight"
-      :key="indexBtn"
-      :to="btn.to"
+      :key="btn.textCode"
       icon
       outline
       color="primary"
+      @click="skip"
       >
       <v-icon>
         {{ btn.icon }}
@@ -42,6 +44,14 @@
 <script>
 
 import { mapState, mapGetters, mapActions } from 'vuex'
+import { InteractEventBus } from 'vue2-interact'
+
+const EVENTS = {
+  // MATCH: 'match',
+  SKIP: 'skip',
+  // REJECT: 'reject'
+}
+
 
 export default {
 
@@ -67,7 +77,7 @@ export default {
       ],
 
       footerBtnsRight : [
-        { textCode: "favorite", icon: "favorite", to: "/favorites" },
+        { textCode: "next", icon: "fas fa-arrow-right", to: "/next" },
       ]
     }
 
@@ -87,7 +97,9 @@ export default {
 
   methods: {
 
-
+    skip() {
+      InteractEventBus.$emit(EVENTS.SKIP)
+    },
 
   },
 

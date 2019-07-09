@@ -1,22 +1,41 @@
-<style>
-
-</style>
-
-
 <template>
-
     
   <v-layout 
-    class="text-xs-center"
-    align-center 
-    justify-center 
+    class="skip-navbar-content"
     >
 
-    About Page...
+    <v-flex xs10 offset-xs1>
+      
+      <h1 class="text-xs-center">
+        {{ $t('about.title') }}
+      </h1>
 
+      <v-layout justify-center>
+        <v-btn 
+          flat
+          icon
+          color="primary"
+          @click="goBack"
+          >
+          <v-icon>
+            close
+          </v-icon>
+        </v-btn>
+      </v-layout>
+
+      <hr>
+
+      <h3 class="pt-3">
+        {{ $t('about.headline') }}
+      </h3>
+
+      <p class="pt-4">
+        {{ $t('about.content') }}
+      </p>
+
+    </v-flex>
 
   </v-layout>
-
 
 </template>
 
@@ -29,7 +48,14 @@ export default {
 
   name: "AboutPage",
 
+  layout : "staticContents",
+
+  // TO DO 
+  pageTransition: {
+  },
+
   components: {
+    // FooterAbout,
   },
 
   middleware : [
@@ -51,6 +77,7 @@ export default {
 
     ...mapState({
       log : state => state.log, 
+      isFirstVisit : state => state.firstVisit,
       locale : state => state.locale,
     }),
 
@@ -61,7 +88,21 @@ export default {
 
   methods: {
 
+    goBack(e){
+      e.preventDefault()
+      this.$router.back()
+    }
+
   },
 
 }
 </script>
+
+
+<style scoped>
+
+  .skip-navbar-content{
+    margin-top: 200px;
+  }
+
+</style>

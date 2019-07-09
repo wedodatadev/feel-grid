@@ -57,9 +57,8 @@
             round
             outline
             color="primary"
-            to="/cards"
+            :to="(isFirstVisit)? '/about' : '/cards' "
             >
-            <!-- @click="openRandomCard()" -->
             {{ $t('intro.getAnAce')}}
           </v-btn>
 
@@ -112,7 +111,10 @@ export default {
   computed: {
 
     ...mapState({
+
       log : state => state.log, 
+
+      isFirstVisit : state => state.firstVisit,
 
       locale : state => state.locale,
       locales : state => state.locales,
@@ -132,7 +134,7 @@ export default {
   methods: {
 
     changeLocale(loc, hover=true){
-      console.log("P-index / changeLocale ...")
+      // console.log("P-index / changeLocale ...")
       this.$i18n.locale = loc.code
       this.$store.commit('switchLocale', loc)
       if (hover){
@@ -143,6 +145,7 @@ export default {
 
     openRandomCard(){
       console.log("P-index / openRandomCard ...")
+      
     }
 
   },
@@ -150,7 +153,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
   .skip-navbar-more{
     margin-top: 75px;

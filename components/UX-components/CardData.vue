@@ -1,73 +1,50 @@
 <template>
 
-  <!-- <v-layout
-    fill-height
-    justify-center
-    align-center
-    > -->
-
-    <!-- class="mx-auto" -->
     <v-card
       color="primary rounded-borders"
       class=""
       dark
       >
 
-          <v-layout 
-            fill-height
-            align-center
-            justify-center
-            >
-
-      <!-- <v-card-title>
-        <v-icon
-          large
-          left
-          >
-          mdi-twitter
-        </v-icon>
-        <span class="title font-weight-light">
-          Twitter
-        </span> 
-      </v-card-title> -->
-
-
-      <v-card-text class="headline font-weight-bold text-xs-center">
-        {{ cardData && cardData['content-fr'] }}
-      </v-card-text>
-
+      <!-- TEXT CONTENTS -->
+      <v-layout 
+        fill-height
+        align-center
+        justify-center
+        >
+        <v-card-text class="headline font-weight-bold text-xs-center">
+          {{ cardData && getContentByLocale('mainContent') }}
+        </v-card-text>
       </v-layout> 
-      <!-- 
-      <v-card-actions>
-        <v-list-tile class="grow">
-        </v-list-tile>
-      </v-card-actions> 
-      -->
 
+      <!-- RESSOURCES CONTENTS -->
+      <!-- TO DO -->
 
+      <!-- FAVORITES FOOTER -->
       <v-footer 
         color="transparent" 
         class="pa-4"
         fixed
         height="100"
         >
-
         <v-layout
           align-center
           justify-end
           >
-          <v-icon class="mr-1">
-            favorite
-          </v-icon>
-
+          <v-btn 
+            icon
+            outline
+            flat
+            >
+            <v-icon>
+              favorite
+            </v-icon>
+          </v-btn>
         </v-layout>
-
       </v-footer>
 
 
     </v-card>
-
-  <!-- </v-layout> -->
 
 </template>
 
@@ -86,7 +63,8 @@ export default {
   },
 
   props: [
-    'cardData'
+    'cardData',
+    'dsId'
   ],
 
   mounted: function() {
@@ -103,14 +81,35 @@ export default {
   computed: {
 
     ...mapState({
+
       log : state => state.log, 
       locale : state => state.locale,
+
+      contentFields : state => state.data.contentFields,
+
     }),
 
   },
 
   methods: {
 
+    getContentByLocale( fieldCode ){
+
+      console.log("C-CardData-getContentByLocale..." )
+
+      let currentLocale = this.locale
+      let contentFields = this.contentFields[ this.dsId ]
+      console.log("C-CardData-getContentByLocale / contentFields : ", contentFields )
+
+      let contentColName = contentFields.find( field => {
+        return fieldCode === field.cardFieldCode
+      })
+      let fieldByLocale = contentColName && contentColName[ currentLocale ]
+      console.log("C-CardData-getContentByLocale / fieldByLocale :", fieldByLocale)
+
+      // find correct field code
+      return this.cardData[ fieldByLocale ]
+    },
 
   }
 }

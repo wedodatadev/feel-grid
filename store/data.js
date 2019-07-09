@@ -2,6 +2,8 @@
 
 import { loadGoogleSheet, applyDataTypes, createDatasetHeaders } from "~/utils/loadGSheetData"
 
+import { DataContentFields } from '~/config/dataContentFields'
+
 export const state = () => ({
 
   log : process.env.LOG,
@@ -15,6 +17,9 @@ export const state = () => ({
   datasets : [],
   correspondanceDicts : [],
   dataTypes : [],
+
+  // data contents fields mapper
+  contentFields : DataContentFields,
 
   // isTypesApplied : false, 
 

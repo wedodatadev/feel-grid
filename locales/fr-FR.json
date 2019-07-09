@@ -37,6 +37,8 @@
     "home" : "Accueil",
     "about" : "À propos",
     "credits": "Crédits",
+    "nextCard": "carte suivante",
+    "prevCard": "carte précédente",
     "english" : "Version Anglaise",
     "french" : "Version Française"
   },
@@ -52,7 +54,22 @@
 
   "about" : {
     "title" : "À propos",
-    "introduction" : "Cette page est faite pour vous donner plus d'informations."
+    "headline" : "headline de about",
+    "introduction" : "Cette page est faite pour vous donner plus d'informations.",
+    "content" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+  },
+
+  "credits" : {
+    "title" : "Crédits",
+    "headline" : "headline de credits",
+    "introduction" : "Cette page liste les crédits",
+    "content" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+  },
+
+  "favorites" : {
+    "title" : "Favoris",
+    "headline" : "headline de favoris",
+    "introduction" : "Cette page liste cartes favorites"
   },
 
   "data" : {

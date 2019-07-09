@@ -1,22 +1,38 @@
-<style>
-
-</style>
-
-
 <template>
-
     
   <v-layout 
-    class="text-xs-center"
-    align-center 
-    justify-center 
+    class="skip-navbar-content"
     >
 
-    Favorites Page...
+    <v-flex xs10 offset-xs1>
+      
+      <h1 class="text-xs-center">
+        {{ $t('favorites.title') }}
+      </h1>
 
+      <v-layout justify-center>
+        <v-btn 
+          flat
+          icon
+          color="primary"
+          @click="goBack"
+          >
+          <v-icon>
+            close
+          </v-icon>
+        </v-btn>
+      </v-layout>
+
+      <hr>
+
+      <h3 class="pt-3">
+        {{ $t('favorites.headline') }}
+      </h3>
+
+
+    </v-flex>
 
   </v-layout>
-
 
 </template>
 
@@ -27,9 +43,16 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
 
-  name: "FavoritesPage",
+  name: "AboutPage",
+
+  layout : "staticContents",
+
+  // TO DO 
+  pageTransition: {
+  },
 
   components: {
+    // FooterAbout,
   },
 
   middleware : [
@@ -39,7 +62,7 @@ export default {
   ],
 
   beforeMount : function(){
-    console.log("P-FavoritesPage / beforeMount....")
+    console.log("P-AboutPage / beforeMount....")
   },
 
   data() {
@@ -51,6 +74,7 @@ export default {
 
     ...mapState({
       log : state => state.log, 
+      isFirstVisit : state => state.firstVisit,
       locale : state => state.locale,
     }),
 
@@ -61,7 +85,21 @@ export default {
 
   methods: {
 
+    goBack(e){
+      e.preventDefault()
+      this.$router.back()
+    }
+
   },
 
 }
 </script>
+
+
+<style scoped>
+
+  .skip-navbar-content{
+    margin-top: 200px;
+  }
+
+</style>

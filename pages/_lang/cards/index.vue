@@ -1,7 +1,8 @@
 <template>
 
   <SwipeableCards
-    :allCards="allCards"
+    :cardsArray="cardsArray"
+    :dsId="dsId"
     >
   </SwipeableCards>
 
@@ -35,20 +36,24 @@ export default {
   beforeMount : function(){
 
     console.log("P-CardsPage / beforeMount....")
-    let allCards = this.getConcatenatedDatasets('datasets')
+    // let cardsArray = this.getConcatenatedDatasets('datasets')
+    let cardsDataset = this.getOneDataset('datasets', this.dsId)
+    let cardsArray = cardsDataset.dataRows
 
     // randomize stack
-    let randomizedCards = ArrayShuffler( allCards )
+    let randomizedCards = ArrayShuffler( cardsArray )
 
     // set data stack locally
-    // this.allCards = allCards
-    this.allCards = randomizedCards
+    // this.cardsArray = cardsArray
+    this.cardsArray = randomizedCards
   },
 
   data() {
     return {
-      // visibleCards: ["Test", "Vue.js", "Webpack"],
-      allCards: undefined
+
+      cardsArray: undefined,
+      dsId: 'contents'
+
     }
   },
 
@@ -70,7 +75,9 @@ export default {
 
     ...mapGetters({
 
-      getConcatenatedDatasets : 'data/getConcatenatedDatasets'
+      getConcatenatedDatasets : 'data/getConcatenatedDatasets',
+      getOneDataset : 'data/getOneDataset'
+
     }),
   },
 

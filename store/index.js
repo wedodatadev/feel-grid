@@ -18,6 +18,7 @@ export const state = () => ({
 
   // UX OPTIONS
   showNav : false,
+  firstVisit: true,
 
 })
 
@@ -38,7 +39,9 @@ export const getters = {
   getNavbarVisibility : state => {
     return state.showNav
   },
-
+  getFirstVisit : state => {
+    return state.firstVisit
+  },
 }
 
 export const mutations = {
@@ -75,6 +78,10 @@ export const mutations = {
 
   setShowNavbar(state, value){
     state.showNav = value
+  },
+
+  setFirstVisit(state, value){
+    state.firstVisit = value
   },
 
 }

@@ -27,12 +27,11 @@
         <!-- class="rounded-borders card card--one" -->
 
         <CardData
-          :cardData="current"
           style="height: 100%"
+          :cardData="current"
+          :dsId="dsId"
           >
         </CardData>
-
-
 
       </Vue2InteractDraggable>
 
@@ -44,17 +43,10 @@
       style="z-index: 2"
       >
 
-      <!-- <v-layout
-        fill-height
-        justify-center
-        align-center
-        >
-        {{ next[ 'content-fr' ]}}
-      </v-layout> -->
-
       <CardData
         style="height: 100%"
         :cardData="next"
+        :dsId="dsId"
         >
       </CardData>
       
@@ -70,6 +62,7 @@
       <CardData
         style="height: 100%"
         :cardData="{}"
+        :dsId="dsId"
         >
       </CardData>
 
@@ -77,23 +70,38 @@
 
 
     <!-- FOOTER -->
-    <!-- <div class="footer fixed">
-      <div class="btn btn--decline" @click="reject">
+    <!-- 
+    <div class="footer fixed">
+
+      <div 
+        class="btn btn--decline" 
+        @click="reject"
+        >
         <i class="material-icons">
           close
         </i>
       </div>
-      <div class="btn btn--skip" @click="skip">
+
+      <div 
+        class="btn btn--skip" 
+        @click="skip"
+        >
         <i class="material-icons">
           call_missed
         </i>
       </div>
-      <div class="btn btn--like" @click="match">
+
+      <div 
+        class="btn btn--like" 
+        @click="match"
+        >
         <i class="material-icons">
           favorite
         </i>
       </div>
-    </div> -->
+
+    </div> 
+    -->
 
     <!-- <FooterCards>
     </FooterCards> -->
@@ -120,6 +128,7 @@ const EVENTS = {
 }
 
 export default {
+
   name: 'SwipeableCards',
 
   components: { 
@@ -128,12 +137,13 @@ export default {
   },
 
   props: [
-    'allCards'
+    'cardsArray',
+    'dsId'
   ],
 
   mounted: function() {
     console.log("C-SwipeableCards / mounted....")
-    this.cards = this.allCards
+    this.cards = this.cardsArray
   },
 
   data() {
@@ -166,7 +176,7 @@ export default {
         // { src: 'uriel.jpg', name: 'Uriel', age: 6 },
         // { src: 'zoe.jpg', name: 'Zoe', age: 2 },
       // ]
-
+      
     }
   },
 
