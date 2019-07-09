@@ -1,45 +1,60 @@
 <template>
-  <v-app>
 
-    <!-- NAVABR -->
-    <Navbar>
-    </Navbar>
+  <!-- FOOTER INDEX -->
+  <v-footer 
+    color="transparent"
+    class="ma-4 pb-2"
+    >
+    
+    <v-btn 
+      v-for="(btn, indexBtn) in footerBtnsLeft"
+      :key="indexBtn"
+      :to="btn.to"
+      icon
+      outline
+      color="primary"
+      >
+      <v-icon>
+        {{ btn.icon }}
+      </v-icon>
+    </v-btn>
 
-    <!-- CONTENTS -->
-    <v-content>
-      <v-container fill-height>
-        <nuxt />
-      </v-container>
-    </v-content>
+    <v-spacer></v-spacer>
 
-    <!-- FOOTER CARDS -->
-    <FooterCards>
-    </FooterCards>
+    <v-btn 
+      v-for="(btn, indexBtn) in footerBtnsRight"
+      :key="indexBtn"
+      :to="btn.to"
+      icon
+      outline
+      color="primary"
+      >
+      <v-icon>
+        {{ btn.icon }}
+      </v-icon>
+    </v-btn>
 
-  </v-app>
+
+  </v-footer>
+
 </template>
 
 <script>
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 
-import Navbar from '~/components/NAV-components/navbar.vue'
-import FooterCards from '~/components/NAV-components/footer-cards'
-
 export default {
 
-  name: "CardLayout",
+  name: "FooterCards",
 
   components: {
-    Navbar,
-    FooterCards
   },
 
   props: [
   ],
 
   beforeMount: function() {
-    console.log("L-CardLayout / beforeMount....")
+    console.log("C-FooterCards / beforeMount....")
   },
 
   data() {
@@ -71,6 +86,9 @@ export default {
   },
 
   methods: {
+
+
+
   },
 
 }

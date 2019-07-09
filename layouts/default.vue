@@ -1,13 +1,9 @@
 <template>
   <v-app>
 
-    <!-- NAVABR -->
+    <!-- NAVBAR & DRAWERS-->
     <Navbar>
     </Navbar>
-
-    <!-- DRAWER RIGHT -->
-
-    <!-- DRAWER LEFT -->
 
     <!-- CONTENTS -->
     <v-content>
@@ -17,30 +13,8 @@
     </v-content>
 
     <!-- FOOTER INDEX -->
-    <v-footer 
-      v-show="locSelected" 
-      color="transparent"
-      class="ma-3 pb-5"
-      >
-
-      <v-layout 
-        justify-center
-        >
-      
-        <v-btn 
-          v-for="(btn, indexBtn) in footerBtns"
-          round
-          outline
-          color="primary"
-          :key="indexBtn"
-          :to="btn.to"
-          >
-          {{ $t('links.' + btn.textCode) }}
-        </v-btn>
-
-      </v-layout>
-      
-    </v-footer>
+    <FooterIndex>
+    </FooterIndex>
 
   </v-app>
 </template>
@@ -49,7 +23,8 @@
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 
-import Navbar from '~/components/UX-components/navbar.vue'
+import Navbar from '~/components/NAV-components/navbar.vue'
+import FooterIndex from '~/components/NAV-components/footer-index.vue'
 
 export default {
 
@@ -57,6 +32,7 @@ export default {
 
   components: {
     Navbar,
+    FooterIndex
   },
 
   props: [
@@ -64,17 +40,11 @@ export default {
 
   beforeMount: function() {
     console.log("L-default / beforeMount....")
-  //   this.$vuetify.theme.primary = '#1b5632';
-  //   this.$vuetify.theme.secondary = '#6AAB84';
   },
 
   data() {
 
     return {
-      footerBtns: [
-        { textCode: "about", to: "/about" },
-        { textCode: "credits", to: "/credits" },
-      ]
     }
 
   },

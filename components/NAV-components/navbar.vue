@@ -90,13 +90,14 @@
     </v-toolbar>
 
 
-    <!-- DRAWER -->
+    <!-- DRAWER RIGHT -->
     <v-navigation-drawer
       v-model="drawer"
       absolute
       floating
       right
-      class="primary"
+      class="grey"
+      style="z-index: 10"
       dark
       >
 
@@ -141,11 +142,11 @@
 
         <v-divider></v-divider>
 
-        <!-- LINNKS -->
+        <!-- LINKS -->
         <v-list-tile
           v-for="item in items"
           :key="item.title"
-          @click=""
+          :to="item.to"
           >
           <v-list-tile-action
             v-if="item.icom">
@@ -154,10 +155,11 @@
             </v-icon>
           </v-list-tile-action>
 
-          <!-- LINNK TITLE -->
+          <!-- LINK TITLE -->
           <v-list-tile-content>
             <v-list-tile-title 
               class="text-uppercase"
+              @click="drawer=false"
               >
 
               {{ $t( 'drawer.'+ item.titleCode)  }}
@@ -192,12 +194,12 @@ export default {
 
   data: () => ({
 
-    drawer: null,
+    drawer: false,
     items: [
-      { titleCode: 'homepage', icon: 'home' },
-      { titleCode: 'favorites', icon: 'favorite' },
-      { titleCode: 'about', icon: 'question_answer' },
-      { titleCode: 'credits', icon: 'question_answer' }
+      { titleCode: 'homepage', icon: 'home', to:"/" },
+      { titleCode: 'favorites', icon: 'favorite', to:"/favorites" },
+      { titleCode: 'about', icon: 'question_answer', to:"/about" },
+      { titleCode: 'credits', icon: 'question_answer', to:"/credits" }
     ]
   }),
 

@@ -9,6 +9,7 @@
 
 <template>
 
+  <!-- :cards="visibleCards" -->
   <GameCardsStack
     :cards="allCards"
     @cardAccepted="handleCardAccepted"
@@ -25,16 +26,14 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 import GameCardsStack from '~/components/UX-components/GameCardsStack'
-// import BasicTable from '~/components/DATA-components/basic-table'
 
 export default {
 
-  name: "CardsStack",
+  name: "CardPage",
 
   layout : "cardLayout",
 
   components: {
-    // BasicTable,
     GameCardsStack
   },
 
@@ -45,8 +44,15 @@ export default {
   ],
 
   beforeMount : function(){
-    console.log("P-index / beforeMount....")
-    this.allCards = this.getConcatenatedDatasets('datasets')
+    console.log("P-CardPage / beforeMount....")
+    let allCards = this.getConcatenatedDatasets('datasets')
+
+    // randomize stack
+
+
+    // set data stack locally
+    this.allCards = allCards
+
   },
 
   data() {
@@ -69,6 +75,8 @@ export default {
       datasets : state => state.data.datasets,
       correspondanceDicts : state => state.data.correspondanceDicts,
       dataTypes : state => state.data.dataTypes,
+
+
 
     }),
 

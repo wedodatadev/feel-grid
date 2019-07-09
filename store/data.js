@@ -22,6 +22,11 @@ export const state = () => ({
   // OPTIONAL : QUERIES AND RESPONSES
   // query: undefined,
 
+
+  //  OPTIONAL : SHUFFLE SEED
+  shuffleIsSeeded : true,
+  shuffleSeed : 1,
+
 })
 
 export const getters = {

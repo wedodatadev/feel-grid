@@ -105,7 +105,7 @@ export function createDatasetHeaders ( GSdataFirstRow, dataTypes ){
 // APPLY DATATYPES TO A DATASET
 export function applyDataTypes ( valueObject, dsTypes ){
 
-  console.log(">>> UT-applyDataTypes ... ")
+  // console.log(">>> UT-applyDataTypes ... ")
   // console.log(">>> UT-applyDataTypes / valueObject : ", valueObject)
   // console.log(">>> UT-applyDataTypes / dsTypes : ", dsTypes)
   let value = valueObject.val
@@ -166,7 +166,7 @@ export function applyDataTypes ( valueObject, dsTypes ){
           console.log(">>> UT-applyDataTypes / json - newValue : ", newValue)
           value = newValue
         } catch {
-          console.log(">>> UT-applyDataTypes / error parsing json - value : ", value)
+          // console.log(">>> UT-applyDataTypes / error parsing json - value : ", value)
         }
       }
 

@@ -7,7 +7,7 @@
 
     <GameCard
       v-for="(card, index) in cards"
-      :key="card"
+      :key="index"
       :card="card"
       :is-current="index === 0"
       @cardAccepted="$emit('cardAccepted');"

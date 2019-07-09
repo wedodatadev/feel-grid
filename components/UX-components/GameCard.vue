@@ -14,6 +14,8 @@
     <h3 class="cardTitle">
       {{ card['content-fr'] }}
     </h3>
+    
+    <br>
 
     <p class="text-xs-center text-uppercase">
       {{ $t('cards.findMore')}}
@@ -44,7 +46,7 @@ export default {
 
   props: {
     card: {
-      type: String,
+      type: Object,
       required: true
     },
     isCurrent: {

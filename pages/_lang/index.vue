@@ -1,12 +1,3 @@
-<style>
-
-  .skip-navbar-more{
-    margin-top: 75px;
-  }
-
-</style>
-
-
 <template>
 
   <!-- <v-container
@@ -66,7 +57,7 @@
             round
             outline
             color="primary"
-            to="/cards-stack"
+            to="/cards"
             >
             <!-- @click="openRandomCard()" -->
             {{ $t('intro.getAnAce')}}
@@ -158,3 +149,11 @@ export default {
 
 }
 </script>
+
+<style>
+
+  .skip-navbar-more{
+    margin-top: 75px;
+  }
+
+</style>
