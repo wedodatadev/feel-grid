@@ -60,7 +60,7 @@ export const mutations = {
   },
 
   switchLocale(state, localeObject) {
-    console.log("S-index-M-switchLocale / localeObject : ", localeObject)
+    // console.log("S-index-M-switchLocale / localeObject : ", localeObject)
     state.locale = localeObject.code
     // this.$i18n.locale = localeObject.code
   },
@@ -81,6 +81,7 @@ export const mutations = {
   },
 
   setFirstVisit(state, value){
+    console.log("S-index-M-setLocSelected ...")
     state.firstVisit = value
   },
 

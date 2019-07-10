@@ -5,13 +5,16 @@
     <Navbar>
     </Navbar>
 
-    <!-- CONTENTS -->
-    <v-content>
-      <v-container fill-height>
-        <nuxt />
-      </v-container>
-    </v-content>
+    <v-layout fill-height>
 
+      <!-- CONTENTS -->
+      <v-content>
+        <v-container fill-height>
+          <nuxt />
+        </v-container>
+      </v-content>
+
+    </v-layout>
 
     <!-- FOOTER CONTENTS -->
     <FooterAbout/>

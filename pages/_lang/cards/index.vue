@@ -1,10 +1,25 @@
 <template>
 
-  <SwipeableCards
-    :cardsArray="cardsArray"
-    :dsId="dsId"
+  <v-layout 
+    fill-height
+    row wrap 
     >
-  </SwipeableCards>
+
+    <v-flex 
+      xs10 offset-xs1
+      sm8 offset-md2
+      md6 offset-md3
+      >
+
+      <SwipeableCards
+        :cardsArray="cardsArray"
+        :dsId="dsId"
+        >
+      </SwipeableCards>
+
+    </v-flex>
+
+  </v-layout>
 
 </template>
 

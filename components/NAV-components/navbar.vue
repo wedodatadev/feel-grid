@@ -27,11 +27,11 @@
 
       <v-spacer></v-spacer>
 
-      <v-toolbar-title
+      <!-- <v-toolbar-title
         class="primary--text"
         >
         {{ mainLogoUrl }}
-      </v-toolbar-title>
+      </v-toolbar-title> -->
 
       <v-spacer></v-spacer>
 
@@ -97,7 +97,7 @@
       floating
       right
       class="grey"
-      style="z-index: 10"
+      style="z-index: 50"
       dark
       >
 

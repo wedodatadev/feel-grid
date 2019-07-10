@@ -32,13 +32,13 @@
           <v-btn 
             v-for="(loc, index) in locales"
             :key="index"
+            :class="`text-uppercase ${ (loc.code === locale)? '' : 'font-weight-thin' }`"
             round 
             color="primary" 
             dark
             outline
-            @click="changeLocale(loc)"
-            @mouseover="changeLocale(loc, false)"
-            :class="`text-uppercase ${ (loc.code === locale)? '' : 'font-weight-thin' }`"
+            @click="changeLocale(loc, false)"
+            @mouseover="changeLocale(loc, true)"
             >
             <!-- :outline="loc.code !== locale " -->
             {{ loc.code }}
@@ -104,7 +104,7 @@ export default {
 
   data() {
     return {
-      locSelected: false,
+      // locSelected: false,
     }
   },
 
@@ -119,6 +119,7 @@ export default {
       locale : state => state.locale,
       locales : state => state.locales,
       defaultLocale : state => state.defaultLocale,
+      locSelected: state => state.locSelected,
 
       datasets : state => state.data.datasets,
       correspondanceDicts : state => state.data.correspondanceDicts,
@@ -137,10 +138,14 @@ export default {
       // console.log("P-index / changeLocale ...")
       this.$i18n.locale = loc.code
       this.$store.commit('switchLocale', loc)
-      if (hover){
+      if (!hover){
+        // this.locSelected = true
         this.$store.commit('setLocSelected')
-        this.locSelected = true
-      }
+        // this.$router.push('/cards')
+      } 
+      // else {
+      //   this.locSelected = true
+      // }
     },
 
     openRandomCard(){

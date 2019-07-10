@@ -1,10 +1,12 @@
 <template>
     
-  <v-layout 
+  <!-- <v-layout 
     class="skip-navbar-content"
-    >
+    > -->
 
-    <v-flex xs10 offset-xs1>
+    <v-flex 
+      xs10 offset-xs1
+      >
       
       <h1 class="text-xs-center">
         {{ $t('credits.title') }}
@@ -25,17 +27,23 @@
 
       <hr>
 
-      <h3 class="pt-3">
-        {{ $t('credits.headline') }}
-      </h3>
+      <div
+        class="limited-height"
+        >
 
-      <p class="pt-4">
-        {{ $t('credits.content') }}
-      </p>
+        <h3 class="pt-3">
+          {{ $t('credits.headline') }}
+        </h3>
+
+        <p class="pt-4">
+          {{ $t('credits.content') }}
+        </p>
+      
+      </div>
 
     </v-flex>
 
-  </v-layout>
+  <!-- </v-layout> -->
 
 
 </template>
@@ -93,10 +101,16 @@ export default {
 }
 </script>
 
+
 <style scoped>
 
   .skip-navbar-content{
     margin-top: 200px;
+  }
+
+  .limited-height{
+    max-height: 85vw;
+    overflow-y: auto;
   }
 
 </style>

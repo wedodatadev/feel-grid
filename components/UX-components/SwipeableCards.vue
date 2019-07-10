@@ -1,72 +1,85 @@
 <template>
 
+  
   <v-layout 
+    id="swipeable-cards"
     fill-height
+    align-center
+    justify-center
+    wrap
     >
 
-    <div
+    <!-- DEBUG -->
+    <!-- {{ breakPointCode }}<br> -->
+    <!-- {{ windowWidth }}<br> -->
+    
+    <!-- FIRST CARD -->
+    <v-flex
       v-if="current"
-      class="fixed fixed--center"
-      style="z-index: 3"
-      :class="{ 'transition': isVisible }"
+      :class="`card card--one full-height fixed fixed--center ${ isVisible ? 'transition' :'' }`"
+      :style="`z-index: 3; width:${ cardWidth( .9 )}; height:${ cardHeight }`"
       >
 
       <Vue2InteractDraggable
         v-if="isVisible"
+        class="full-height"
+
         :interact-out-of-sight-x-coordinate="500"
         :interact-max-rotation="15"
         :interact-x-threshold="200"
         :interact-y-threshold="200"
         :interact-event-bus-events="interactEventBus"
+
         interact-block-drag-down
+
         @draggedRight="emitAndNext('match')"
         @draggedLeft="emitAndNext('reject')"
         @draggedUp="emitAndNext('skip')"
-        class="card card--one"
         >
-        <!-- class="rounded-borders card card--one" -->
 
         <CardData
-          style="height: 100%"
           :cardData="current"
           :dsId="dsId"
+          :cardHeights="cardHeights"
+
+          :cardWidth="cardWidth( .9 )"
+          :breakPoint="this.$vuetify.breakpoint.name"
           >
         </CardData>
 
       </Vue2InteractDraggable>
 
-    </div>
+    </v-flex>
 
-    <div
+
+    <!-- SECOND CARD -->
+    <v-flex
       v-if="next"
       class="card card--two fixed fixed--center"
-      style="z-index: 2"
+      :style="`z-index: 2; width:${ cardWidth( .85 )}; height:${ cardHeight }`"
       >
-
       <CardData
-        style="height: 100%"
         :cardData="next"
         :dsId="dsId"
+        :cardHeights="cardHeights"
         >
       </CardData>
-      
-    </div> 
+    </v-flex> 
 
-    <div
+
+    <!-- THIRD CARD -->
+    <v-flex
       v-if="index + 2 < cards.length"
       class="card card--three fixed fixed--center"
-      style="z-index: 1">
-
-      <!-- <div style="height: 100%">
-      </div> -->
+      :style="`z-index: 1; width:${ cardWidth( .8 )}; height:${ cardHeight }`"
+      >
       <CardData
-        style="height: 100%"
         :cardData="{}"
         :dsId="dsId"
+        :cardHeights="cardHeights"
         >
       </CardData>
-
-    </div>
+    </v-flex>
 
 
     <!-- FOOTER -->
@@ -143,11 +156,32 @@ export default {
 
   mounted: function() {
     console.log("C-SwipeableCards / mounted....")
+
+    // this.onResize()
+    // window.addEventListener('resize', this.onResize, { passive: true })
+
     this.cards = this.cardsArray
   },
 
+  // beforeDestroy () {
+  //   if (typeof window !== 'undefined') {
+  //     window.removeEventListener('resize', this.onResize, { passive: true })
+  //   }
+  // },
+
   data() {
     return {
+      
+      breakPointCode : undefined,
+      windowWidth : 0,
+  
+      cardHeight: "70vh",
+      cardHeights: {
+        title: "10vh",
+        content: "46vh",
+        more: "7vh",
+        footer: "7vh"
+      },
 
       isVisible: true,
 
@@ -160,22 +194,6 @@ export default {
       },
 
       cards: [],
-      // [
-        // { src: 'karina.jpg', name: 'Karina', age: 7 },
-        // { src: 'alexander.jpg', name: 'Alexander', age: 5 },
-        // { src: 'bona.jpg', name: 'Bona', age: 3 },
-        // { src: 'ichi.jpg', name: 'Ichi', age: 7 },
-        // { src: 'lloyd.jpg', name: 'Lloyd', age: 4 },
-        // { src: 'luiza.jpg', name: 'Luiza', age: 9 },
-        // { src: 'max.jpg', name: 'Max', age: 6 },
-        // { src: 'mona.jpg', name: 'Mona', age: 3 },
-        // { src: 'naru.jpg', name: 'Naru', age: 7 },
-        // { src: 'ramdan.jpg', name: 'Ramdan', age: 8 },
-        // { src: 'rikki-austin.jpg', name: 'Rikki Austin', age: 3 },
-        // { src: 'tucker.jpg', name: 'Tucker', age: 9 },
-        // { src: 'uriel.jpg', name: 'Uriel', age: 6 },
-        // { src: 'zoe.jpg', name: 'Zoe', age: 2 },
-      // ]
       
     }
   },
@@ -188,14 +206,29 @@ export default {
     }),
 
     current() {
-      return this.cards && this.cards[this.index]
+      return this.cards && this.cards[ this.index ]
     },
+    
     next() {
-      return this.cards && this.cards[this.index + 1]
-    }
+      return this.cards && this.cards[ this.index + 1 ]
+    },
+  
   },
 
   methods: {
+
+    cardWidth ( widthPercent ) {
+      let maxWidth = 80
+      let zWidth = maxWidth * widthPercent
+      let step = 10
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs': return zWidth + 'vw'
+        case 'sm': return ( zWidth - (step * 2) ) + 'vw'
+        case 'md': return ( zWidth - (step * 3) ) + 'vw'
+        case 'lg': return ( zWidth - (step * 4) ) + 'vw'
+        case 'xl': return ( zWidth - (step * 5) ) + 'vw'
+      }
+    },
 
     match() {
       InteractEventBus.$emit(EVENTS.MATCH)
@@ -212,7 +245,7 @@ export default {
       setTimeout(() => {
         this.index++
         this.isVisible = true
-      }, 200)
+      }, 400)
     }
 
   }
@@ -220,6 +253,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.full-height{
+  height: 100%;
+}
 
 // .container {
 //   // background: #eceff1;
@@ -254,65 +291,65 @@ export default {
 //   }
 // }
 
-.footer {
-  width: 77vw;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  padding-bottom: 30px;
-  justify-content: space-around;
-  align-items: center;
-}
+// .footer {
+//   width: 77vw;
+//   bottom: 0;
+//   left: 50%;
+//   transform: translateX(-50%);
+//   display: flex;
+//   padding-bottom: 30px;
+//   justify-content: space-around;
+//   align-items: center;
+// }
 
-.btn {
-  position: relative;
-  width: 50px;
-  height: 50px;
-  padding: .2rem;
-  border-radius: 50%;
-  background-color: white;
-  box-shadow: 0 6px 6px -3px rgba(0,0,0,0.02), 0 10px 14px 1px rgba(0,0,0,0.02), 0 4px 18px 3px rgba(0,0,0,0.02);
-  cursor: pointer;
-  transition: all .3s ease;
-  user-select: none;
-  -webkit-tap-highlight-color:transparent;
-  &:active {
-    transform: translateY(4px);
-  }
-  i {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    &::before {
-      content: '';
-    }
-  }
-  &--like {
-    background-color: red;
-    padding: .5rem;
-    color: white;
-    box-shadow: 0 10px 13px -6px rgba(0,0,0,.2), 0 20px 31px 3px rgba(0,0,0,.14), 0 8px 38px 7px rgba(0,0,0,.12);
-    i {
-      font-size: 32px;
-    }
-  }
-  &--decline {
-    color: red;
-  }
-  &--skip {
-    color: green;
-  }
-}
+// .btn {
+//   position: relative;
+//   width: 50px;
+//   height: 50px;
+//   padding: .2rem;
+//   border-radius: 50%;
+//   background-color: white;
+//   box-shadow: 0 6px 6px -3px rgba(0,0,0,0.02), 0 10px 14px 1px rgba(0,0,0,0.02), 0 4px 18px 3px rgba(0,0,0,0.02);
+//   cursor: pointer;
+//   transition: all .3s ease;
+//   user-select: none;
+//   -webkit-tap-highlight-color:transparent;
+//   &:active {
+//     transform: translateY(4px);
+//   }
+//   i {
+//     position: absolute;
+//     top: 50%;
+//     left: 50%;
+//     transform: translate(-50%, -50%);
+//     &::before {
+//       content: '';
+//     }
+//   }
+//   &--like {
+//     background-color: red;
+//     padding: .5rem;
+//     color: white;
+//     box-shadow: 0 10px 13px -6px rgba(0,0,0,.2), 0 20px 31px 3px rgba(0,0,0,.14), 0 8px 38px 7px rgba(0,0,0,.12);
+//     i {
+//       font-size: 32px;
+//     }
+//   }
+//   &--decline {
+//     color: red;
+//   }
+//   &--skip {
+//     color: green;
+//   }
+// }
 
-.flex {
-  display: flex;
-  &--center {
-    align-items: center;
-    justify-content: center;
-  }
-}
+// .flex {
+//   display: flex;
+//   &--center {
+//     align-items: center;
+//     justify-content: center;
+//   }
+// }
 
 .fixed {
   position: fixed;
@@ -327,7 +364,8 @@ export default {
 // }
 
 .card {
-  height: 60vh;
+  // height: 70vh;
+  // height: 85%;
   // color: black;
 
   // img {
@@ -338,24 +376,28 @@ export default {
   // }
 
   &--one {
-    width: 80vw;
+    // width: 80vw;
+    // width: 100%;
+    transform: translate(-50%, -60%);
     // background: rgba(white, 1);
     // box-shadow: 0 1px 3px rgba(0,0,0,.2), 0 1px 1px rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
   }
   &--two {
-    width: 78vw;
+    // width: 78vw;
+    // width: 85%;
     // background: rgba(white, .9);
     // transform: translate(-48%, -48%);
     // transform: scale(1, .8);
-    transform: translate(-50%, -47%);
+    transform: translate(-50%, -55%);
     // box-shadow: 0 6px 6px -3px rgba(0,0,0,.2), 0 10px 14px 1px rgba(0,0,0,.14), 0 4px 18px 3px rgba(0,0,0,.12);
   }
   &--three {
-    width: 76vw;
+    // width: 76vw;
+    // width: 80%;
     // background: rgba(white, .8);
     // transform: translate(-46%, -46%);
     // transform: scale(1, .6);
-    transform: translate(-50%, -44%);
+    transform: translate(-50%, -50%);
     // box-shadow: 0 10px 13px -6px rgba(0,0,0,.2), 0 20px 31px 3px rgba(0,0,0,.14), 0 8px 38px 7px rgba(0,0,0,.12);
   }
 
@@ -383,7 +425,7 @@ export default {
     transform: translate(-50%, -47%);
   }
   to {
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -60%);
   }
 }
 </style>

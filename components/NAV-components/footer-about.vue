@@ -17,8 +17,9 @@
         outline
         color="primary"
         :key="indexBtn"
-        :to="btn.to"
+        @click="goToCards()"
         >
+        <!-- :to="btn.to" -->
         {{ $t(btn.textCode) }}
       </v-btn>
 
@@ -72,6 +73,13 @@ export default {
   },
 
   methods: {
+
+    goToCards() {
+      console.log("C-FooterAbout / goToCards....")
+      this.$store.commit('setFirstVisit', false)
+      this.$router.push('/cards')
+    }
+
   },
 
 }

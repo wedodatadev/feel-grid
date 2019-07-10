@@ -1,10 +1,12 @@
 <template>
     
-  <v-layout 
+  <!-- <v-layout 
     class="skip-navbar-content"
-    >
+    > -->
 
-    <v-flex xs10 offset-xs1>
+    <v-flex 
+      xs10 offset-xs1
+      >
       
       <h1 class="text-xs-center">
         {{ $t('about.title') }}
@@ -25,17 +27,23 @@
 
       <hr>
 
-      <h3 class="pt-3">
-        {{ $t('about.headline') }}
-      </h3>
+      <div 
+        class="limited-height"
+        >
 
-      <p class="pt-4">
-        {{ $t('about.content') }}
-      </p>
+        <h3 class="pt-3">
+          {{ $t('about.headline') }}
+        </h3>
+
+        <p class="pt-4">
+          {{ $t('about.content') }}
+        </p>
+
+      </div>
 
     </v-flex>
 
-  </v-layout>
+  <!-- </v-layout> -->
 
 </template>
 
@@ -103,6 +111,11 @@ export default {
 
   .skip-navbar-content{
     margin-top: 200px;
+  }
+
+  .limited-height{
+    max-height: 85vw;
+    overflow-y: auto;
   }
 
 </style>

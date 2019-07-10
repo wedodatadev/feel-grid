@@ -1,43 +1,67 @@
 <template>
 
-  <!-- FOOTER INDEX -->
+<!-- FOOTER INDEX -->
+
   <v-footer 
     color="transparent"
-    class="ma-4 pb-2"
+    class="ma-4 pb-2 centered"
     >
-    
-    <!-- LEFT SIDE ICONS -->
-    <v-btn 
-      v-for="(btn, indexBtn) in footerBtnsLeft"
-      :key="btn.textCode"
-      :to="btn.to"
-      icon
-      outline
-      color="primary"
-      >
-      <v-icon>
-        {{ btn.icon }}
-      </v-icon>
-    </v-btn>
 
-    <v-spacer></v-spacer>
+    <!-- <v-layout
+      > -->
 
-    <!-- RIGHT SIDE ICONS  -->
-    <v-btn 
-      v-for="(btn, indexBtn) in footerBtnsRight"
-      :key="btn.textCode"
-      icon
-      outline
-      color="primary"
-      @click="skip"
-      >
-      <v-icon>
-        {{ btn.icon }}
-      </v-icon>
-    </v-btn>
+      <div
+        :style="`z-index: 4; width:${ cardWidth( .9 ) }`"
+        >
 
+        <v-layout
+          row wrap
+          >
+
+          <!-- LEFT SIDE ICONS -->
+          <v-layout justify-start>
+            <v-btn 
+              v-for="(btn, indexBtn) in footerBtnsLeft"
+              :key="btn.textCode"
+              :to="btn.to"
+              icon
+              outline
+              color="primary"
+              class="ma-1"
+              >
+              <v-icon>
+                {{ btn.icon }}
+              </v-icon>
+            </v-btn>
+          </v-layout>
+
+          <!-- <v-spacer></v-spacer> -->
+
+          <!-- RIGHT SIDE ICONS  -->
+          <v-layout justify-end>
+            <v-btn 
+              v-for="(btn, indexBtn) in footerBtnsRight"
+              :key="btn.textCode"
+              icon
+              outline
+              color="primary"
+              class="ma-1"
+              @click="skip"
+              >
+              <v-icon>
+                {{ btn.icon }}
+              </v-icon>
+            </v-btn>
+          </v-layout>
+
+        </v-layout>
+
+      </v-layout>
+
+    </div>
 
   </v-footer>
+
 
 </template>
 
@@ -97,6 +121,19 @@ export default {
 
   methods: {
 
+    cardWidth ( widthPercent ) {
+      let maxWidth = 80
+      let zWidth = maxWidth * widthPercent
+      let step = 10
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs': return zWidth + 'vw'
+        case 'sm': return ( zWidth - (step * 2) ) + 'vw'
+        case 'md': return ( zWidth - (step * 3) ) + 'vw'
+        case 'lg': return ( zWidth - (step * 4) ) + 'vw'
+        case 'xl': return ( zWidth - (step * 5) ) + 'vw'
+      }
+    },
+
     skip() {
       InteractEventBus.$emit(EVENTS.SKIP)
     },
@@ -105,3 +142,16 @@ export default {
 
 }
 </script>
+
+
+<style scoped>
+  .centered{
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
