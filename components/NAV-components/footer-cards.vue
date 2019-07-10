@@ -21,7 +21,7 @@
           <!-- LEFT SIDE ICONS -->
           <v-layout justify-start>
             <v-btn 
-              v-for="(btn, indexBtn) in footerBtnsLeft"
+              v-for="btn in footerBtnsLeft"
               :key="btn.textCode"
               :to="btn.to"
               icon
@@ -40,7 +40,7 @@
           <!-- RIGHT SIDE ICONS  -->
           <v-layout justify-end>
             <v-btn 
-              v-for="(btn, indexBtn) in footerBtnsRight"
+              v-for="btn in footerBtnsRight"
               :key="btn.textCode"
               icon
               outline
@@ -70,11 +70,7 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 import { InteractEventBus } from 'vue2-interact'
 
-const EVENTS = {
-  // MATCH: 'match',
-  SKIP: 'skip',
-  // REJECT: 'reject'
-}
+import { EVENTS, INTERACT_EVENTS } from "~/config/interactEvents.js"
 
 
 export default {

@@ -41,11 +41,14 @@
         <v-card-text class="headline font-weight-bold text-xs-center">
 
           {{ cardData && getContentByLocale('mainContent') }}
-          <br>
+          <!-- <br>
           cardWidth : {{ cardWidth }}
           <br>
-          breakPoint : {{ breakPoint }}
-            
+          breakPoint : {{ breakPoint }} -->
+          <!-- <br>
+          favs : <br><code>{{ favs }}</code> -->
+          <!-- <br>
+          favorites : <br><code>{{ favorites }}</code> -->
         </v-card-text>
 
       </v-layout> 
@@ -102,6 +105,8 @@
           <v-btn 
             icon
             flat
+            :color="isFavorite ? 'pink' : 'white' "
+            @click="switchFavorite()"
             >
             <v-icon>
               favorite
@@ -123,6 +128,10 @@
 // based and adapted from : https://www.josephharveyangeles.com/blog/2019/kittynder
 
 import { mapState, mapGetters, mapActions } from 'vuex'
+import { InteractEventBus } from 'vue2-interact'
+
+import { EVENTS, INTERACT_EVENTS } from "~/config/interactEvents.js"
+
 
 export default {
 
@@ -163,7 +172,24 @@ export default {
 
       contentFields : state => state.data.contentFields,
 
+      itemIdField : state => state.users.itemIdField,
+
+      favorites : state => state.users.favorites
+
     }),
+
+    ...mapGetters({
+
+      // favorites : 'users/getFavorites',
+
+    }),
+
+    isFavorite(){
+      // console.log("C-CardData-isFavorite / this.itemIdField : ", this.itemIdField)
+      let itemId = this.cardData[ this.itemIdField ]
+      // console.log("C-CardData-isFavorite / itemId : ", itemId)
+      return this.favorites.includes( String(itemId) )
+    },
 
   },
 
@@ -171,17 +197,17 @@ export default {
 
     getContentByLocale( fieldCode ){
 
-      console.log("C-CardData-getContentByLocale..." )
+      // console.log("C-CardData-getContentByLocale..." )
 
       let currentLocale = this.locale
       let contentFields = this.contentFields[ this.dsId ]
-      console.log("C-CardData-getContentByLocale / contentFields : ", contentFields )
+      // console.log("C-CardData-getContentByLocale / contentFields : ", contentFields )
 
       let contentColName = contentFields.find( field => {
         return fieldCode === field.cardFieldCode
       })
       let fieldByLocale = contentColName && contentColName[ currentLocale ]
-      console.log("C-CardData-getContentByLocale / fieldByLocale :", fieldByLocale)
+      // console.log("C-CardData-getContentByLocale / fieldByLocale :", fieldByLocale)
 
       // find correct field code
       return this.cardData[ fieldByLocale ]
@@ -211,6 +237,15 @@ export default {
       // } else {
       //   return 
       // }
+    },
+
+    switchFavorite(){
+
+      console.log("C-CardData-addAsFavorite..." )
+
+      // InteractEventBus.$emit(EVENTS.MATCH)
+      this.$store.dispatch('users/switchFavorite', this.cardData)
+
     },
 
   }

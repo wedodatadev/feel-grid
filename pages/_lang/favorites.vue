@@ -29,7 +29,7 @@
         {{ $t('favorites.headline') }}
       </h3>
 
-
+      
     </v-flex>
 
   </v-layout>
@@ -73,9 +73,13 @@ export default {
   computed: {
 
     ...mapState({
+
       log : state => state.log, 
       isFirstVisit : state => state.firstVisit,
       locale : state => state.locale,
+      
+      favorites : state => state.users.favorites
+
     }),
 
     ...mapGetters({

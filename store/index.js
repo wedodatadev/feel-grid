@@ -48,6 +48,7 @@ export const mutations = {
 
   // INTERNATIONALIZATION
   initLocales(state) {
+    
     console.log("S-index-M-initLocales ... ")
 
     let localesBuild = process.env.CONFIG_APP.localesBuild

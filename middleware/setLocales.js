@@ -2,7 +2,7 @@ export default function ({ req, store, app, redirect }) {
 
   let hasLocales = store.state.locales 
 
-  if (!hasLocales){
+  if ( !hasLocales ){
     console.log('\n-MW- setLocales...')
 
     let localesObj = process.env.CONFIG_APP.localesBuild

@@ -1,4 +1,5 @@
 var cookieparser = require('cookieparser')
+import Cookie from 'js-cookie'
 
 export default function ({ req, store, app, redirect }) {
 
@@ -19,7 +20,13 @@ export default function ({ req, store, app, redirect }) {
     parsed = cookieparser.parse(cookie)
   }
 
-  // console.log('-MW-checkFavorites / parsed :', parsed)
+  console.log('-MW-checkFavorites / parsed :', parsed)
 
+  let cookieRawFavorites = parsed.favorites
+  if ( cookieRawFavorites ){
+    let parsedFavorites = JSON.parse(cookieRawFavorites)
+    console.log('-MW-checkFavorites / parsedFavorites :', parsedFavorites)
 
+    store.commit('users/setFavorites', parsedFavorites)
+  }
 }

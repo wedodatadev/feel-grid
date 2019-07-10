@@ -28,14 +28,28 @@
         :interact-max-rotation="15"
         :interact-x-threshold="200"
         :interact-y-threshold="200"
+
         :interact-event-bus-events="interactEventBus"
 
         interact-block-drag-down
 
+        @draggedRight="emitAndNext('skip')"
+        @draggedLeft="emitAndNext('skip')"
+        @draggedUp="emitAndNext('skip')"
+
+        >
+
+        <!-- 
+        @draggedDown="draggedDown"
+        @draggedLeft="draggedLeft"
+        @draggedRight="draggedRight"
+        @draggedUp="draggedUp" 
+        -->
+        <!-- 
         @draggedRight="emitAndNext('match')"
         @draggedLeft="emitAndNext('reject')"
         @draggedUp="emitAndNext('skip')"
-        >
+        -->
 
         <CardData
           :cardData="current"
@@ -134,11 +148,7 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 import { Vue2InteractDraggable, InteractEventBus } from 'vue2-interact'
 import CardData from '~/components/UX-components/CardData'
 
-const EVENTS = {
-  MATCH: 'match',
-  SKIP: 'skip',
-  REJECT: 'reject'
-}
+import { EVENTS, INTERACT_EVENTS } from "~/config/interactEvents.js"
 
 export default {
 
@@ -161,6 +171,7 @@ export default {
     // window.addEventListener('resize', this.onResize, { passive: true })
 
     this.cards = this.cardsArray
+    this.cardsLength = this.cardsArray.length
   },
 
   // beforeDestroy () {
@@ -184,16 +195,19 @@ export default {
       },
 
       isVisible: true,
-
       index: 0,
 
       interactEventBus: {
         draggedRight: EVENTS.MATCH,
-        draggedLeft: EVENTS.REJECT,
+        draggedLeft: EVENTS.SKIP,
         draggedUp: EVENTS.SKIP
       },
+        // draggedRight: INTERACT_EVENTS.INTERACT_DRAGGED_RIGHT,
+        // draggedLeft: INTERACT_EVENTS.INTERACT_DRAGGED_LEFT,
+        // draggedUp: INTERACT_EVENTS.INTERACT_DRAGGED_UP
 
       cards: [],
+      cardsLength: 0,
       
     }
   },
@@ -217,6 +231,7 @@ export default {
 
   methods: {
 
+    // compute card width
     cardWidth ( widthPercent ) {
       let maxWidth = 80
       let zWidth = maxWidth * widthPercent
@@ -230,23 +245,99 @@ export default {
       }
     },
 
+
+    // 
+    skip() {
+      InteractEventBus.$emit(EVENTS.SKIP)
+    },
     match() {
       InteractEventBus.$emit(EVENTS.MATCH)
     },
     reject() {
       InteractEventBus.$emit(EVENTS.REJECT)
     },
-    skip() {
-      InteractEventBus.$emit(EVENTS.SKIP)
-    },
+
     emitAndNext(event) {
+
+      console.log("C-CardData-emitAndNext / this.index :", this.index )
+
+      // emit event to parent
       this.$emit(event, this.index)
-      setTimeout(() => this.isVisible = false, 200)
+
+      // make card disappear
       setTimeout(() => {
-        this.index++
+        this.isVisible = false
+      }, 200)
+
+      // show next card by adding +1 to index
+      setTimeout(() => {
+
+        this.index += 1
+        // reset deck if no more cards
+        if (this.index >= this.cardsLength){
+          this.index = 0
+        }
+
         this.isVisible = true
-      }, 400)
-    }
+
+      }, 400 )
+
+    },
+
+
+
+
+
+    shiftCard() {
+      setTimeout(() => {
+        this.isShowing = false;
+      }, 200);
+      setTimeout(() => {
+        this.isShowing = true;
+      }, 1000);
+    },
+
+
+
+    // draggedDown() {
+    //   console.log("dragged down!");
+    //   this.shiftCard();
+    // },
+
+    draggedLeft() {
+      console.log("dragged left!");
+      this.shiftCard();
+    },
+
+    draggedRight() {
+      console.log("dragged right!");
+      this.shiftCard();
+    },
+
+    draggedUp() {
+      console.log("dragged up!");
+      this.shiftCard();
+    },
+
+
+
+    // dragDown() {
+    //   InteractEventBus.$emit(INTERACT_EVENTS.INTERACT_DRAGGED_DOWN);
+    // },
+
+    dragLeft() {
+      InteractEventBus.$emit(INTERACT_EVENTS.INTERACT_DRAGGED_LEFT);
+    },
+
+    dragRight() {
+      InteractEventBus.$emit(INTERACT_EVENTS.INTERACT_DRAGGED_RIGHT);
+    },
+
+    dragUp() {
+      InteractEventBus.$emit(INTERACT_EVENTS.INTERACT_DRAGGED_UP);
+    },
+
+
 
   }
 }

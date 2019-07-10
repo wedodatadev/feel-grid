@@ -4,6 +4,7 @@ import { loadGoogleSheet, applyDataTypes, createDatasetHeaders } from "~/utils/l
 
 import { DataContentFields } from '~/config/dataContentFields'
 
+
 export const state = () => ({
 
   log : process.env.LOG,
@@ -118,7 +119,6 @@ export const actions = {
     commit('setIsTypesApplied', true)
 
   },
-
 
 
 
