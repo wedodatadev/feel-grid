@@ -29,7 +29,36 @@
         {{ $t('favorites.headline') }}
       </h3>
 
-      
+      <br>
+
+      <!-- FAVORITES LIST -->
+      <v-list dense class="transparent">
+
+        <v-list-tile
+          v-for="item in favorites"
+          :key="item[ itemIdField ]"
+          :to="'/cards/' + item "
+          >
+
+          <!-- icon -->
+          <v-list-tile-action>
+            <v-icon color="pink">
+              favorite
+            </v-icon>
+          </v-list-tile-action>
+
+          <!-- favorite title -->
+          <v-list-tile-content>
+            <v-list-tile-title>
+              {{ item }}
+            </v-list-tile-title>
+          </v-list-tile-content>
+        
+        </v-list-tile>
+
+      </v-list>
+
+
     </v-flex>
 
   </v-layout>
@@ -77,7 +106,9 @@ export default {
       log : state => state.log, 
       isFirstVisit : state => state.firstVisit,
       locale : state => state.locale,
-      
+
+      itemIdField : state => state.users.itemIdField,
+
       favorites : state => state.users.favorites
 
     }),
@@ -85,6 +116,7 @@ export default {
     ...mapGetters({
 
     }),
+
   },
 
   methods: {
@@ -92,7 +124,14 @@ export default {
     goBack(e){
       e.preventDefault()
       this.$router.back()
-    }
+    },
+
+    getItemFromDatasets(itemId){
+      
+      let itemIdField = this.itemIdField
+      // TO DO 
+
+    },
 
   },
 
@@ -102,8 +141,8 @@ export default {
 
 <style scoped>
 
-  .skip-navbar-content{
-    margin-top: 200px;
-  }
+.skip-navbar-content{
+  margin-top: 200px;
+}
 
 </style>

@@ -38,7 +38,16 @@
           <!-- <v-spacer></v-spacer> -->
 
           <!-- RIGHT SIDE ICONS  -->
-          <v-layout justify-end>
+          <v-layout justify-end >
+
+            <v-btn
+              v-show="showNext"
+              flat
+              color="grey"
+              >
+              {{ $t('cards.next') }}
+            </v-btn>
+
             <v-btn 
               v-for="btn in footerBtnsRight"
               :key="btn.textCode"
@@ -90,6 +99,7 @@ export default {
   data() {
 
     return {
+
       footerBtnsLeft: [
         { textCode: "twitter", icon: "fab fa-twitter", to: "/about" },
         { textCode: "facebook", icon: "fab fa-facebook", to: "/credits" },
@@ -98,7 +108,10 @@ export default {
 
       footerBtnsRight : [
         { textCode: "next", icon: "fas fa-arrow-right", to: "/next" },
-      ]
+      ],
+
+      showNextBreakpoints : [ 'md' , 'lg', 'xl'],
+
     }
 
   },
@@ -113,6 +126,11 @@ export default {
 
     ...mapGetters({
     }),
+
+    showNext(){
+      let screenBreakPoint = this.$vuetify.breakpoint.name
+      return this.showNextBreakpoints.includes(screenBreakPoint)
+    }
   },
 
   methods: {

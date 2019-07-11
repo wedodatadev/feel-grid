@@ -4,7 +4,7 @@
 
     <v-toolbar 
       color="transparent" 
-      dark
+      :dark="!isDrawerLeft"
       flat
       fixed
       >
@@ -35,12 +35,6 @@
 
       <v-spacer></v-spacer>
 
-      <v-toolbar-side-icon
-        color="primary"
-        @click.stop="drawer = !drawer"
-        >
-      </v-toolbar-side-icon>
-
       <!-- BTN SEARCH -->
       <!-- <v-btn icon>
         <v-icon>search</v-icon>
@@ -53,12 +47,32 @@
 
 
       <!-- LOCALES -->
-      <!-- <v-menu offset-y open-on-hover nudge-bottom nudge-left>
+      <v-menu 
+        v-if="isDrawerLeft"
+        offset-y 
+        open-on-hover 
+        nudge-bottom 
+        nudge-left
+        >
         
-        <template v-slot:activator="{ on }">
-          <v-toolbar-title v-on="on">
-            <span>{{ locale }}</span>
-            <v-icon dark>arrow_drop_down</v-icon>
+        <template 
+          v-slot:activator="{ on }"
+          >
+          <v-toolbar-title 
+            v-on="on"
+            >
+            
+            <span
+              class="text-uppercase grey--text subheading"
+              >
+              {{ locale }}
+            </span>
+
+            <v-icon
+              color="grey"
+              >
+              arrow_drop_down
+            </v-icon>
           </v-toolbar-title>
         </template>
 
@@ -70,15 +84,35 @@
             @click="changeLocale(loc)"
             >
             
-            <v-list-tile-title 
-              v-text="loc.name"
+            <v-list-tile-title
+              :class="`${ loc.code !== locale ? 'font-weight-thin' : ''}`"
               >
+              {{ loc.name }}
             </v-list-tile-title>
 
           </v-list-tile>
 
         </v-list>
-      </v-menu> -->
+      </v-menu>
+
+
+      <!-- <v-toolbar-side-icon
+        v-show="!isDrawerLeft"
+        color="primary"
+        @click.stop="drawer = !drawer"
+        >
+      </v-toolbar-side-icon> -->
+      <v-btn
+        v-show="!isDrawerLeft"
+        icon
+        flat
+        color="primary"
+        @click.stop="drawer = !drawer"
+        >
+        <v-icon>
+          fas fa-bars
+        </v-icon>
+      </v-btn>
 
 
       <!-- BTN MORE VERT -->
@@ -92,25 +126,24 @@
 
     <!-- DRAWER RIGHT -->
     <v-navigation-drawer
-      v-model="drawer"
+      v-model="showDrawer"
       absolute
       floating
-      right
-      class="grey"
+      :right="!isDrawerLeft"
+      :class="isDrawerLeft ? 'transparent' : 'grey'"
       style="z-index: 50"
-      dark
+      :dark="!isDrawerLeft"
       >
 
       <!-- temporary -->
-
       <v-list class="pt-0" dense>
-
 
         <!-- CLOSE DRAWER -->
         <div
           class="text-xs-right"
           >
           <v-btn 
+            v-show="!isDrawerLeft"
             flat
             icon
             small
@@ -122,10 +155,14 @@
           </v-btn>
         </div>
 
-        <v-divider></v-divider>
+        <v-divider
+          v-show="!isDrawerLeft"
+          >
+        </v-divider>
 
         <!-- LOCALES -->
         <v-list-tile
+          v-show="!isDrawerLeft"
           v-for="(loc, index) in locales"
           :key="index"
           @click="changeLocale(loc)"
@@ -139,8 +176,13 @@
           </v-list-tile-content>
         </v-list-tile>
 
+        <v-divider          
+          v-show="!isDrawerLeft"
+          >
+        </v-divider>
 
-        <v-divider></v-divider>
+
+        <br>
 
         <!-- LINKS -->
         <v-list-tile
@@ -168,7 +210,9 @@
           </v-list-tile-content>
 
         </v-list-tile>
+
       </v-list>
+
     </v-navigation-drawer>
 
   </div>
@@ -195,12 +239,16 @@ export default {
   data: () => ({
 
     drawer: false,
+
+    fullDrawerLeftBreakpoints : ['lg', 'xl'],
+
     items: [
       { titleCode: 'homepage', icon: 'home', to:"/" },
       { titleCode: 'favorites', icon: 'favorite', to:"/favorites" },
       { titleCode: 'about', icon: 'question_answer', to:"/about" },
       { titleCode: 'credits', icon: 'question_answer', to:"/credits" }
-    ]
+    ],
+
   }),
 
 
@@ -217,6 +265,15 @@ export default {
     ...mapGetters({
       // localeCode : 'getCurrentLocaleCode',
     }),
+
+    isDrawerLeft() {
+      let screenBreakPoint = this.$vuetify.breakpoint.name
+      return this.fullDrawerLeftBreakpoints.includes(screenBreakPoint)
+    },
+
+    showDrawer(){
+      return this.isDrawerLeft || this.drawer ? true : false 
+    },
 
   },
 

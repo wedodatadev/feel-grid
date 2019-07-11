@@ -49,7 +49,8 @@
   },
 
   "cards" : {
-    "findMore": "en savoir plus"
+    "findMore": "en savoir plus",
+    "next" : "suivante"
   },
 
   "about" : {
