@@ -41,14 +41,23 @@
         <v-card-text class="headline font-weight-bold text-xs-center">
 
           {{ cardData && getContentByLocale('mainContent') }}
+          <br>
+
           <!-- <br>
+          idField : {{ idField }} -->
+          <!-- 
           cardWidth : {{ cardWidth }}
           <br>
           breakPoint : {{ breakPoint }} -->
           <!-- <br>
           favs : <br><code>{{ favs }}</code> -->
+
           <!-- <br>
-          favorites : <br><code>{{ favorites }}</code> -->
+          favorites : <br>
+            <code>
+              {{ favorites }}
+            </code> -->
+
         </v-card-text>
 
       </v-layout> 
@@ -141,6 +150,7 @@ export default {
   },
 
   props: [
+
     'cardData',
     'dsId',
 
@@ -149,6 +159,11 @@ export default {
     'breakPoint',
     'cardHeights'
   ],
+
+  beforeMount() {
+    console.log("C-CardData / beforeMount....")
+    this.idField = this.currentIdField( this.dsId )
+  },
 
   mounted: function() {
     console.log("C-CardData / mounted....")
@@ -159,6 +174,7 @@ export default {
     return {
       
       contentHeight: 0,
+      idField: undefined,
 
     }
   },
@@ -172,7 +188,7 @@ export default {
 
       contentFields : state => state.data.contentFields,
 
-      itemIdField : state => state.users.itemIdField,
+      // itemIdField : state => state.users.itemIdField,
 
       favorites : state => state.users.favorites
 
@@ -181,14 +197,20 @@ export default {
     ...mapGetters({
 
       // favorites : 'users/getFavorites',
+      currentIdField: 'users/getCurrentIdField',
+      isInFavorites: 'users/isInFavorites'
 
     }),
 
     isFavorite(){
-      // console.log("C-CardData-isFavorite / this.itemIdField : ", this.itemIdField)
-      let itemId = this.cardData[ this.itemIdField ]
-      // console.log("C-CardData-isFavorite / itemId : ", itemId)
-      return this.favorites.includes( String(itemId) )
+      // console.log("C-CardData-isFavorite / this.idField : ", this.idField)
+      let itemId = this.cardData[ this.idField ]
+
+      let itemPayload = {
+        'itemDsId': this.dsId,
+        'itemId': String(itemId),
+      }
+      return this.isInFavorites( itemPayload )
     },
 
   },
@@ -200,7 +222,11 @@ export default {
       // console.log("C-CardData-getContentByLocale..." )
 
       let currentLocale = this.locale
-      let contentFields = this.contentFields[ this.dsId ]
+      // let contentFields = this.contentFields[ this.dsId ]
+      let contentFieldsObject = this.contentFields.find( fieldObj => {
+        return this.dsId == fieldObj.dsId
+      }) 
+      let contentFields = contentFieldsObject.contentsFields
       // console.log("C-CardData-getContentByLocale / contentFields : ", contentFields )
 
       let contentColName = contentFields.find( field => {
@@ -244,7 +270,13 @@ export default {
       console.log("C-CardData-addAsFavorite..." )
 
       // InteractEventBus.$emit(EVENTS.MATCH)
-      this.$store.dispatch('users/switchFavorite', this.cardData)
+      let payload = {
+        item : this.cardData,
+        dsId : this.dsId,
+        idField : this.idField
+      }
+      // this.$store.dispatch('users/switchFavorite', this.cardData)
+      this.$store.dispatch('users/switchFavorite', payload )
 
     },
 

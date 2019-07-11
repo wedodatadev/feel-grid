@@ -161,7 +161,8 @@ export default {
 
   props: [
     'cardsArray',
-    'dsId'
+    'dsId',
+    'cardId'
   ],
 
   mounted: function() {
@@ -217,6 +218,7 @@ export default {
     ...mapState({
       log : state => state.log, 
       locale : state => state.locale,
+
     }),
 
     current() {

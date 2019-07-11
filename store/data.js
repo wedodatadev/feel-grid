@@ -2,7 +2,7 @@
 
 import { loadGoogleSheet, applyDataTypes, createDatasetHeaders } from "~/utils/loadGSheetData"
 
-import { DataContentFields } from '~/config/dataContentFields'
+import { DataContentFields, DataIdFields } from '~/config/dataContentFields'
 
 
 export const state = () => ({
@@ -21,6 +21,7 @@ export const state = () => ({
 
   // data contents fields mapper
   contentFields : DataContentFields,
+  idFields : DataIdFields,
 
   // isTypesApplied : false, 
 
@@ -45,11 +46,11 @@ export const getters = {
 
   // GSHEET DATA
   getDatasets: state => datasetName => {
-    console.log("S-data-G-getDatasets / datasetName : ", datasetName)
+    // console.log("S-data-G-getDatasets / datasetName : ", datasetName)
     return state[ datasetName ]
   },
   getOneDataset: state => ( datasetName, dsId ) => {
-    console.log("S-data-G-getDatasets / datasetName : ", datasetName)
+    // console.log("S-data-G-getOneDataset / datasetName : ", datasetName)
     return state[ datasetName ].find( d => {
       return d.dsId === dsId
     })

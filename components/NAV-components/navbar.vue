@@ -323,10 +323,15 @@ export default {
     isCurrentPage( item ){
 
       let currentPage = this.$nuxt.$route.path
-      console.log("C-navbar-isCurrentPage / currentPage : ", currentPage)
-      console.log("C-navbar-isCurrentPage / item.to  : ", item.to )
+      // console.log("C-navbar-isCurrentPage / currentPage : ", currentPage)
+      // console.log("C-navbar-isCurrentPage / item.to  : ", item.to )
 
-      return currentPage === item.to
+      if ( item.to === '/' ){
+        return item.to === currentPage
+      } else {
+        return currentPage.startsWith(item.to)
+      }
+
     },
 
     closeDrawer(){

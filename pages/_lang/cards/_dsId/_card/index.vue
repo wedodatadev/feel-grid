@@ -14,6 +14,7 @@
       <SwipeableCards
         :cardsArray="cardsArray"
         :dsId="dsId"
+        :cardId="cardId"
         >
       </SwipeableCards>
 
@@ -51,23 +52,59 @@ export default {
   beforeMount : function(){
 
     console.log("P-CardsPage / beforeMount....")
-    // let cardsArray = this.getConcatenatedDatasets('datasets')
+
+    // SPECIFIC TO _dsId : find 
+    let currentDsId = this.$nuxt.$route.params.dsId
+    console.log("P-CardsPage / currentDsId : ", currentDsId)
+    let firstDataset = this.datasets[0]
+    let firstDatasetId = firstDataset.dsId
+    if ( !currentDsId ){
+      this.dsId = firstDatasetId
+      // TO DO : append to url 
+    } else {
+      let isDsId = this.datasets.find( ds => { return ds.dsId === currentDsId })
+      this.dsId = (isDsId)? currentDsId : firstDatasetId
+    }
+
+    // get dataset corresponding to dsId
     let cardsDataset = this.getOneDataset('datasets', this.dsId)
+    console.log("P-CardsPage / cardsDataset : ", cardsDataset)
     let cardsArray = cardsDataset.dataRows
 
     // randomize stack
     let randomizedCards = ArrayShuffler( cardsArray )
+    console.log( "P-CardsPage / randomizedCards : ", randomizedCards )
+
+
+    // get idField for this dataset 
+    let idField = this.currentIdField( this.dsId )
+    console.log( "P-CardsPage / idField : ", idField )
+
+
+    // SPECIFIC TO _card : find 
+    let currentCardId = this.$nuxt.$route.params.card
+    console.log( "P-CardsPage / currentCardId : ", currentCardId )
+    let currentCard = randomizedCards.find( item => { return currentCardId === String(item[ idField ]) } )
+    console.log( "P-CardsPage / currentCard : ", currentCard )
+    if ( currentCardId ) {
+      // put card on top of the deck 
+      randomizedCards = randomizedCards.filter( item => { return item !== currentCard })
+      randomizedCards.unshift( currentCard )
+    }
+
 
     // set data stack locally
     // this.cardsArray = cardsArray
     this.cardsArray = randomizedCards
+
   },
 
   data() {
     return {
 
       cardsArray: undefined,
-      dsId: 'contents'
+      dsId: 'aces-contents',
+      cardId : undefined,
 
     }
   },
@@ -91,7 +128,8 @@ export default {
     ...mapGetters({
 
       getConcatenatedDatasets : 'data/getConcatenatedDatasets',
-      getOneDataset : 'data/getOneDataset'
+      getOneDataset : 'data/getOneDataset',
+      currentIdField: 'users/getCurrentIdField',
 
     }),
   },

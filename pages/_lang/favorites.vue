@@ -37,27 +37,34 @@
         class="transparent limited-height"
         >
 
-        <v-list-tile
-          v-for="item in favorites"
-          :key="item[ itemIdField ]"
-          :to="'/cards/' + item "
+        <div
+          v-for="dsFavorites in favorites"
+          :key="dsFavorites.dsId"
           >
 
-          <!-- icon -->
-          <v-list-tile-action>
-            <v-icon color="pink">
-              favorite
-            </v-icon>
-          </v-list-tile-action>
+          <v-list-tile
+            v-for="item in dsFavorites.favorites"
+            :key="item[ itemIdField ]"
+            :to="'/cards/' + dsFavorites.dsId + '/' + item "
+            >
 
-          <!-- favorite title -->
-          <v-list-tile-content>
-            <v-list-tile-title>
-              {{ item }}
-            </v-list-tile-title>
-          </v-list-tile-content>
-        
-        </v-list-tile>
+            <!-- icon -->
+            <v-list-tile-action>
+              <v-icon color="pink">
+                favorite
+              </v-icon>
+            </v-list-tile-action>
+
+            <!-- favorite title -->
+            <v-list-tile-content>
+              <v-list-tile-title>
+                {{ dsFavorites.dsId + '/' + item }}
+              </v-list-tile-title>
+            </v-list-tile-content>
+          
+          </v-list-tile>
+
+        </div>
 
       </v-list>
 

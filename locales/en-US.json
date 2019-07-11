@@ -23,11 +23,11 @@
   },
 
   "drawer": {
-    "homepage"  : "homepage",
-    "favorites"  : "favorites ACES",
-    "about"  : "about",
-    "credits"  : "credits",
-    "cards"  : "ACES cards"
+    "homepage" : "homepage",
+    "favorites" : "favorites ACES",
+    "about" : "about",
+    "credits" : "credits",
+    "cards" : "ACES cards"
   },
 
   "footers" : {

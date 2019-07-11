@@ -1,21 +1,59 @@
 // store for users
 
 import Cookie from 'js-cookie'
+import { DataIdFields } from '~/config/dataContentFields'
 
 export const state = () => ({
 
   infos : undefined,
 
   itemIdField : 'card-id',
+  idFields : DataIdFields,
 
-  favorites : [ "2", "11", "8", "1" ],
+  favorites : [ ],
   
 })
 
 export const getters = {
+
   getFavorites : state => {
     return state.favorites
+  },
+
+  getCurrentIdField : state => dsId => {
+    // console.log("S-users-G-getCurrentIdField / dsId : ", dsId)
+    let idFieldObject = state.idFields.find( f => {
+      return dsId === f.dsId
+    })
+    // console.log("S-users-G-getCurrentIdField / idFieldObject : ", idFieldObject)
+    return idFieldObject.idField 
+  },
+  
+  isInFavorites : state => itemPayload => {
+
+    // console.log("\nS-users-G-isInFavorites / itemPayload : ", itemPayload)
+    let dsId = itemPayload.itemDsId
+    let itemId = itemPayload.itemId
+
+    // console.log("S-users-G-isInFavorites / state.favorites : ", state.favorites)
+
+    let isInFavorites = state.favorites.find( dsFav => {
+
+      let isDsId = (dsFav.dsId === dsId)? true : false
+      // console.log("S-users-G-isInFavorites / isDsId : ", isDsId)
+
+      let isItemIdInDsFavorites = false 
+      if ( isDsId ){
+        isItemIdInDsFavorites = dsFav.favorites.includes( itemId )
+      }
+      return isDsId && isItemIdInDsFavorites
+    })
+
+
+    // console.log("S-users-G-isInFavorites / isInFavorites : ", isInFavorites)
+    return isInFavorites
   }
+
 }
 
 export const mutations = {
@@ -28,36 +66,83 @@ export const mutations = {
     state.favorites = favorites
   },
 
-  appendToFavorites (state, itemId) {
-    state.favorites.push( itemId )
+  appendToFavorites (state, { itemDsId, itemId }) {
+
+    console.log("S-users-M-appendToFavorites / itemDsId : ", itemDsId)
+    let dsFavorites = state.favorites.find( dsFavs => { return dsFavs.dsId === itemDsId } )
+
+    // existing ds fav list
+    if ( dsFavorites ) {
+      let dsFavList = dsFavorites.favorites.push( itemId )
+    } 
+
+    // new ds fav list
+    else {
+      let newDsFavs = {
+        dsId : itemDsId,
+        favorites : [ itemId ]
+      }
+      state.favorites.push(newDsFavs)
+
+    }
   },
 
-  deleteFromFavorites (state, itemId) {
-    let newArray = state.favorites.filter( item => {
-      return item != itemId
+  deleteFromFavorites (state, { itemDsId, itemId } ) {
+    
+    console.log("\nS-users-M-switchFavorite / itemDsId : ", itemDsId)
+    console.log("S-users-M-switchFavorite / itemId : ", itemId)
+
+    let dsFavorites = state.favorites.find( dsFavs => {
+      return dsFavs.dsId === itemDsId
     })
-    state.favorites = newArray
+    let newArray = dsFavorites.favorites.filter( item => {
+      return item !== itemId
+    })
+    
+    // temporarily delete whole dsId favs
+    state.favorites = state.favorites.filter( dsFavs => { return dsFavs.dsId !== itemDsId } )
+
+    // re-append dsId favs to list
+    state.favorites.push({ dsId: itemDsId, favorites : newArray })
   }
 
 }
 
 export const actions = {
 
-  switchFavorite({state, commit, getters}, item ){
-    
-    console.log("S-users-A-switchFavorite / item : ", item)
+  switchFavorite({state, commit, getters}, { item, dsId, idField } ){
 
-    let itemId = String(item[ state.itemIdField ])
+    console.log("\nS-users-A-switchFavorite / item : ", item)
+    console.log("S-users-A-switchFavorite / dsId : ", dsId)
+    console.log("S-users-A-switchFavorite / idField : ", idField)
+
+    let itemId = String( item[ idField ] )
     console.log("S-users-A-switchFavorite / itemId : ", itemId)
 
+    let itemPayload = {
+      'itemDsId': dsId,
+      'itemId': itemId,
+    }
+
     // add/delete favorite in/from store
-    let isInFavorites = state.favorites.includes( itemId )
-    if (isInFavorites){
+    // let isInFavorites = state.favorites.find( dsFav => {
+    //   let isDsId = dsFav.dsId === dsId
+    //   let isItemIdInDsFavorites = false 
+    //   if ( isDsId ){
+    //     isItemIdInDsFavorites = dsFav.favorites.includes( itemId )
+    //   }
+    //   return isDsId && isItemIdInDsFavorites
+    // })
+    let isInFavorites = getters.isInFavorites( itemPayload )
+
+    if ( isInFavorites ){
       console.log("S-users-A-switchFavorite / deleteFromFavorites ... ")
-      commit('deleteFromFavorites', itemId)
-    } else {
+      commit('deleteFromFavorites', itemPayload)
+    } 
+    
+    else {
       console.log("S-users-A-switchFavorite / appendToFavorites ... ")
-      commit('appendToFavorites', itemId)
+      commit('appendToFavorites', itemPayload)
     }
 
     // set cookie/favorites
@@ -68,12 +153,6 @@ export const actions = {
     console.log("S-users-A-switchFavorite / favoritesForCookie : ", favoritesForCookie)
     
     Cookie.set('favorites', favoritesForCookie )
-
-    // if ( !cookieFavorites ){
-    //   // Cookie.set('favorites', favoritesForCookie )
-    // } else {
-    //   // Cookie.set('favorites', favoritesForCookie )
-    // }
     
   }
 
