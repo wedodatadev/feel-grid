@@ -1,10 +1,11 @@
-# sheet-loads
+# ACES CARDS 
 
-aka : "givasheet"
 
-> boilerplate for loading gsheets into your vue app... Then 
+## Goal
 
-This boilerplate allows you to :
+Display quotes as cards (aka "ACES" cards) 
+
+- mobile-fisrt
 
 - agnostically load list of Google Sheet data to the store
 - (option) add list of sheets as correspondance tables
@@ -65,11 +66,13 @@ NUXT_GSHEET_IDS_DATA_TYPES=1FcV5ZQAKyx5cZWW7EABTioaRYrs4Jw9ncHjs2ZeVWFA:3:my-typ
 
 - Nuxt
 - Vuetify
+- vue2-interact
 - I18n
 - Axios
 - Material design icons
 - Fontawesome icons
 - Cookie-parser
+- js-cookie
 - dotenv
 
 ----------
@@ -92,3 +95,22 @@ $ npm run generate
 ```
 
 For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
+
+
+--------
+
+## Credits
+
+### client 
+
+- IFS / AFD
+
+### Realisation
+
+- WeDoData
+
+-------
+
+## Author
+
+- Julien Paris

@@ -1,8 +1,8 @@
 <template>
     
-  <v-layout 
+  <!-- <v-layout 
     class="skip-navbar-content"
-    >
+    > -->
 
     <v-flex xs10 offset-xs1>
       
@@ -32,7 +32,10 @@
       <br>
 
       <!-- FAVORITES LIST -->
-      <v-list dense class="transparent">
+      <v-list 
+        dense 
+        class="transparent limited-height"
+        >
 
         <v-list-tile
           v-for="item in favorites"
@@ -61,7 +64,7 @@
 
     </v-flex>
 
-  </v-layout>
+  <!-- </v-layout> -->
 
 </template>
 
@@ -72,7 +75,7 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
 
-  name: "AboutPage",
+  name: "FavoritesPage",
 
   layout : "staticContents",
 
@@ -91,7 +94,7 @@ export default {
   ],
 
   beforeMount : function(){
-    console.log("P-AboutPage / beforeMount....")
+    console.log("P-FavoritesPage / beforeMount....")
   },
 
   data() {
@@ -145,4 +148,8 @@ export default {
   margin-top: 200px;
 }
 
+.limited-height{
+  max-height: 80vw;
+  overflow-y: auto;
+}
 </style>

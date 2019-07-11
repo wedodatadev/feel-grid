@@ -24,9 +24,10 @@
 
   "drawer": {
     "homepage"  : "page d'accueil",
-    "favorites"  : "favoris",
+    "favorites"  : "favoris ACES",
     "about"  : "à propos",
-    "credits"  : "crédits"
+    "credits"  : "crédits",
+    "cards"  : "cartes ACES"
   },
 
   "footer"  : {
@@ -68,7 +69,7 @@
   },
 
   "favorites" : {
-    "title" : "Favoris",
+    "title" : "Favoris ACES",
     "headline" : "headline de favoris",
     "introduction" : "Cette page liste cartes favorites"
   },

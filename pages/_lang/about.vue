@@ -4,9 +4,7 @@
     class="skip-navbar-content"
     > -->
 
-    <v-flex 
-      xs10 offset-xs1
-      >
+    <v-flex xs10 offset-xs1>
       
       <h1 class="text-xs-center">
         {{ $t('about.title') }}
@@ -109,13 +107,13 @@ export default {
 
 <style scoped>
 
-  .skip-navbar-content{
-    margin-top: 200px;
-  }
+.skip-navbar-content{
+  margin-top: 200px;
+}
 
-  .limited-height{
-    max-height: 85vw;
-    overflow-y: auto;
-  }
+.limited-height{
+  max-height: 80vw;
+  overflow-y: auto;
+}
 
 </style>

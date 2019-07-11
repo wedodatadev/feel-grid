@@ -107,7 +107,7 @@
         icon
         flat
         color="primary"
-        @click.stop="drawer = !drawer"
+        @click.stop="closeDrawer()"
         >
         <v-icon>
           fas fa-bars
@@ -124,9 +124,9 @@
     </v-toolbar>
 
 
-    <!-- DRAWER RIGHT -->
+    <!-- DRAWER RIGHT / LEFT -->
     <v-navigation-drawer
-      v-model="showDrawer"
+      v-model="drawer"
       absolute
       floating
       :right="!isDrawerLeft"
@@ -190,23 +190,45 @@
           :key="item.title"
           :to="item.to"
           >
+
+          <!-- 
           <v-list-tile-action
-            v-if="item.icom">
+            v-if="item.icom"
+            >
             <v-icon>
               {{ item.icon }}
             </v-icon>
-          </v-list-tile-action>
+          </v-list-tile-action> 
+          -->
+
+          <v-divider
+            v-if="item.isDivider"
+            >
+          </v-divider>
 
           <!-- LINK TITLE -->
-          <v-list-tile-content>
+          <v-list-tile-content
+            v-else
+            >
+            
             <v-list-tile-title 
-              class="text-uppercase"
-              @click="drawer=false"
+              @click="closeDrawer()"
+              :class="`text-uppercase ${ isCurrentPage(item) ? 'black--text' : 'font-weight-thin' }`"
               >
 
               {{ $t( 'drawer.'+ item.titleCode)  }}
 
+              <!-- append heart icon if favorite -->
+              <v-icon 
+                v-if="item.titleCode === 'favorites'"
+                color="pink"
+                small
+                >
+                favorite
+              </v-icon>
+
             </v-list-tile-title>
+
           </v-list-tile-content>
 
         </v-list-tile>
@@ -236,6 +258,13 @@ export default {
   props: [
   ],
 
+  mounted: function() {
+    console.log("C-navbar / mounted....")
+    if ( this.isDrawerLeft ){
+      this.drawer = true 
+    }
+  },
+
   data: () => ({
 
     drawer: false,
@@ -243,10 +272,17 @@ export default {
     fullDrawerLeftBreakpoints : ['lg', 'xl'],
 
     items: [
+
+      { titleCode: 'cards', icon: 'card', to:"/cards" },
+
+      { titleCode: '', icon: '', to:"/", isDivider: true },
+
       { titleCode: 'homepage', icon: 'home', to:"/" },
       { titleCode: 'favorites', icon: 'favorite', to:"/favorites" },
       { titleCode: 'about', icon: 'question_answer', to:"/about" },
-      { titleCode: 'credits', icon: 'question_answer', to:"/credits" }
+      { titleCode: 'credits', icon: 'question_answer', to:"/credits" },
+      
+
     ],
 
   }),
@@ -284,6 +320,20 @@ export default {
       this.$store.commit('switchLocale', loc)
     },
 
+    isCurrentPage( item ){
+
+      let currentPage = this.$nuxt.$route.path
+      console.log("C-navbar-isCurrentPage / currentPage : ", currentPage)
+      console.log("C-navbar-isCurrentPage / item.to  : ", item.to )
+
+      return currentPage === item.to
+    },
+
+    closeDrawer(){
+      if ( !this.isDrawerLeft ){
+        this.drawer = !this.drawer
+      }
+    }
 
 
   },

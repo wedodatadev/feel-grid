@@ -44,6 +44,7 @@
               v-show="showNext"
               flat
               color="grey"
+              @click="skip"
               >
               {{ $t('cards.next') }}
             </v-btn>
@@ -110,7 +111,7 @@ export default {
         { textCode: "next", icon: "fas fa-arrow-right", to: "/next" },
       ],
 
-      showNextBreakpoints : [ 'md' , 'lg', 'xl'],
+      showNextBreakpoints : [ 'sm', 'md' , 'lg', 'xl'],
 
     }
 

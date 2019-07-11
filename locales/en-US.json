@@ -24,9 +24,10 @@
 
   "drawer": {
     "homepage"  : "homepage",
-    "favorites"  : "favorites",
+    "favorites"  : "favorites ACES",
     "about"  : "about",
-    "credits"  : "credits"
+    "credits"  : "credits",
+    "cards"  : "ACES cards"
   },
 
   "footers" : {
@@ -68,7 +69,7 @@
   },
 
   "favorites" : {
-    "title" : "Favorites",
+    "title" : "Favorite ACES",
     "headline" : "headline of favorites page",
     "introduction" : "This page lists your favorite cards"
   },

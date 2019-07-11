@@ -1,22 +1,25 @@
-<style>
-
-  .skip-navbar-more{
-    margin-top: 75px;
-  }
-
-</style>
-
-
 <template>
 
-  <!-- :cards="visibleCards" -->
-  <GameCardsStack
-    :cards="allCards"
-    @cardAccepted="handleCardAccepted"
-    @cardRejected="handleCardRejected"
-    @cardSkipped="handleCardSkipped"
-    @hideCard="removeCardFromDeck"
-  />
+  <v-layout 
+    fill-height
+    row wrap 
+    >
+
+    <v-flex 
+      xs10 offset-xs1
+      sm8 offset-md2
+      md6 offset-md3
+      >
+
+      <SwipeableCards
+        :cardsArray="cardsArray"
+        :dsId="dsId"
+        >
+      </SwipeableCards>
+
+    </v-flex>
+
+  </v-layout>
 
 </template>
 
@@ -25,16 +28,18 @@
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 
-import GameCardsStack from '~/components/UX-components/GameCardsStack'
+import ArrayShuffler from '~/utils/shuffler.js'
+
+import SwipeableCards from '~/components/UX-components/SwipeableCards'
 
 export default {
 
-  name: "CardPage",
+  name: "CardsPage",
 
   layout : "cardLayout",
 
   components: {
-    GameCardsStack
+    SwipeableCards,
   },
 
   middleware : [
@@ -44,21 +49,26 @@ export default {
   ],
 
   beforeMount : function(){
-    console.log("P-CardPage / beforeMount....")
-    let allCards = this.getConcatenatedDatasets('datasets')
+
+    console.log("P-CardsPage / beforeMount....")
+    // let cardsArray = this.getConcatenatedDatasets('datasets')
+    let cardsDataset = this.getOneDataset('datasets', this.dsId)
+    let cardsArray = cardsDataset.dataRows
 
     // randomize stack
-
+    let randomizedCards = ArrayShuffler( cardsArray )
 
     // set data stack locally
-    this.allCards = allCards
-
+    // this.cardsArray = cardsArray
+    this.cardsArray = randomizedCards
   },
 
   data() {
     return {
-      // visibleCards: ["Test", "Vue.js", "Webpack"],
-      allCards: undefined
+
+      cardsArray: undefined,
+      dsId: 'contents'
+
     }
   },
 
@@ -76,13 +86,13 @@ export default {
       correspondanceDicts : state => state.data.correspondanceDicts,
       dataTypes : state => state.data.dataTypes,
 
-
-
     }),
 
     ...mapGetters({
 
-      getConcatenatedDatasets : 'data/getConcatenatedDatasets'
+      getConcatenatedDatasets : 'data/getConcatenatedDatasets',
+      getOneDataset : 'data/getOneDataset'
+
     }),
   },
 
@@ -106,3 +116,11 @@ export default {
 
 }
 </script>
+
+<style scoped>
+
+  .skip-navbar-more{
+    margin-top: 75px;
+  }
+
+</style>
