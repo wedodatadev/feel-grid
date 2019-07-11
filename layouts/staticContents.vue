@@ -32,7 +32,7 @@ import FooterAbout from '~/components/NAV-components/footer-about'
 export default {
 
   name: "staticContents",
-
+  
   components: {
     Navbar,
     FooterAbout
@@ -69,3 +69,7 @@ export default {
 
 }
 </script>
+
+<style scoped>
+
+</style>

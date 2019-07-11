@@ -85,6 +85,7 @@ export default {
   name: "FavoritesPage",
 
   layout : "staticContents",
+  transition: 'static',
 
   // TO DO 
   pageTransition: {

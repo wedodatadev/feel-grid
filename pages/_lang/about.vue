@@ -55,6 +55,8 @@ export default {
   name: "AboutPage",
 
   layout : "staticContents",
+  
+  transition: 'static',
 
   // TO DO 
   pageTransition: {

@@ -58,6 +58,7 @@ export default {
   name: "CreditsPage",
 
   layout : "staticContents",
+  transition: 'static',
 
   components: {
   },

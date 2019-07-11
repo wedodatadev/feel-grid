@@ -86,6 +86,7 @@ import BasicTable from '~/components/DATA-components/basic-table'
 export default {
 
   name: "MainIndex",
+  transition: 'static',
 
   components: {
     BasicTable,
