@@ -47,8 +47,8 @@
             {{ cardData && getContentByLocale('mainContent') }}
             <br>
 
-            <br>
-            findMoreActive : {{ findMoreActive }}
+            <!-- <br>
+            findMoreActive : {{ findMoreActive }} -->
             <!-- <br>
             idField : {{ idField }} -->
             <!-- 
@@ -138,7 +138,7 @@
       <!-- FAVORITES FOOTER -->
       <v-footer
         color="transparent" 
-        class="px-2 pb-2"
+        class="px-4 pb-4"
         fixed
         :style="`height:${ cardHeights['footer'] }`"
         ref="cardFooter"
@@ -150,10 +150,13 @@
           <v-btn 
             icon
             flat
-            :color="isFavorite ? 'pink' : 'white' "
+            outline
+            dark
             @click="switchFavorite()"
             >
-            <v-icon>
+            <v-icon
+              :color="isFavorite ? 'pink' : 'white' "
+              >
               favorite
             </v-icon>
           </v-btn>

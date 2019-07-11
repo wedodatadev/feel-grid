@@ -25,9 +25,8 @@
               :key="btn.textCode"
               :to="btn.to"
               icon
-              outline
-              color="primary"
-              class="ma-1"
+              class="primary ma-1"
+              flat
               >
               <v-icon>
                 {{ btn.icon }}
@@ -53,9 +52,8 @@
               v-for="btn in footerBtnsRight"
               :key="btn.textCode"
               icon
-              outline
-              color="primary"
-              class="ma-1"
+              class="primary ma-1"
+              flat
               @click="skip"
               >
               <v-icon>
