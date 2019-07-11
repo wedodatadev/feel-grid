@@ -27,80 +27,116 @@
       <!-- </v-layout>  -->
 
 
-      <!-- <br> -->
 
       <!-- TEXT CONTENTS -->
-
+      <transition name="slide">
       <v-layout 
         ref="cardContent"
+        v-show="!findMoreActive"
         align-center
         justify-center
         :style="`height:${ cardHeights['content'] }`"
+        :class="`${ findMoreActive ? '' : '' }`"
         >
 
-        <v-card-text class="headline font-weight-bold text-xs-center">
+          <v-card-text 
+            v-show="!findMoreActive"
+            class="headline font-weight-bold text-xs-center"
+            >
 
-          {{ cardData && getContentByLocale('mainContent') }}
-          <br>
+            {{ cardData && getContentByLocale('mainContent') }}
+            <br>
 
-          <!-- <br>
-          idField : {{ idField }} -->
-          <!-- 
-          cardWidth : {{ cardWidth }}
-          <br>
-          breakPoint : {{ breakPoint }} -->
-          <!-- <br>
-          favs : <br><code>{{ favs }}</code> -->
+            <br>
+            findMoreActive : {{ findMoreActive }}
+            <!-- <br>
+            idField : {{ idField }} -->
+            <!-- 
+            cardWidth : {{ cardWidth }}
+            <br>
+            breakPoint : {{ breakPoint }} -->
+            <!-- <br>
+            favs : <br><code>{{ favs }}</code> -->
 
-          <!-- <br>
-          favorites : <br>
-            <code>
-              {{ favorites }}
-            </code> -->
+            <!-- <br>
+            favorites : <br>
+              <code>
+                {{ favorites }}
+              </code> -->
 
-        </v-card-text>
+          </v-card-text>
 
       </v-layout> 
+      </transition>
 
 
-      <!-- </v-layout>  -->
 
       <!-- RESSOURCES CONTENTS -->
       <v-layout 
         ref="cardMore"
         justify-center
         :style="`height:${ cardHeights['more'] }`"
+        :class="`${ findMoreActive ? '' : '' }`"
         row wrap
         >
 
-        <!-- <v-card-actions> -->
+        <!-- FIND MORE TITLE -->
+        <v-flex 
+          xs12 
+          class="text-uppercase text-xs-center"
+          >
+          {{ $t('cards.findMore') }}
+        </v-flex>
 
-          <v-flex 
-            xs12 
-            class="text-uppercase text-xs-center"
+        <!-- BTN OPEN/CLOSE -->
+        <v-flex xs12
+          :class="`text-xs-center`"
+          >
+          <v-btn 
+            flat
+            icon
+            @click=" findMoreActive = !findMoreActive "
+            :class="`${ findMoreActive? 'close-to-plus-out' : 'close-to-plus-in roll-in' }`"
             >
-            {{ $t('cards.findMore') }}
-          </v-flex>
-
-          <v-flex xs12
-            class="text-xs-center"
-            >
-            <v-btn 
-              flat
-              icon
+            <v-icon
               >
-              <v-icon>
-                fas fa-plus
-              </v-icon>
-            </v-btn>
-          </v-flex>
-        <!-- </v-card-actions> -->
+              close
+            </v-icon>
+          </v-btn>
+        </v-flex>
         
+
+        <!-- CONTENT RESOURCES -->
+        <transition name="slide">
+        <v-flex xs12
+          :style="`height:${ cardHeights['content'] }`"
+          v-show="findMoreActive"
+          >
+          <v-card-text
+            class=""
+            >
+            <v-divider></v-divider>
+
+            <div class="mt-4 limited-height">
+
+              test find more...
+              
+              Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+            
+            </div>
+
+          </v-card-text>
+
+        </v-flex>
+        </transition>
+
+
+
       </v-layout> 
 
 
       <!-- FAVORITES FOOTER -->
-      <v-footer 
+      <v-footer
         color="transparent" 
         class="px-2 pb-2"
         fixed
@@ -175,6 +211,8 @@ export default {
       
       contentHeight: 0,
       idField: undefined,
+
+      findMoreActive: false,
 
     }
   },
@@ -292,5 +330,63 @@ export default {
 .full-height{
   height: 100%;
 }
+
+.limited-height{
+  max-height: 60vw;
+  overflow-y: auto;
+}
+
+.close-to-plus-in{
+  transform: rotate(45deg)
+}
+
+@keyframes rollin {
+  0% { transform: rotate(0); }
+  100% { transform: rotate(45deg); }
+}
+@keyframes rollout {
+  0% { transform: rotate(0); }
+  100% { transform: rotate(-45deg); }
+}
+.roll-in { 
+  animation: rollin .5s cubic-bezier(0.55, 0.085, 0.68, 0.53) ; 
+}
+.roll-out { 
+  animation: rollout .5s cubic-bezier(0.55, 0.085, 0.68, 0.53) ; 
+}
+
+
+.slide-enter-active {
+   -moz-transition-duration: 0.3s;
+   -webkit-transition-duration: 0.3s;
+   -o-transition-duration: 0.3s;
+   transition-duration: 0.3s;
+   -moz-transition-timing-function: ease-in;
+   -webkit-transition-timing-function: ease-in;
+   -o-transition-timing-function: ease-in;
+   transition-timing-function: ease-in;
+}
+
+.slide-leave-active {
+   -moz-transition-duration: 0.3s;
+   -webkit-transition-duration: 0.3s;
+   -o-transition-duration: 0.3s;
+   transition-duration: 0.3s;
+   -moz-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+   -webkit-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+   -o-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+   transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+
+.slide-enter-to, .slide-leave {
+   max-height: 100px;
+   overflow: hidden;
+}
+
+.slide-enter, .slide-leave-to {
+   overflow: hidden;
+   max-height: 0;
+}
+
 
 </style>
