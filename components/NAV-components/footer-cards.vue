@@ -54,7 +54,7 @@
               icon
               class="primary ma-1"
               flat
-              @click="skip"
+              @click.stop="skip"
               >
               <v-icon>
                 {{ btn.icon }}
@@ -148,6 +148,7 @@ export default {
     },
 
     skip() {
+      console.log("C-FooterCards-skip ..." )
       InteractEventBus.$emit(EVENTS.SKIP)
     },
 

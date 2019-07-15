@@ -335,7 +335,7 @@ export default {
 }
 
 .limited-height{
-  max-height: 60vw;
+  max-height: 55vw;
   overflow-y: auto;
 }
 

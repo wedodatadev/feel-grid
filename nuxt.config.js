@@ -4,7 +4,7 @@ import pkg from './package'
 
 require('dotenv').config()
 
-console.log('>>> nuxt.config.js / process.env.NUXT_GSHEET_IDS : ', process.env.NUXT_GSHEET_IDS)
+console.log('>>> nuxt.config.js (start) / process.env.NUXT_GSHEET_IDS : ', process.env.NUXT_GSHEET_IDS)
 
 const trueStrings = ['yes', 'Yes', 'YES', 'y', 'Y', 'true', 'True', 'TRUE', 't', 'T']
 const falseStrings = ['no', 'No', 'NO', 'n', 'N', 'false', 'False', 'FALSE', 'f', 'F']
@@ -174,6 +174,7 @@ export default {
   loading: { 
     color: '#fff' 
   },
+  // loading: '~/components/UX-components/mainLoading.vue',
 
   /*
   ** Global CSS

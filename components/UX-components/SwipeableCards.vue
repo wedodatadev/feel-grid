@@ -187,10 +187,10 @@ export default {
       breakPointCode : undefined,
       windowWidth : 0,
   
-      cardHeight: "70vh",
+      cardHeight: "80vh",
       cardHeights: {
         title: "10vh",
-        content: "46vh",
+        content: "56vh",
         more: "7vh",
         footer: "7vh"
       },
@@ -235,21 +235,22 @@ export default {
 
     // compute card width
     cardWidth ( widthPercent ) {
-      let maxWidth = 80
+      let maxWidth = 100
       let zWidth = maxWidth * widthPercent
       let step = 10
       switch (this.$vuetify.breakpoint.name) {
         case 'xs': return zWidth + 'vw'
-        case 'sm': return ( zWidth - (step * 2) ) + 'vw'
-        case 'md': return ( zWidth - (step * 3) ) + 'vw'
-        case 'lg': return ( zWidth - (step * 4) ) + 'vw'
-        case 'xl': return ( zWidth - (step * 5) ) + 'vw'
+        case 'sm': return ( zWidth - (step * 4) ) + 'vw'
+        case 'md': return ( zWidth - (step * 5) ) + 'vw'
+        case 'lg': return ( zWidth - (step * 6) ) + 'vw'
+        case 'xl': return ( zWidth - (step * 7) ) + 'vw'
       }
     },
 
 
     // 
     skip() {
+      console.log("C-SwipeableCards-skip ..." )
       InteractEventBus.$emit(EVENTS.SKIP)
     },
     match() {
@@ -261,7 +262,7 @@ export default {
 
     emitAndNext(event) {
 
-      console.log("C-CardData-emitAndNext / this.index :", this.index )
+      console.log("C-SwipeableCards-emitAndNext / this.index (A) :", this.index )
 
       // emit event to parent
       this.$emit(event, this.index)
@@ -275,6 +276,8 @@ export default {
       setTimeout(() => {
 
         this.index += 1
+        console.log("C-SwipeableCards-emitAndNext / this.index (B) :", this.index )
+
         // reset deck if no more cards
         if (this.index >= this.cardsLength){
           this.index = 0
@@ -481,7 +484,7 @@ export default {
     // background: rgba(white, .9);
     // transform: translate(-48%, -48%);
     // transform: scale(1, .8);
-    transform: translate(-50%, -55%);
+    transform: translate(-50%, -57%);
     // box-shadow: 0 6px 6px -3px rgba(0,0,0,.2), 0 10px 14px 1px rgba(0,0,0,.14), 0 4px 18px 3px rgba(0,0,0,.12);
   }
   &--three {
@@ -490,7 +493,7 @@ export default {
     // background: rgba(white, .8);
     // transform: translate(-46%, -46%);
     // transform: scale(1, .6);
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -54%);
     // box-shadow: 0 10px 13px -6px rgba(0,0,0,.2), 0 20px 31px 3px rgba(0,0,0,.14), 0 8px 38px 7px rgba(0,0,0,.12);
   }
 

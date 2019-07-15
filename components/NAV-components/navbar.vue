@@ -1,6 +1,6 @@
 <template>
 
-  <div>
+  <div class="navbar-above-all">
 
     <v-toolbar 
       color="transparent" 
@@ -33,7 +33,7 @@
         {{ mainLogoUrl }}
       </v-toolbar-title> -->
 
-      <v-spacer></v-spacer>
+      <!-- <v-spacer></v-spacer> -->
 
       <!-- BTN SEARCH -->
       <!-- <v-btn icon>
@@ -106,6 +106,7 @@
         v-show="!isDrawerLeft"
         icon
         flat
+        :class="`white ${ (this.$vuetify.breakpoint.name === 'xs' ) ? 'card-margin-in-view-percents' : 'card-margin-in-pixels' }`"
         color="primary"
         @click.stop="closeDrawer()"
         >
@@ -269,7 +270,7 @@ export default {
 
     drawer: false,
 
-    fullDrawerLeftBreakpoints : ['lg', 'xl'],
+    fullDrawerLeftBreakpoints : [ 'lg', 'xl' ],
 
     items: [
 
@@ -346,3 +347,22 @@ export default {
 
 }
 </script>
+
+
+<style>
+
+.navbar-above-all{
+  z-index: 25;
+}
+
+.card-margin-in-view-percents{
+  margin-top: 4vh !important;
+  margin-right: 2vw !important;
+}
+.card-margin-in-pixels{
+  margin-top: 25px !important;
+  margin-right: 5px !important;
+}
+
+
+</style>
