@@ -199,17 +199,17 @@ export default {
       isVisible: true,
       index: 0,
 
-      interactEventBus: {
-        draggedRight: EVENTS.MATCH,
-        draggedLeft: EVENTS.SKIP,
-        draggedUp: EVENTS.SKIP
-      },      
-      
       // interactEventBus: {
-        // draggedRight: INTERACT_EVENTS.INTERACT_DRAGGED_RIGHT,
-        // draggedLeft: INTERACT_EVENTS.INTERACT_DRAGGED_LEFT,
-        // draggedUp: INTERACT_EVENTS.INTERACT_DRAGGED_UP
+      //   draggedRight: EVENTS.SKIP,
+      //   draggedLeft: EVENTS.SKIP,
+      //   draggedUp: EVENTS.SKIP
       // },      
+      
+      interactEventBus: {
+        draggedRight: INTERACT_EVENTS.INTERACT_DRAGGED_RIGHT,
+        draggedLeft: INTERACT_EVENTS.INTERACT_DRAGGED_LEFT,
+        draggedUp: INTERACT_EVENTS.INTERACT_DRAGGED_UP
+      },      
 
       cards: [],
       cardsLength: 0,
@@ -255,15 +255,17 @@ export default {
     // WARNING ! careful to study thius before
     // cf : https://codesandbox.io/s/5wo373kqwk
     skip() {
-      console.log("C-SwipeableCards-skip ..." )
-      // InteractEventBus.$emit(EVENTS.SKIP)
-      this.emitAndNext('skip')
+      console.log("C-SwipeableCards / skip ..." )
+      InteractEventBus.$emit(EVENTS.SKIP)
+      // this.emitAndNext('skip')
     },
     match() {
+      console.log("C-SwipeableCards / match ..." )
       // InteractEventBus.$emit(EVENTS.MATCH)
       this.emitAndNext('match')
     },
     reject() {
+      console.log("C-SwipeableCards / reject ..." )
       // InteractEventBus.$emit(EVENTS.REJECT)
       this.emitAndNext('reject')
     },
@@ -274,15 +276,17 @@ export default {
       console.log("C-SwipeableCards-emitAndNext / this.index (A) :", this.index )
 
       // emit event to parent
-      // this.$emit(event, this.index)
+      this.$emit(event, this.index)
 
       // make card disappear
       setTimeout(() => {
+        console.log("C-SwipeableCards-emitAndNext / setTimeout disappear..." )
         this.isVisible = false
-      }, 200)
+      }, 300)
 
       // show next card by adding +1 to index
       setTimeout(() => {
+        console.log("C-SwipeableCards-emitAndNext / setTimeout reappear..." )
 
         this.index += 1
         console.log("C-SwipeableCards-emitAndNext / this.index (B) :", this.index )

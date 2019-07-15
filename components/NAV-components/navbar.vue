@@ -47,10 +47,10 @@
 
 
       <!-- LOCALES -->
-      <v-menu 
+      <v-menu
         v-if="isDrawerLeft"
         offset-y 
-        open-on-hover 
+        open-on-click 
         nudge-bottom 
         nudge-left
         >
@@ -61,13 +61,11 @@
           <v-toolbar-title 
             v-on="on"
             >
-            
             <span
               class="text-uppercase grey--text subheading"
               >
               {{ locale }}
             </span>
-
             <v-icon
               color="grey"
               >
@@ -77,22 +75,19 @@
         </template>
 
         <v-list>
-
           <v-list-tile
             v-for="loc in locales"
             :key="loc.code"
             @click="changeLocale(loc)"
             >
-            
             <v-list-tile-title
               :class="`${ loc.code !== locale ? 'font-weight-thin' : ''}`"
               >
               {{ loc.name }}
             </v-list-tile-title>
-
           </v-list-tile>
-
         </v-list>
+
       </v-menu>
 
 

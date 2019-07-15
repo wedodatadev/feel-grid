@@ -4,7 +4,7 @@
 
   <v-footer 
     color="transparent"
-    class="ma-4 pb-2 centered"
+    :class="`${ (showNext)? 'ma-4' : 'mx-0 mb-4' } pb-2 centered`"
     >
 
     <!-- <v-layout
@@ -52,9 +52,27 @@
             </v-btn> -->
 
             <v-btn 
+              v-if="!showNext"
               v-for="btn in footerBtnsRight"
               :key="btn.textCode"
-              class="transparent mr-0 pa-2 text-xs-right"
+              class="primary mr-0 text-xs-right"
+              flat
+              icon
+              @click.prevent="skip"
+              >
+              <v-icon
+                color="white"
+                >
+                {{ btn.icon }}
+              </v-icon>
+            </v-btn>
+            
+            <v-btn 
+              v-else
+              v-for="btn in footerBtnsRight"
+              :key="btn.textCode"
+              class="transparent mr-0 py-4 pr-2 pl-3 text-xs-right"
+              round
               flat
               @click.prevent="skip"
               >
@@ -66,12 +84,6 @@
                 {{ $t( btn.textCode ) }}
               </span>
 
-              <!-- <v-btn
-                flat
-                icon
-                class="primary"
-                dark
-                > -->
               <v-avatar 
                 color="primary"
                 size="36px"
@@ -82,10 +94,10 @@
                   {{ btn.icon }}
                 </v-icon>
               </v-avatar>
-              <!-- </v-btn> -->
-
 
             </v-btn>
+
+
           </v-layout>
 
         </v-layout>
@@ -136,6 +148,12 @@ export default {
       ],
 
       showNextBreakpoints : [ 'sm', 'md' , 'lg', 'xl'],
+      
+      interactEventBus: {
+        draggedRight: EVENTS.SKIP,
+        draggedLeft: EVENTS.SKIP,
+        draggedUp: EVENTS.SKIP
+      },   
 
     }
 
@@ -175,7 +193,9 @@ export default {
 
     skip() {
       console.log("C-FooterCards-skip ..." )
-      InteractEventBus.$emit(EVENTS.SKIP)
+      console.log("C-FooterCards-skip ... InteractEventBus : \n", InteractEventBus )
+      // InteractEventBus.$emit(EVENTS.SKIP)
+      InteractEventBus.$emit(INTERACT_EVENTS.INTERACT_DRAGGED_RIGHT);
     },
 
   },

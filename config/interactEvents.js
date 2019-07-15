@@ -3,7 +3,8 @@ export const EVENTS = Object.freeze({
   MATCH: 'match',
   REJECT: 'reject',
   
-  SKIP: 'emitAndNext',
+  // SKIP: 'emitAndNext',
+  SKIP: 'skip',
   ADD_FAVORITE: 'addAsFavorite',
   
 })
