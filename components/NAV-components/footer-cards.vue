@@ -39,26 +39,52 @@
           <!-- RIGHT SIDE ICONS  -->
           <v-layout justify-end >
 
-            <v-btn
-              v-show="showNext"
+            <!-- <v-btn
               flat
               color="grey"
-              @click="skip"
+              @click.prevent="skip"
               >
-              {{ $t('cards.next') }}
-            </v-btn>
+              <span
+                v-show="showNext"
+                >
+                {{ $t('cards.next') }}
+              </span>
+            </v-btn> -->
 
             <v-btn 
               v-for="btn in footerBtnsRight"
               :key="btn.textCode"
-              icon
-              class="primary ma-1"
+              class="transparent mr-0 pa-2 text-xs-right"
               flat
-              @click.stop="skip"
+              @click.prevent="skip"
               >
-              <v-icon>
-                {{ btn.icon }}
-              </v-icon>
+
+              <span
+                v-show="showNext"
+                class="grey--text mr-2"
+                >
+                {{ $t( btn.textCode ) }}
+              </span>
+
+              <!-- <v-btn
+                flat
+                icon
+                class="primary"
+                dark
+                > -->
+              <v-avatar 
+                color="primary"
+                size="36px"
+                >
+                <v-icon
+                  color="white"
+                  >
+                  {{ btn.icon }}
+                </v-icon>
+              </v-avatar>
+              <!-- </v-btn> -->
+
+
             </v-btn>
           </v-layout>
 
@@ -106,7 +132,7 @@ export default {
       ],
 
       footerBtnsRight : [
-        { textCode: "next", icon: "fas fa-arrow-right", to: "/next" },
+        { textCode: "cards.next", icon: "fas fa-arrow-right", to: "/next" },
       ],
 
       showNextBreakpoints : [ 'sm', 'md' , 'lg', 'xl'],
