@@ -1,5 +1,7 @@
 <template>
-  <v-app>
+  <v-app
+    >
+    <!-- class="splashscreen-gradient" -->
 
     <!-- NAVBAR & DRAWERS-->
     <Navbar>

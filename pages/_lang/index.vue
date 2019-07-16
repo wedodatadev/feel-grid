@@ -34,7 +34,7 @@
             :key="index"
             :class="`text-uppercase ${ (loc.code === locale)? '' : 'font-weight-thin' }`"
             round 
-            color="primary" 
+            color="white" 
             dark
             outline
             @click="changeLocale(loc, false)"
@@ -55,8 +55,8 @@
 
           <v-btn 
             round
-            outline
-            color="primary"
+            class="btn-gradient white--text"
+            color="white"
             :to="(isFirstVisit)? '/about' : '/cards' "
             >
             {{ $t('intro.getAnAce')}}

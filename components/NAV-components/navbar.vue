@@ -48,7 +48,7 @@
 
       <!-- LOCALES -->
       <v-menu
-        v-if="isDrawerLeft"
+        v-if="isDrawerLeft && hasManyLocales"
         offset-y 
         open-on-click 
         nudge-bottom 
@@ -90,13 +90,21 @@
 
       </v-menu>
 
-
-      <!-- <v-toolbar-side-icon
-        v-show="!isDrawerLeft"
-        color="primary"
-        @click.stop="drawer = !drawer"
+      <v-btn 
+        v-if="isDrawerLeft && !hasManyLocales"
+        v-for="loc in locales"
+        :key="loc.code"
+        flat
+        small
+        @click="changeLocale(loc)"
+        :class="`text-uppercase px-0 mx-0 grey--text subheading ${ loc.code !== locale ? 'font-weight-thin' : ''}`"
         >
-      </v-toolbar-side-icon> -->
+        <span
+          >
+          {{ loc.code }}
+        </span>
+      </v-btn>
+
       <v-btn
         v-show="!isDrawerLeft"
         icon
@@ -111,10 +119,6 @@
       </v-btn>
 
 
-      <!-- BTN MORE VERT -->
-      <!-- <v-btn icon>
-        <v-icon>more_vert</v-icon>
-      </v-btn> -->
 
 
     </v-toolbar>
@@ -132,7 +136,11 @@
       >
 
       <!-- temporary -->
-      <v-list class="pt-0" dense>
+      <v-list 
+        class="pt-0" 
+        dense
+        :dark="isCardPage"
+        >
 
         <!-- CLOSE DRAWER -->
         <div
@@ -177,7 +185,6 @@
           >
         </v-divider>
 
-
         <br>
 
         <!-- LINKS -->
@@ -186,16 +193,6 @@
           :key="item.title"
           :to="item.to"
           >
-
-          <!-- 
-          <v-list-tile-action
-            v-if="item.icom"
-            >
-            <v-icon>
-              {{ item.icon }}
-            </v-icon>
-          </v-list-tile-action> 
-          -->
 
           <v-divider
             v-if="item.isDivider"
@@ -209,7 +206,7 @@
             
             <v-list-tile-title 
               @click="closeDrawer()"
-              :class="`text-uppercase ${ isCurrentPage(item) ? 'black--text' : 'font-weight-thin' }`"
+              :class="`text-uppercase ${ isCurrentPage(item) ? '' : 'font-weight-thin' }`"
               >
 
               {{ $t( 'drawer.'+ item.titleCode)  }}
@@ -267,14 +264,16 @@ export default {
 
     fullDrawerLeftBreakpoints : [ 'lg', 'xl' ],
 
+    maxLocalesLength : 3,
+
     items: [
 
+      { titleCode: 'homepage', icon: 'home', to:"/" },
       { titleCode: 'cards', icon: 'card', to:"/cards" },
+      { titleCode: 'favorites', icon: 'favorite', to:"/favorites" },
 
       { titleCode: '', icon: '', to:"/", isDivider: true },
 
-      { titleCode: 'homepage', icon: 'home', to:"/" },
-      { titleCode: 'favorites', icon: 'favorite', to:"/favorites" },
       { titleCode: 'about', icon: 'question_answer', to:"/about" },
       { titleCode: 'credits', icon: 'question_answer', to:"/credits" },
       
@@ -306,6 +305,17 @@ export default {
     showDrawer(){
       return this.isDrawerLeft || this.drawer ? true : false 
     },
+
+    hasManyLocales(){
+      return this.locales.length > this.maxLocalesLength
+    },
+
+    isCardPage(){
+      console.log("C-navbar-isCardPage/  this.$nuxt.$route", this.$nuxt.$route)
+      let isCardPage = this.$nuxt.$route.fullPath.startsWith('/cards')
+      return isCardPage 
+    }
+
 
   },
 

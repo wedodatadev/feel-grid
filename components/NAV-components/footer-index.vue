@@ -15,7 +15,7 @@
         v-for="(btn, indexBtn) in footerBtns"
         round
         outline
-        color="primary"
+        color="white"
         :key="indexBtn"
         :to="btn.to"
         >

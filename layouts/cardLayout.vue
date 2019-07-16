@@ -1,20 +1,25 @@
 <template>
-  <v-app>
+  <v-app
+    class="card-background-color"
+    >
 
     <!-- NAVABR -->
     <Navbar>
     </Navbar>
 
     <!-- CONTENTS -->
-    <v-content>
+    <v-content
+      >
       <v-container>
         <nuxt />
       </v-container>
     </v-content>
 
     <!-- FOOTER CARDS -->
-    <FooterCards>
+    <FooterCards
+      >
     </FooterCards>
+
 
   </v-app>
 </template>

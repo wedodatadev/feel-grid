@@ -32,19 +32,20 @@
       <br>
 
       <!-- FAVORITES LIST -->
-      <v-list 
-        dense 
-        class="transparent limited-height"
+      <div
+        v-for="dsFavorites in favorites"
+        :key="dsFavorites.dsId"
         >
 
-        <div
-          v-for="dsFavorites in favorites"
-          :key="dsFavorites.dsId"
+
+        <v-list 
+          v-for="item in dsFavorites.favorites"
+          :key="item[ getItemIdField( dsFavorites.dsId ) ]"
+          three-lines
+          class="transparent limited-height py-0"
           >
 
           <v-list-tile
-            v-for="item in dsFavorites.favorites"
-            :key="item[ getItemIdField( dsFavorites.dsId ) ]"
             :to=" locale + '/cards/' + dsFavorites.dsId + '/' + item "
             >
 
@@ -58,17 +59,28 @@
             <!-- favorite title -->
             <v-list-tile-content>
               <v-list-tile-title>
-
-                {{ getFavoriteItem( dsFavorites.dsId, item, 'favText' ) }}
+                
+                <span 
+                  class=""
+                  >
+                  "{{ getFavoriteItem( dsFavorites.dsId, item, 'favText' ) }}"
+                </span>
+                <v-icon
+                  color="grey"
+                  >
+                  chevron_right
+                </v-icon>
 
               </v-list-tile-title>
             </v-list-tile-content>
           
           </v-list-tile>
 
-        </div>
-
-      </v-list>
+          <v-divider inset></v-divider>
+  
+        </v-list>
+  
+      </div>
 
 
     </v-flex>

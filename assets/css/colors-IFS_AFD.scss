@@ -1,0 +1,32 @@
+// Gradient Splashscreen :
+$color-splashscreen-start: #2e2265;
+$color-splashscreen-end: #c4281a;
+
+.splashscreen-gradient {
+  background-image: linear-gradient($color-splashscreen-start , $color-splashscreen-end) !important;
+}
+// Primary
+$main-background: #2e2265;
+.card-background-color{
+  background-color : $main-background !important;
+}
+
+// Secondary
+$main-secondary : #de4a5b;
+
+// Gradient btn :
+$color-btn-start: #de4a5b;
+$color-btn-end: #863561;
+.btn-gradient {
+  background-image: linear-gradient(to right, $color-btn-start , $color-btn-end) !important;
+}
+
+// cards colors :
+$card-orange : #e76727;
+$card-pink : #da9aaa;
+$card-turquoise : #4fc3b3;
+$card-beige : #f3c45e;
+$card-red : #de4a5b;
+$card-yellow : #f1a21e;
+$card-green : #3dad4b;
+$card-blue : #5599d6;

@@ -77,4 +77,3 @@ export const DataIdFields = Object.freeze([
     idField : "card-id"
   },
 ])
-

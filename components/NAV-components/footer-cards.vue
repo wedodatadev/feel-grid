@@ -67,6 +67,7 @@
               </v-icon>
             </v-btn>
             
+
             <v-btn 
               v-else
               v-for="btn in footerBtnsRight"
