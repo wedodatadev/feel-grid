@@ -25,7 +25,7 @@
               :key="btn.textCode"
               :to="btn.to"
               icon
-              class="primary ma-1"
+              class="primary "
               flat
               >
               <v-icon>
@@ -55,7 +55,7 @@
               v-if="!showNext"
               v-for="btn in footerBtnsRight"
               :key="btn.textCode"
-              class="primary mr-0 text-xs-right"
+              class="primary mr-0 text-xs-right "
               flat
               icon
               @click.prevent="skip"
@@ -71,7 +71,7 @@
               v-else
               v-for="btn in footerBtnsRight"
               :key="btn.textCode"
-              class="transparent mr-0 py-4 pr-2 pl-3 text-xs-right"
+              class="transparent mr-0 pr-2 pl-3 text-xs-right "
               round
               flat
               @click.prevent="skip"
@@ -86,6 +86,7 @@
 
               <v-avatar 
                 color="primary"
+                :style="'transform: translateX(8px)'"
                 size="36px"
                 >
                 <v-icon

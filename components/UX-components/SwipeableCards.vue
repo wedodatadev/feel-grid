@@ -191,9 +191,9 @@ export default {
       cardHeights: {
         title: "10vh",
         content: "56vh",
-        more: "7vh",
+        more: "10vh",
         resources: "42vh",
-        footer: "7vh"
+        footer: "4vh"
       },
 
       isVisible: true,

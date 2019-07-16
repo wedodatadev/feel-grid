@@ -75,7 +75,7 @@
       <v-layout 
         ref="cardMore"
         justify-center
-        :style="`height:${ cardHeights['more'] }`"
+        :style="`z-index: 5; height:${ cardHeights['more'] }`"
         :class="`${ findMoreActive ? '' : '' }`"
         row wrap
         >
@@ -106,6 +106,34 @@
         </v-flex>
         
 
+      <!-- FAVORITES FOOTER -->
+      <v-footer
+        color="transparent" 
+        class="px-2 pb-4"
+        fixed
+        :style="`z-index: 4; height:${ cardHeights['footer'] }`"
+        ref="cardFooter"
+        >
+        <v-layout
+          align-center
+          justify-end
+          >
+          <v-btn 
+            icon
+            flat
+            outline
+            dark
+            @click="switchFavorite()"
+            >
+            <v-icon
+              :color="isFavorite ? 'pink' : 'white' "
+              >
+              favorite
+            </v-icon>
+          </v-btn>
+        </v-layout>
+      </v-footer>
+      
         <!-- CONTENT RESOURCES -->
         <transition name="slide">
         <v-flex xs12
@@ -139,33 +167,7 @@
       </v-layout> 
 
 
-      <!-- FAVORITES FOOTER -->
-      <v-footer
-        color="transparent" 
-        class="px-4 pb-4"
-        fixed
-        :style="`height:${ cardHeights['footer'] }`"
-        ref="cardFooter"
-        >
-        <v-layout
-          align-center
-          justify-end
-          >
-          <v-btn 
-            icon
-            flat
-            outline
-            dark
-            @click="switchFavorite()"
-            >
-            <v-icon
-              :color="isFavorite ? 'pink' : 'white' "
-              >
-              favorite
-            </v-icon>
-          </v-btn>
-        </v-layout>
-      </v-footer>
+
 
 
     </div>
