@@ -44,8 +44,8 @@
 
           <v-list-tile
             v-for="item in dsFavorites.favorites"
-            :key="item[ itemIdField ]"
-            :to="'/cards/' + dsFavorites.dsId + '/' + item "
+            :key="item[ getItemIdField( dsFavorites.dsId ) ]"
+            :to=" locale + '/cards/' + dsFavorites.dsId + '/' + item "
             >
 
             <!-- icon -->
@@ -58,7 +58,9 @@
             <!-- favorite title -->
             <v-list-tile-content>
               <v-list-tile-title>
-                {{ dsFavorites.dsId + '/' + item }}
+
+                {{ getFavoriteItem( dsFavorites.dsId, item, 'favText' ) }}
+
               </v-list-tile-title>
             </v-list-tile-content>
           
@@ -107,24 +109,31 @@ export default {
 
   data() {
     return {
+      idField: undefined,
+
     }
   },
 
   computed: {
-
+    
     ...mapState({
-
+      
       log : state => state.log, 
       isFirstVisit : state => state.firstVisit,
       locale : state => state.locale,
 
-      itemIdField : state => state.users.itemIdField,
+      contentFields : state => state.data.contentFields,
+      // itemIdField : state => state.users.itemIdField,
 
       favorites : state => state.users.favorites
 
     }),
 
     ...mapGetters({
+
+      currentIdField: 'data/getCurrentIdField',
+      getContentField: 'data/getContentField',
+      getItemData: 'data/getOneItemFromDatasets',
 
     }),
 
@@ -137,12 +146,42 @@ export default {
       this.$router.back()
     },
 
-    getItemFromDatasets(itemId){
-      
-      let itemIdField = this.itemIdField
-      // TO DO 
 
+    getItemIdField( dsId ){
+      console.log("P-FavoritesPage-getItemFieldId / this.currentIdField( dsId ) : ", this.currentIdField( dsId ) )
+      return this.currentIdField( dsId )
     },
+
+    getFavoriteItem( dsId, itemId, fieldCode  ){
+
+      let currentLocale = this.locale
+      
+      console.log("P-FavoritesPage-getFavoriteText / dsId : ", dsId )
+      console.log("P-FavoritesPage-getFavoriteText / itemId : ", itemId )
+
+      console.log("P-FavoritesPage-getFavoriteText / this.contentFields : ", this.contentFields )
+
+      let contentFieldsObject = this.contentFields.find( fieldObj => {
+        return dsId == fieldObj.dsId
+      }) 
+      let contentFields = contentFieldsObject.contentsFields
+      console.log("P-FavoritesPage-getFavoriteText / contentFields : ", contentFields )
+
+      let contentColName = contentFields.find( field => {
+        return fieldCode === field.itemAppFieldCode
+      })
+      console.log("P-FavoritesPage-getFavoriteText / contentColName : ", contentColName )
+
+      let itemData = this.getItemData( dsId, itemId)
+      console.log("P-FavoritesPage-getFavoriteText / itemData : ", itemData )
+
+
+      let fieldByLocale = this.getContentField( dsId, currentLocale, fieldCode)
+      console.log("P-FavoritesPage-getFavoriteText / fieldByLocale : ", fieldByLocale )
+
+      return itemData[ fieldByLocale ]
+    }
+
 
   },
 

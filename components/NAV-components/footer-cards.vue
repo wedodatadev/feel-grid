@@ -71,7 +71,7 @@
               v-else
               v-for="btn in footerBtnsRight"
               :key="btn.textCode"
-              class="transparent mr-0 pr-2 pl-3 text-xs-right "
+              class="transparent mr-3 pr-2 pl-3 text-xs-right "
               round
               flat
               @click.prevent="skip"
@@ -85,8 +85,8 @@
               </span>
 
               <v-avatar 
+                class="next-translated"
                 color="primary"
-                :style="'transform: translateX(8px)'"
                 size="36px"
                 >
                 <v-icon
@@ -214,5 +214,9 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .next-translated {
+    transform: translateX(8px);
   }
 </style>

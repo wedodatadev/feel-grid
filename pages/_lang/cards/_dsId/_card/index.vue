@@ -130,7 +130,7 @@ export default {
 
       getConcatenatedDatasets : 'data/getConcatenatedDatasets',
       getOneDataset : 'data/getOneDataset',
-      currentIdField: 'users/getCurrentIdField',
+      currentIdField: 'data/getCurrentIdField',
 
     }),
   },

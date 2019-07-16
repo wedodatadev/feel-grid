@@ -44,7 +44,7 @@
             class="headline font-weight-bold text-xs-center"
             >
 
-            {{ cardData && getContentByLocale('mainContent') }}
+            {{ itemData && getContentByLocale('mainContent') }}
             <br>
 
             <!-- <br>
@@ -106,60 +106,93 @@
         </v-flex>
         
 
-      <!-- FAVORITES FOOTER -->
-      <v-footer
-        color="transparent" 
-        class="px-2 pb-4"
-        fixed
-        :style="`z-index: 4; height:${ cardHeights['footer'] }`"
-        ref="cardFooter"
-        >
-        <v-layout
-          align-center
-          justify-end
+        <!-- FAVORITES FOOTER -->
+        <v-footer
+          color="transparent" 
+          class="px-2 pb-4"
+          fixed
+          :style="`z-index: 4; height:${ cardHeights['footer'] }`"
+          ref="cardFooter"
           >
-          <v-btn 
-            icon
-            flat
-            outline
-            dark
-            @click="switchFavorite()"
+          <v-layout
+            align-center
+            justify-end
             >
-            <v-icon
-              :color="isFavorite ? 'pink' : 'white' "
+            <v-btn 
+              icon
+              flat
+              outline
+              dark
+              @click="switchFavorite()"
               >
-              favorite
-            </v-icon>
-          </v-btn>
-        </v-layout>
-      </v-footer>
+              <v-icon
+                :color="isFavorite ? 'pink' : 'white' "
+                >
+                favorite
+              </v-icon>
+            </v-btn>
+          </v-layout>
+        </v-footer>
       
         <!-- CONTENT RESOURCES -->
         <transition name="slide">
-        <v-flex xs12
-          :style="`height:${ cardHeights['content'] }`"
-          v-show="findMoreActive"
-          >
-          <v-card-text
-            class=""
+          <v-flex xs12
+            :style="`height:${ cardHeights['content'] }`"
+            v-show="findMoreActive"
             >
-            <v-divider></v-divider>
-
-            <div 
-              :class="`mt-4 limited-height`"
-              :style="`max-height:${ cardHeights['resources'] }`"
+            <v-card-text
+              class=""
               >
+              <v-divider></v-divider>
 
-              test find more...
+              <div 
+                :class="`mt-4 limited-height`"
+                :style="`max-height:${ cardHeights['resources'] }`"
+                >
+
+                <!-- {{ resourcesList.favFields }} -->
+
+                <!-- <br>  -->
+
+                <!-- {{ itemData }} -->
+
+
+                <v-list-tile
+                  v-for="favField in resourcesList.favFields"
+                  :key="favField.textFieldCode"
+                  style="z-index: 25"
+                  >
+                    <v-list-tile-action>
+                      <v-icon >
+                        fas fa-arrow-right
+                      </v-icon>
+                    </v-list-tile-action>
+
+                    <v-list-tile-content>
+                      <v-list-tile-title>
+                        <a 
+                          class="white--text"
+                          :href="itemData[ favField.linkFieldCode ]"
+                          >
+                          {{ itemData[ favField.textFieldCode ] }}
+                        </a>
+                      </v-list-tile-title>
+                    </v-list-tile-content>
+
+
+                </v-list-tile>
+
+                <!-- <br> -->
+                <!-- test find more... -->
               
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+                <!-- Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? -->
 
-              <!-- TO DO : add content given locale -->
-            </div>
+                <!-- TO DO : add content given locale -->
+              </div>
 
-          </v-card-text>
+            </v-card-text>
 
-        </v-flex>
+          </v-flex>
         </transition>
 
 
@@ -196,7 +229,7 @@ export default {
 
   props: [
 
-    'cardData',
+    'itemData',
     'dsId',
 
     // debug
@@ -208,6 +241,7 @@ export default {
   beforeMount() {
     console.log("C-CardData / beforeMount....")
     this.idField = this.currentIdField( this.dsId )
+    this.resourcesList = this.getCardResourcesFields( this.dsId )
   },
 
   mounted: function() {
@@ -220,6 +254,7 @@ export default {
       
       contentHeight: 0,
       idField: undefined,
+      resourcesList: undefined,
 
       findMoreActive: false,
 
@@ -244,14 +279,17 @@ export default {
     ...mapGetters({
 
       // favorites : 'users/getFavorites',
-      currentIdField: 'users/getCurrentIdField',
-      isInFavorites: 'users/isInFavorites'
+      currentIdField: 'data/getCurrentIdField',
+      getContentField: 'data/getContentField',
+      getCardResourcesFields: 'data/getCardResourcesFields',
+      isInFavorites: 'users/isInFavorites',
 
     }),
 
     isFavorite(){
+
       // console.log("C-CardData-isFavorite / this.idField : ", this.idField)
-      let itemId = this.cardData[ this.idField ]
+      let itemId = this.itemData[ this.idField ]
 
       let itemPayload = {
         'itemDsId': this.dsId,
@@ -269,21 +307,23 @@ export default {
       // console.log("C-CardData-getContentByLocale..." )
 
       let currentLocale = this.locale
-      // let contentFields = this.contentFields[ this.dsId ]
-      let contentFieldsObject = this.contentFields.find( fieldObj => {
-        return this.dsId == fieldObj.dsId
-      }) 
-      let contentFields = contentFieldsObject.contentsFields
-      // console.log("C-CardData-getContentByLocale / contentFields : ", contentFields )
+      // let contentFieldsObject = this.contentFields.find( fieldObj => {
+      //   return this.dsId == fieldObj.dsId
+      // }) 
+      // let contentFields = contentFieldsObject.contentsFields
+      // // console.log("C-CardData-getContentByLocale / contentFields : ", contentFields )
 
-      let contentColName = contentFields.find( field => {
-        return fieldCode === field.cardFieldCode
-      })
-      let fieldByLocale = contentColName && contentColName[ currentLocale ]
+      // let contentColName = contentFields.find( field => {
+      //   return fieldCode === field.itemAppFieldCode
+      // })
+      // let fieldByLocale = contentColName && contentColName[ currentLocale ]
       // console.log("C-CardData-getContentByLocale / fieldByLocale :", fieldByLocale)
 
+      let fieldByLocale = this.getContentField( this.dsId, currentLocale, fieldCode )
+      console.log("C-CardData-getContentByLocale / fieldByLocale :", fieldByLocale)
+
       // find correct field code
-      return this.cardData[ fieldByLocale ]
+      return this.itemData[ fieldByLocale ]
     },
 
     computeContentHeight(){
@@ -318,7 +358,7 @@ export default {
 
       // InteractEventBus.$emit(EVENTS.MATCH)
       let payload = {
-        item : this.cardData,
+        item : this.itemData,
         dsId : this.dsId,
         idField : this.idField
       }

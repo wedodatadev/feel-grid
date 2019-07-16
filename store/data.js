@@ -2,7 +2,7 @@
 
 import { loadGoogleSheet, applyDataTypes, createDatasetHeaders } from "~/utils/loadGSheetData"
 
-import { DataContentFields, DataIdFields } from '~/config/dataContentFields'
+import { DataContentFields, CardResourcesFields, DataIdFields } from '~/config/dataContentFields'
 
 
 export const state = () => ({
@@ -21,6 +21,7 @@ export const state = () => ({
 
   // data contents fields mapper
   contentFields : DataContentFields,
+  resourcesFields : CardResourcesFields,
   idFields : DataIdFields,
 
   // isTypesApplied : false, 
@@ -79,8 +80,61 @@ export const getters = {
     }
     return concatenated
   },
+
   getIsTypesApplied : state =>  {
     return state.isTypesApplied
+  },
+
+  getCurrentIdField : state => dsId => {
+    // console.log("S-users-G-getCurrentIdField / dsId : ", dsId)
+    let idFieldObject = state.idFields.find( f => {
+      return dsId === f.dsId
+    })
+    // console.log("S-users-G-getCurrentIdField / idFieldObject : ", idFieldObject)
+    return idFieldObject.idField 
+  },
+
+  getContentField: state => (dsId, currentLocale, fieldCode ) => {
+    // console.log("S-data-G-getContentField ... ")
+
+    let contentFieldsObject = state.contentFields.find( fieldObj => {
+      return dsId == fieldObj.dsId
+    }) 
+    // console.log("S-data-G-getContentField / contentFieldsObject :", contentFieldsObject)
+    let contentFields = contentFieldsObject.contentsFields
+    let contentColName = contentFields.find( field => {
+      return fieldCode === field.itemAppFieldCode
+    })
+    let fieldByLocale = contentColName && contentColName[ currentLocale ]
+    // console.log("S-data-G-getContentField / fieldByLocale :", fieldByLocale)
+
+    return fieldByLocale
+
+  },
+
+  getCardResourcesFields: (state) => (dsId) => {
+    return state.resourcesFields.find( rscField => {
+      return rscField.dsId === dsId  
+    })
+  },
+
+  getOneItemFromDatasets: (state, getters, rootState, rootGetters) => ( dsId, itemId ) => {
+    console.log("S-data-G-getOneItemFromDatasets ... ")
+
+    let dataset = getters.getOneDataset('datasets', dsId )
+    console.log("S-data-G-getOneItemFromDatasets / dataset :", dataset)
+
+    // let idField = rootGetters['users/getCurrentIdField']( dsId )
+    let idField = getters['getCurrentIdField']( dsId )
+    console.log("S-data-G-getOneItemFromDatasets / idField :", idField)
+
+    let itemData = dataset.dataRows.find( item => {
+      // console.log("S-data-G-getOneItemFromDatasets / item :", item)
+      return String(item[ idField ]) === String(itemId)
+    })
+    // console.log("S-data-G-getOneItemFromDatasets / itemData :", itemData)
+    
+    return itemData
   },
 
 }

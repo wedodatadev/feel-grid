@@ -52,7 +52,7 @@
         -->
 
         <CardData
-          :cardData="current"
+          :itemData="current"
           :dsId="dsId"
           :cardHeights="cardHeights"
 
@@ -73,7 +73,7 @@
       :style="`z-index: 2; width:${ cardWidth( .85 )}; height:${ cardHeight }`"
       >
       <CardData
-        :cardData="next"
+        :itemData="next"
         :dsId="dsId"
         :cardHeights="cardHeights"
         >
@@ -88,7 +88,7 @@
       :style="`z-index: 1; width:${ cardWidth( .8 )}; height:${ cardHeight }`"
       >
       <CardData
-        :cardData="{}"
+        :itemData="{}"
         :dsId="dsId"
         :cardHeights="cardHeights"
         >

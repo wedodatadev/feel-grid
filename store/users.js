@@ -1,14 +1,14 @@
 // store for users
 
 import Cookie from 'js-cookie'
-import { DataIdFields } from '~/config/dataContentFields'
+// import { DataIdFields } from '~/config/dataContentFields'
 
 export const state = () => ({
 
   infos : undefined,
 
-  itemIdField : 'card-id',
-  idFields : DataIdFields,
+  // itemIdField : 'card-id',
+  // idFields : DataIdFields,
 
   favorites : [ ],
   
@@ -20,14 +20,14 @@ export const getters = {
     return state.favorites
   },
 
-  getCurrentIdField : state => dsId => {
-    // console.log("S-users-G-getCurrentIdField / dsId : ", dsId)
-    let idFieldObject = state.idFields.find( f => {
-      return dsId === f.dsId
-    })
-    // console.log("S-users-G-getCurrentIdField / idFieldObject : ", idFieldObject)
-    return idFieldObject.idField 
-  },
+  // getCurrentIdField : state => dsId => {
+  //   // console.log("S-users-G-getCurrentIdField / dsId : ", dsId)
+  //   let idFieldObject = state.idFields.find( f => {
+  //     return dsId === f.dsId
+  //   })
+  //   // console.log("S-users-G-getCurrentIdField / idFieldObject : ", idFieldObject)
+  //   return idFieldObject.idField 
+  // },
   
   isInFavorites : state => itemPayload => {
 
