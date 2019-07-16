@@ -159,11 +159,15 @@ export default {
   */
   router : {
     middleware: [
+
       'setLocales',
+      'checkCookieLocale',
       'i18n',
+
       'loadGSheetDataTypes',
       'loadGSheetData',
       // 'applyDataTypes',
+      
       'checkFavorites',
     ],
   },

@@ -313,7 +313,9 @@ export default {
 
     changeLocale(loc){
       this.$i18n.locale = loc.code
-      this.$store.commit('switchLocale', loc)
+      // this.$store.commit('switchLocale', loc)
+      // this.$store.commit('switchLocaleCode', loc.code)
+      this.$store.dispatch('setLocaleCookie', loc.code)
     },
 
     isCurrentPage( item ){

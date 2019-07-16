@@ -1,4 +1,5 @@
 // main store index
+import Cookie from 'js-cookie'
 
 export const state = () => ({
 
@@ -60,10 +61,15 @@ export const mutations = {
 
   },
 
-  switchLocale(state, localeObject) {
-    // console.log("S-index-M-switchLocale / localeObject : ", localeObject)
+  switchLocale(state , localeObject) {
+    console.log("S-index-M-switchLocale / localeObject : ", localeObject)
     state.locale = localeObject.code
     // this.$i18n.locale = localeObject.code
+  },
+
+  switchLocaleCode(state , localeCode) {
+    console.log("S-index-M-switchLocaleCode / localeCode : ", localeCode)
+    state.locale = localeCode
   },
 
   setLocSelected(state) {
@@ -89,5 +95,17 @@ export const mutations = {
 }
 
 export const actions = {
+
+  setLocaleCookie({state, commit}, localeCode){
+
+    // set locale in store
+    // let localeObject = state.locales.find(loc => {
+    //   return loc.code === localeCode
+    // })
+    // commit('switchLocale', localeObject)
+    // state.locale = localeCode
+    commit('switchLocaleCode', localeCode)
+    Cookie.set('locale', localeCode )
+  },
 
 }
