@@ -34,7 +34,7 @@
         interact-block-drag-down
 
         @draggedRight="emitAndNext('skip')"
-        @draggedLeft="emitAndNext('skip')"
+        @draggedLeft="emitAndNext('previous')"
         @draggedUp="emitAndNext('skip')"
 
         >
@@ -203,7 +203,7 @@ export default {
       //   draggedRight: EVENTS.SKIP,
       //   draggedLeft: EVENTS.SKIP,
       //   draggedUp: EVENTS.SKIP
-      // },      
+      // },
       
       interactEventBus: {
         draggedRight: INTERACT_EVENTS.INTERACT_DRAGGED_RIGHT,
@@ -288,12 +288,25 @@ export default {
       setTimeout(() => {
         console.log("C-SwipeableCards-emitAndNext / setTimeout reappear..." )
 
-        this.index += 1
-        console.log("C-SwipeableCards-emitAndNext / this.index (B) :", this.index )
+        let newIndex = this.index
+
+        if ( event === 'previous' ){
+          newIndex -= 1
+        } else {
+          newIndex += 1
+        }
+
+        if ( newIndex < 0 ){
+          newIndex = this.cardsLength -1
+        }
+        console.log("C-SwipeableCards-emitAndNext / newIndex (B) :", newIndex )
 
         // reset deck if no more cards
-        if (this.index >= this.cardsLength){
+        if ( newIndex >= this.cardsLength - 1  ){
           this.index = 0
+        } 
+        else {
+          this.index = newIndex
         }
 
         this.isVisible = true

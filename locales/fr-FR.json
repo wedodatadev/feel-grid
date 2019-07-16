@@ -51,6 +51,7 @@
 
   "cards" : {
     "findMore": "en savoir plus",
+    "previous" : "précédente",
     "next" : "suivante"
   },
 

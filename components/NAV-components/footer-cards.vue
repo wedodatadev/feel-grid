@@ -10,97 +10,152 @@
     <!-- <v-layout
       > -->
 
-      <div
-        :style="`z-index: 4; width:${ cardWidth( .9 ) }`"
+    <div
+      :style="`z-index: 4; width:${ cardWidth( .9 ) }`"
+      >
+
+      <v-layout
+        row wrap
         >
 
-        <v-layout
-          row wrap
-          >
+        <!-- LEFT SIDE ICONS  -->
+        <v-layout justify-start >
 
-          <!-- LEFT SIDE ICONS -->
-          <v-layout justify-start>
-            <v-btn 
-              v-for="btn in footerBtnsLeft"
-              :key="btn.textCode"
-              :to="btn.to"
-              icon
-              class="primary "
-              flat
+          <v-btn 
+            v-if="!showNext"
+            v-for="btn in footerBtnsLeft"
+            :key="btn.textCode"
+            class="primary mr-0 text-xs-right "
+            flat
+            icon
+            @click.prevent="skip(false)"
+            >
+            <v-icon
+              color="white"
               >
-              <v-icon>
-                {{ btn.icon }}
-              </v-icon>
-            </v-btn>
-          </v-layout>
+              {{ btn.icon }}
+            </v-icon>
+          </v-btn>
+          
 
-          <!-- <v-spacer></v-spacer> -->
+          <v-btn 
+            v-else
+            v-for="btn in footerBtnsLeft"
+            :key="btn.textCode"
+            class="transparent mr-3 pr-2 pl-3 text-xs-right "
+            round
+            flat
+            @click.prevent="skip(false)"
+            >
 
-          <!-- RIGHT SIDE ICONS  -->
-          <v-layout justify-end >
-
-            <!-- <v-btn
-              flat
-              color="grey"
-              @click.prevent="skip"
-              >
-              <span
-                v-show="showNext"
-                >
-                {{ $t('cards.next') }}
-              </span>
-            </v-btn> -->
-
-            <v-btn 
-              v-if="!showNext"
-              v-for="btn in footerBtnsRight"
-              :key="btn.textCode"
-              class="primary mr-0 text-xs-right "
-              flat
-              icon
-              @click.prevent="skip"
+            <v-avatar 
+              class="previous-translated"
+              color="primary"
+              size="36px"
               >
               <v-icon
                 color="white"
                 >
                 {{ btn.icon }}
               </v-icon>
-            </v-btn>
-            
+            </v-avatar>
 
-            <v-btn 
-              v-else
-              v-for="btn in footerBtnsRight"
-              :key="btn.textCode"
-              class="transparent mr-3 pr-2 pl-3 text-xs-right "
-              round
-              flat
-              @click.prevent="skip"
+            <span
+              v-show="showNext"
+              class="grey--text mr-2"
               >
+              {{ $t( btn.textCode ) }}
+            </span>
 
-              <span
-                v-show="showNext"
-                class="grey--text mr-2"
+
+
+          </v-btn>
+
+
+        </v-layout>
+
+
+        <!-- CENTER SIDE ICONS -->
+        <v-layout justify-center>
+          <v-btn 
+            v-for="btn in footerBtnsCenter"
+            :key="btn.textCode"
+            :to="btn.to"
+            icon
+            class="primary "
+            flat
+            >
+            <v-icon>
+              {{ btn.icon }}
+            </v-icon>
+          </v-btn>
+        </v-layout>
+
+        <!-- <v-spacer></v-spacer> -->
+
+        <!-- RIGHT SIDE ICONS  -->
+        <v-layout justify-end >
+
+          <!-- <v-btn
+            flat
+            color="grey"
+            @click.prevent="skip"
+            >
+            <span
+              v-show="showNext"
+              >
+              {{ $t('cards.next') }}
+            </span>
+          </v-btn> -->
+
+          <v-btn 
+            v-if="!showNext"
+            v-for="btn in footerBtnsRight"
+            :key="btn.textCode"
+            class="primary mr-0 text-xs-right "
+            flat
+            icon
+            @click.prevent="skip()"
+            >
+            <v-icon
+              color="white"
+              >
+              {{ btn.icon }}
+            </v-icon>
+          </v-btn>
+          
+
+          <v-btn 
+            v-else
+            v-for="btn in footerBtnsRight"
+            :key="btn.textCode"
+            class="transparent mr-3 pr-2 pl-3 text-xs-right "
+            round
+            flat
+            @click.prevent="skip()"
+            >
+
+            <span
+              v-show="showNext"
+              class="grey--text mr-2"
+              >
+              {{ $t( btn.textCode ) }}
+            </span>
+
+            <v-avatar 
+              class="next-translated"
+              color="primary"
+              size="36px"
+              >
+              <v-icon
+                color="white"
                 >
-                {{ $t( btn.textCode ) }}
-              </span>
+                {{ btn.icon }}
+              </v-icon>
+            </v-avatar>
 
-              <v-avatar 
-                class="next-translated"
-                color="primary"
-                size="36px"
-                >
-                <v-icon
-                  color="white"
-                  >
-                  {{ btn.icon }}
-                </v-icon>
-              </v-avatar>
+          </v-btn>
 
-            </v-btn>
-
-
-          </v-layout>
 
         </v-layout>
 
@@ -139,7 +194,11 @@ export default {
 
     return {
 
-      footerBtnsLeft: [
+      footerBtnsLeft : [
+        { textCode: "cards.previous", icon: "fas fa-arrow-left", to: "/previous" },
+      ],
+
+      footerBtnsCenter: [
         { textCode: "twitter", icon: "fab fa-twitter", to: "/about" },
         { textCode: "facebook", icon: "fab fa-facebook", to: "/credits" },
         { textCode: "screenshot", icon: "fas fa-camera", to: "/credits" },
@@ -149,7 +208,7 @@ export default {
         { textCode: "cards.next", icon: "fas fa-arrow-right", to: "/next" },
       ],
 
-      showNextBreakpoints : [ 'sm', 'md' , 'lg', 'xl'],
+      showNextBreakpoints : [ 'xl' ],
       
       interactEventBus: {
         draggedRight: EVENTS.SKIP,
@@ -193,11 +252,14 @@ export default {
       }
     },
 
-    skip() {
+    skip( isNext=true ) {
       console.log("C-FooterCards-skip ..." )
       console.log("C-FooterCards-skip ... InteractEventBus : \n", InteractEventBus )
-      // InteractEventBus.$emit(EVENTS.SKIP)
-      InteractEventBus.$emit(INTERACT_EVENTS.INTERACT_DRAGGED_RIGHT);
+      if ( isNext ){
+        InteractEventBus.$emit(INTERACT_EVENTS.INTERACT_DRAGGED_RIGHT);
+      } else {
+        InteractEventBus.$emit(INTERACT_EVENTS.INTERACT_DRAGGED_LEFT);
+      }
     },
 
   },
@@ -219,5 +281,8 @@ export default {
 
   .next-translated {
     transform: translateX(8px);
+  }
+  .previous-translated {
+    transform: translateX(-8px);
   }
 </style>

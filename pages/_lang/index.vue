@@ -32,14 +32,14 @@
           <v-btn 
             v-for="(loc, index) in locales"
             :key="index"
-            :class="`text-uppercase ${ (loc.code === locale)? '' : 'font-weight-thin' }`"
+            :class="`btn-gradient text-uppercase ${ (loc.code === locale)? '' : 'font-weight-thin' }`"
             round 
-            color="white" 
             dark
-            outline
             @click="changeLocale(loc, false)"
             @mouseover="changeLocale(loc, true)"
             >
+            <!-- outline -->
+            <!-- color="primary"  -->
             <!-- :outline="loc.code !== locale " -->
             {{ loc.code }}
           </v-btn>
@@ -55,8 +55,8 @@
 
           <v-btn 
             round
-            class="btn-gradient white--text"
-            color="white"
+            class="btn-gradient"
+            color="primary"
             :to="(isFirstVisit)? '/about' : '/cards' "
             >
             {{ $t('intro.getAnAce')}}
