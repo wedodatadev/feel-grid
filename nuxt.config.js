@@ -1,6 +1,6 @@
 import colors from 'vuetify/es5/util/colors'
 
-import pkg from './package'
+// import pkg from './package.json'
 
 require('dotenv').config()
 

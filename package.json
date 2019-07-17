@@ -1,6 +1,6 @@
 {
-  "name": "IFS_AFD-ACES",
-  "version": "1.0.0",
+  "name": "IFS_AFD-ACES-dev",
+  "version": "1.0.1",
   "description": "ACES project for AFD and IFS",
   "author": "Julien_P",
   "private": true,

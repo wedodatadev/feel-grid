@@ -137,23 +137,27 @@
                   v-for="favField in resourcesList.favFields"
                   :key="favField.textFieldCode"
                   style="z-index: 25"
+                  class="text-xs-center"
                   >
-                    <v-list-tile-action>
-                      <v-icon >
-                        fas fa-arrow-right
-                      </v-icon>
-                    </v-list-tile-action>
+                  
+                  <v-list-tile-action
+                    class="near-icon"
+                    >
+                    <v-icon small>
+                      fas fa-arrow-right
+                    </v-icon>
+                  </v-list-tile-action>
 
-                    <v-list-tile-content>
-                      <v-list-tile-title>
-                        <a 
-                          class="white--text"
-                          :href="itemData[ favField.linkFieldCode ]"
-                          >
-                          {{ itemData[ favField.textFieldCode ] }}
-                        </a>
-                      </v-list-tile-title>
-                    </v-list-tile-content>
+                  <v-list-tile-content>
+                    <v-list-tile-title>
+                      <a 
+                        class="white--text"
+                        :href="itemData[ favField.linkFieldCode ]"
+                        >
+                        {{ itemData[ favField.textFieldCode ] }}
+                      </a>
+                    </v-list-tile-title>
+                  </v-list-tile-content>
 
 
                 </v-list-tile>
@@ -406,6 +410,10 @@ export default {
 .slide-enter, .slide-leave-to {
    overflow: hidden;
    max-height: 0;
+}
+
+.near-icon{
+  min-width: 30px;
 }
 
 

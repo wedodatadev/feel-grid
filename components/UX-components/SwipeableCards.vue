@@ -68,12 +68,12 @@
 
     <!-- SECOND CARD -->
     <v-flex
-      v-if="next"
+      v-if="getNexCard()"
       class="card card--two fixed fixed--center"
       :style="`z-index: 2; width:${ cardWidth( .85 )}; height:${ cardHeight }`"
       >
       <CardData
-        :itemData="next"
+        :itemData="getNexCard()"
         :dsId="dsId"
         :cardHeights="cardHeights"
         >
@@ -199,6 +199,8 @@ export default {
       isVisible: true,
       index: 0,
 
+      getPrevious: false,
+
       // interactEventBus: {
       //   draggedRight: EVENTS.SKIP,
       //   draggedLeft: EVENTS.SKIP,
@@ -233,6 +235,14 @@ export default {
       return this.cards && this.cards[ this.index + 1 ]
     },
   
+    previous() {
+      if ( this.index !== 0 ){
+        return this.cards && this.cards[ this.index - 1 ]
+      } else {
+        return this.cards && this.cards[ -1 ]
+      }
+    },
+
   },
 
   methods: {
@@ -251,6 +261,13 @@ export default {
       }
     },
 
+    getNexCard(){
+      if ( !this.getPrevious ){
+        return this.next
+      } else {
+        return this.previous
+      }
+    },
 
     // WARNING ! careful to study thius before
     // cf : https://codesandbox.io/s/5wo373kqwk
@@ -282,6 +299,9 @@ export default {
       setTimeout(() => {
         console.log("C-SwipeableCards-emitAndNext / setTimeout disappear..." )
         this.isVisible = false
+        if ( event === 'previous' ){
+          this.getPrevious = true
+        }
       }, 300)
 
       // show next card by adding +1 to index
@@ -300,6 +320,8 @@ export default {
           newIndex = this.cardsLength -1
         }
         console.log("C-SwipeableCards-emitAndNext / newIndex (B) :", newIndex )
+        
+        // let newPreviousIndex = newIndex -1 
 
         // reset deck if no more cards
         if ( newIndex >= this.cardsLength - 1  ){
@@ -310,8 +332,13 @@ export default {
         }
 
         this.isVisible = true
+        this.getPrevious = false
 
       }, 400 )
+
+      // setTimeout(() => {
+      //   this.getPrevious = false
+      // }, 300)
 
     },
 
@@ -539,7 +566,7 @@ export default {
 }
 
 .transition {
-  animation: appear 200ms ease-in;
+  animation: appear 400ms ease-in;
 }
 
 @keyframes appear {

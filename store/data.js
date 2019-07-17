@@ -51,7 +51,9 @@ export const getters = {
     return state[ datasetName ]
   },
   getOneDataset: state => ( datasetName, dsId ) => {
-    // console.log("S-data-G-getOneDataset / datasetName : ", datasetName)
+    console.log("S-data-G-getOneDataset / datasetName : ", datasetName)
+    console.log("S-data-G-getOneDataset / dsId : ", dsId)
+    console.log("S-data-G-getOneDataset / state[ datasetName ] : ", state[ datasetName ])
     return state[ datasetName ].find( d => {
       return d.dsId === dsId
     })

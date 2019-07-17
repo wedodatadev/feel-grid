@@ -97,7 +97,7 @@
         flat
         small
         @click="changeLocale(loc)"
-        :class="`text-uppercase px-0 mx-0 subheading ${ loc.code !== locale ? 'grey--text font-weight-thin' : 'white--text'}`"
+        :class="`text-uppercase px-0 mx-0 subheading ${ isCardPage ? 'white--text' : 'grey--text'} ${ loc.code !== locale ? 'font-weight-thin' : ''}`"
         >
         <span
           >
