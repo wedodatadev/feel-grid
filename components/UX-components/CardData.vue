@@ -46,7 +46,8 @@
 
             <!-- currentDsId : {{ currentDsId }}<br> -->
             cookieContent : {{ cookieContent.locale }} <br>
-            locale (store) : {{ locale }}
+            locale (store) : {{ locale }}<br>
+            triggerFav : {{ triggerFav }}<br>
             <hr>
 
             {{ itemData && getContentByLocale('mainContent') }}
@@ -243,6 +244,9 @@ export default {
 
       findMoreActive: false,
 
+      // debug cookies
+      triggerFav : false,
+
     }
   },
 
@@ -348,6 +352,9 @@ export default {
     switchFavorite(){
 
       console.log("C-CardData-addAsFavorite..." )
+
+      // debug cookies mobile 
+      this.triggerFav = !this.triggerFav
 
       // InteractEventBus.$emit(EVENTS.MATCH)
       let payload = {
