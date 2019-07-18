@@ -55,7 +55,7 @@
               flat
               outline
               dark
-              @click="switchFavorite()"
+              @click.prevent.stop="switchFavorite()"
               >
               <v-icon
                 :color="isFavorite ? 'pink' : 'white' "
@@ -63,7 +63,7 @@
                 favorite
               </v-icon>
             </v-btn>
-            
+
             {{ itemData && getContentByLocale('mainContent') }}
             <br>
 
