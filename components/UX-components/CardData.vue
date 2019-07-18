@@ -46,18 +46,16 @@
             <!-- <v-card-text 
               > -->
 
-              <p class="caption">
-              <!-- currentDsId : {{ currentDsId }}<br> -->
-              <!-- cookieContent : {{ cookieContent.locale }} <br> -->
-              <!-- locale (store) : {{ locale }}<br> -->
-              isPauseInteractParent : <code>{{ isPauseInteractParent }}</code><br>
-              device : <code>{{ $device }}</code><br>
-              isPauseInteract : <code>{{ isPauseInteract }}</code><br>
-              triggerFav : <code>{{ triggerFav }}</code><br>
-
-              </p>
-
-              <br>
+              <!-- <p class="caption"> -->
+                <!-- currentDsId : {{ currentDsId }}<br> -->
+                <!-- cookieContent : {{ cookieContent.locale }} <br> -->
+                <!-- locale (store) : {{ locale }}<br> -->
+                <!-- isPauseInteractParent : <code>{{ isPauseInteractParent }}</code><br> -->
+                <!-- device : <code>{{ $device }}</code><br> -->
+                <!-- isPauseInteract : <code>{{ isPauseInteract }}</code><br> -->
+                <!-- triggerFav : <code>{{ triggerFav }}</code><br> -->
+              <!-- </p> -->
+              <!-- <br> -->
 
               <p class="headline font-weight-bold ">
                 {{ itemData && getContentByLocale('mainContent') }}
@@ -109,7 +107,7 @@
             flat
             icon
             @click=" findMoreActive = !findMoreActive "
-            :class="`card-button ma-0 ${ findMoreActive? 'close-to-plus-out' : 'close-to-plus-in roll-in' }`"
+            :class="`mb-2 card-button ma-0 ${ findMoreActive? 'close-to-plus-out' : 'close-to-plus-in roll-in' }`"
             >
             <v-icon
               >
@@ -379,6 +377,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .absolutePos{
   // position: absolute;
   // left: 50vw;
@@ -405,26 +404,26 @@ export default {
   100% { transform: rotate(-45deg); }
 }
 .roll-in { 
-  animation: rollin .5s cubic-bezier(0.55, 0.085, 0.68, 0.53) ; 
+  animation: rollin .7s cubic-bezier(0.55, 0.085, 0.68, 0.53) ; 
 }
 .roll-out { 
-  animation: rollout .5s cubic-bezier(0.55, 0.085, 0.68, 0.53) ; 
+  animation: rollout .7s cubic-bezier(0.55, 0.085, 0.68, 0.53) ; 
 }
 .slide-enter-active {
-   -moz-transition-duration: 0.3s;
-   -webkit-transition-duration: 0.3s;
-   -o-transition-duration: 0.3s;
-   transition-duration: 0.3s;
+   -moz-transition-duration: 0.4s;
+   -webkit-transition-duration: 0.4s;
+   -o-transition-duration: 0.4s;
+   transition-duration: 0.4s;
    -moz-transition-timing-function: ease-in;
    -webkit-transition-timing-function: ease-in;
    -o-transition-timing-function: ease-in;
    transition-timing-function: ease-in;
 }
 .slide-leave-active {
-   -moz-transition-duration: 0.3s;
-   -webkit-transition-duration: 0.3s;
-   -o-transition-duration: 0.3s;
-   transition-duration: 0.3s;
+   -moz-transition-duration: 0.4s;
+   -webkit-transition-duration: 0.4s;
+   -o-transition-duration: 0.4s;
+   transition-duration: 0.4s;
    -moz-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
    -webkit-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
    -o-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
