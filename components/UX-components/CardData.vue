@@ -17,7 +17,7 @@
 
       <v-card-title 
         ref="cardTitle"
-        class="justify-center"
+        class="justify-center pa-0"
         :style="`height:${ cardHeights['title'] }`"
         >
         <h2 class="text-xs-center mb-0">
@@ -55,7 +55,7 @@
               flat
               outline
               dark
-              @click.prevent.stop="switchFavorite()"
+              @click.native="switchFavorite()"
               >
               <v-icon
                 :color="isFavorite ? 'pink' : 'white' "
@@ -110,10 +110,10 @@
         
 
         <!-- FAVORITES FOOTER -->
-        <v-footer
+          <!-- fixed -->
+        <v-content
           color="transparent" 
-          class="px-2 pb-4"
-          fixed
+          class="px-2"
           :style="`z-index: 4; height:${ cardHeights['footer'] }`"
           ref="cardFooter"
           >
@@ -135,7 +135,7 @@
               </v-icon>
             </v-btn>
           </v-layout>
-        </v-footer>
+        </v-content>
       
         <!-- CONTENT RESOURCES -->
         <transition name="slide">
