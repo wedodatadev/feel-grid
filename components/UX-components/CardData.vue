@@ -153,7 +153,7 @@
               flat
               outline
               dark
-              @click="switchFavorite()"
+              @click.native="switchFavorite()"
               @mouseover="switchHover()"
               >
               <v-icon
