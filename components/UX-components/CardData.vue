@@ -138,11 +138,13 @@
               outline
               dark
 
-              @mouseenter="switchHover()"
-              @mouseleave="switchHover()"
               
-              @click.native="switchFavorite()"
+              @click.prevent.stop="switchFavorite()"
+              
               >
+              <!-- @mouseenter="switchHover()"
+              @mouseleave="switchHover()" -->
+
               <!-- v-touch:tap="switchFavorite('tap')" -->
               <v-icon
                 :color="isFavorite ? 'pink' : 'white' "
@@ -276,6 +278,7 @@ export default {
     }
   },
   computed: {
+
     ...mapState({
       log : state => state.log, 
       locale : state => state.locale,
@@ -284,6 +287,7 @@ export default {
       // itemIdField : state => state.users.itemIdField,
       favorites : state => state.users.favorites
     }),
+
     ...mapGetters({
       // favorites : 'users/getFavorites',
       currentIdField: 'data/getCurrentIdField',
@@ -291,6 +295,7 @@ export default {
       getCardResourcesFields: 'data/getCardResourcesFields',
       isInFavorites: 'users/isInFavorites',
     }),
+
     isFavorite(){
       // console.log("C-CardData-isFavorite / this.idField : ", this.idField)
       let itemId = this.itemData[ this.idField ]
@@ -300,9 +305,11 @@ export default {
       }
       return this.isInFavorites( itemPayload )
     },
+
     chooseBackground() {
       
     },
+
     cookieContent(){
       let parsed = cookieparser.parse(document.cookie)
       console.log("C-CardData-cookieContent / parsed :", parsed)

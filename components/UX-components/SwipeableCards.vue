@@ -20,6 +20,7 @@
       :style="`z-index: 3; width:${ cardWidth( .9 )}; height:${ cardHeight }`"
       >
 
+        <!-- :interact-event-bus-events="this.$bus" -->
       <InteractDraggable
         v-if="isVisible"
         id="mainDraggableCard"
@@ -47,7 +48,10 @@
         @draggedLeft="emitAndNext('skip')"
         @draggedUp="emitAndNext('skip')"
 
+
+        @clickDraggableBtn="getClickSignal"
         >
+        <!-- @skip="emitAndNext('skip')" -->
 
         <!-- 
         @draggedDown="draggedDown"
@@ -140,7 +144,7 @@ import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
 import interact from 'interact.js'
 // import { Vue2InteractDraggable, InteractEventBus } from 'vue2-interact'
-import { InteractEventBus } from 'vue2-interact'
+// import { InteractEventBus } from 'vue2-interact'
 
 import CardData from '~/components/UX-components/CardData'
 import InteractDraggable from '~/components/UX-components/InteractDraggable'
@@ -156,13 +160,9 @@ export default {
     // Vue2InteractDraggable,
   },
   props: [
-    // 'cardsArray',
-    // 'dsId',
-    // 'cardId'
   ],
   mounted: function() {
     console.log("C-SwipeableCards / mounted....")
-    // interact('.vue-interact-animated').draggable({ ignoreFrom : 'button' })
   },
   data() {
     return {
@@ -181,12 +181,12 @@ export default {
       },
       // cards iteration variables
       isVisible: true,
-      // cards: [],
-      // cardsLength: 0,
-      // index: 0,
+
       getPrevious: false,
+      
       // interactjs
       isPauseInteract : false,
+      
       // interactEventBus: {
       //   draggedRight: EVENTS.SKIP,
       //   draggedLeft: EVENTS.SKIP,
@@ -197,8 +197,14 @@ export default {
         draggedRight: INTERACT_EVENTS.INTERACT_DRAGGED_RIGHT,
         draggedLeft: INTERACT_EVENTS.INTERACT_DRAGGED_LEFT,
         draggedUp: INTERACT_EVENTS.INTERACT_DRAGGED_UP
-      },      
-      
+      },
+
+      // interactEventBus: {
+      //   draggedRight: 'skip',
+      //   draggedLeft: 'skip',
+      //   draggedUp: 'skip'
+      // },
+
     }
   },
   computed: {
@@ -230,6 +236,13 @@ export default {
     },
   },
   methods: {
+    
+    getClickSignal(event){
+      console.log("C-SwipeableCards-getClickSignal / event : ", event )
+      e.stopImmediatePropagation()
+      e.stopPropagation()
+      e.preventDefault()
+    },
 
     ...mapMutations({
       setCurrentDsId: 'cards/setCurrentDsId',
@@ -258,14 +271,18 @@ export default {
         return this.previous
       }
     },
+
+
     // WARNING ! careful to study this before
     // cf : https://codesandbox.io/s/5wo373kqwk
     skip() {
       console.log("C-SwipeableCards / skip ..." )
       // InteractEventBus.$emit(EVENTS.SKIP)
-      InteractEventBus.$emit(INTERACT_EVENTS.INTERACT_DRAGGED_RIGHT)
+      // InteractEventBus.$emit(INTERACT_EVENTS.INTERACT_DRAGGED_RIGHT)
+      this.$bus.$emit(INTERACT_EVENTS.INTERACT_DRAGGED_RIGHT)
       // this.emitAndNext('skip')
     },
+
     // match() {
     //   console.log("C-SwipeableCards / match ..." )
     //   // InteractEventBus.$emit(EVENTS.MATCH)
@@ -276,16 +293,26 @@ export default {
     //   // InteractEventBus.$emit(EVENTS.REJECT)
     //   this.emitAndNext('reject')
     // },
+
+
+    
     stopPropagation(e){
       console.log("C-SwipeableCards-stopPropagation / event : ", event )
       e.stopImmediatePropagation()
       e.stopPropagation()
       e.preventDefault()
     },
+
+
+
     pauseInteract( isPause ){
       console.log("C-SwipeableCards-pauseInteract / isPause :", isPause )
       this.isPauseInteract = isPause
     },
+
+
+
+
     emitAndNext(event) {
       console.log("C-SwipeableCards-emitAndNext / event :", event )
       console.log("C-SwipeableCards-emitAndNext / this.index (A) :", this.index )
@@ -336,6 +363,11 @@ export default {
           this.isShowing = true;
         }, 1000);
     },
+
+
+
+
+
     // draggedDown() {
     //   console.log("dragged down!");
     //   this.shiftCard();
@@ -352,17 +384,23 @@ export default {
       console.log("dragged up!");
       this.shiftCard();
     },
+
+
+
     // dragDown() {
     //   InteractEventBus.$emit(INTERACT_EVENTS.INTERACT_DRAGGED_DOWN);
     // },
     dragLeft() {
-      InteractEventBus.$emit(INTERACT_EVENTS.INTERACT_DRAGGED_LEFT);
+      // InteractEventBus.$emit(INTERACT_EVENTS.INTERACT_DRAGGED_LEFT);
+      this.$bus.$emit(INTERACT_EVENTS.INTERACT_DRAGGED_LEFT);
     },
     dragRight() {
-      InteractEventBus.$emit(INTERACT_EVENTS.INTERACT_DRAGGED_RIGHT);
+      // InteractEventBus.$emit(INTERACT_EVENTS.INTERACT_DRAGGED_RIGHT);
+      this.$bus.$emit(INTERACT_EVENTS.INTERACT_DRAGGED_RIGHT);
     },
     dragUp() {
-      InteractEventBus.$emit(INTERACT_EVENTS.INTERACT_DRAGGED_UP);
+      // InteractEventBus.$emit(INTERACT_EVENTS.INTERACT_DRAGGED_UP);
+      this.$bus.$emit(INTERACT_EVENTS.INTERACT_DRAGGED_UP);
     },
   }
 }

@@ -199,6 +199,7 @@ export default {
     '~/plugins/i18n.js',
     // '~/plugins/loadGSheetData',
     '~/plugins/vue-touch-events.js',
+    '~/plugins/eventBus'
   ],
 
   /*
