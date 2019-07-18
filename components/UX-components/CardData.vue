@@ -45,6 +45,9 @@
             >
 
             <!-- currentDsId : {{ currentDsId }}<br> -->
+            cookieContent : {{ cookieContent.locale }}
+            <hr>
+
             {{ itemData && getContentByLocale('mainContent') }}
             <br>
 
@@ -189,6 +192,8 @@
 <script>
 
 // based and adapted from : https://www.josephharveyangeles.com/blog/2019/kittynder
+var cookieparser = require('cookieparser')
+import Cookie from 'js-cookie'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 import { InteractEventBus } from 'vue2-interact'
@@ -278,6 +283,11 @@ export default {
       }
       return this.isInFavorites( itemPayload )
     },
+
+    cookieContent(){
+      console.log("C-CardData-cookieContent / document.cookie :", document.cookie)
+      return document.cookie
+    }
 
   },
 
