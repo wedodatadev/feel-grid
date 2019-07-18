@@ -116,6 +116,7 @@ const configApp = {
 
 }
 console.log('>>> nuxt.config.js / configApp : \n', configApp)
+// console.log('>>> nuxt.config.js / process.env : \n', process.env)
 
 // NUXT CONFIG
 export default {

@@ -12,7 +12,7 @@
       <div>
 
         <!-- LOGO -->
-        <p>xxx logo xxx</p>
+        <p>xxx logo AFD xxx</p>
 
         <h2> 
           {{ $t('title.development') }}

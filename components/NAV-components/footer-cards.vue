@@ -4,6 +4,9 @@
 
   <v-footer 
     color="transparent"
+        xs10 offset-xs1
+    sm8 offset-md2
+    md6 offset-md3
     :class="`${ (showNext)? 'ma-4' : 'mx-0 mb-4' } pb-2 centered`"
     >
 
@@ -170,7 +173,7 @@
 
 <script>
 
-import { mapState, mapGetters, mapActions } from 'vuex'
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 import { InteractEventBus } from 'vue2-interact'
 
 import { EVENTS, INTERACT_EVENTS } from "~/config/interactEvents.js"
@@ -195,7 +198,7 @@ export default {
     return {
 
       footerBtnsLeft : [
-        { textCode: "cards.previous", icon: "fas fa-arrow-left", to: "/previous" },
+        { textCode: "cards.previous", icon: "fas fa-undo-alt", to: "/previous" },
       ],
 
       footerBtnsCenter: [
@@ -226,6 +229,9 @@ export default {
       log : state => state.log, 
       locale : state => state.locale,
       locSelected : state => state.locSelected,
+
+      index : state => state.cards.currentCardIndex,
+
     }),
 
     ...mapGetters({
@@ -238,6 +244,11 @@ export default {
   },
 
   methods: {
+
+    ...mapMutations({
+      setCurrentCardIndex: 'cards/setCurrentCardIndex',
+      setPreviousCurrentCardIndex : 'cards/setPreviousCurrentCardIndex'
+    }),
 
     cardWidth ( widthPercent ) {
       let maxWidth = 80
@@ -253,13 +264,19 @@ export default {
     },
 
     skip( isNext=true ) {
-      console.log("C-FooterCards-skip ..." )
-      console.log("C-FooterCards-skip ... InteractEventBus : \n", InteractEventBus )
+      console.log("C-FooterCards-skip / isNext : ", isNext )
+      // console.log("C-FooterCards-skip ... InteractEventBus : \n", InteractEventBus )
+
       if ( isNext ){
+        // swipe to next
         InteractEventBus.$emit(INTERACT_EVENTS.INTERACT_DRAGGED_RIGHT);
       } else {
-        InteractEventBus.$emit(INTERACT_EVENTS.INTERACT_DRAGGED_LEFT);
+        // reload previous
+        // InteractEventBus.$emit(INTERACT_EVENTS.INTERACT_DRAGGED_LEFT);
+        // this.$emit('reloadPreviousItem')
+        this.setPreviousCurrentCardIndex()
       }
+
     },
 
   },

@@ -51,9 +51,11 @@
         @draggedUp="emitAndNext('skip')"
         -->
 
+          <!-- :dsId="dsId" -->
         <CardData
+
           :itemData="current"
-          :dsId="dsId"
+          
           :cardHeights="cardHeights"
 
           :cardWidth="cardWidth( .9 )"
@@ -72,9 +74,9 @@
       class="card card--two fixed fixed--center"
       :style="`z-index: 2; width:${ cardWidth( .85 )}; height:${ cardHeight }`"
       >
+        <!-- :dsId="dsId" -->
       <CardData
         :itemData="getNexCard()"
-        :dsId="dsId"
         :cardHeights="cardHeights"
         >
       </CardData>
@@ -87,51 +89,13 @@
       class="card card--three fixed fixed--center"
       :style="`z-index: 1; width:${ cardWidth( .8 )}; height:${ cardHeight }`"
       >
+        <!-- :dsId="dsId" -->
       <CardData
         :itemData="{}"
-        :dsId="dsId"
         :cardHeights="cardHeights"
         >
       </CardData>
     </v-flex>
-
-
-    <!-- FOOTER -->
-    <!-- 
-    <div class="footer fixed">
-
-      <div 
-        class="btn btn--decline" 
-        @click="reject"
-        >
-        <i class="material-icons">
-          close
-        </i>
-      </div>
-
-      <div 
-        class="btn btn--skip" 
-        @click="skip"
-        >
-        <i class="material-icons">
-          call_missed
-        </i>
-      </div>
-
-      <div 
-        class="btn btn--like" 
-        @click="match"
-        >
-        <i class="material-icons">
-          favorite
-        </i>
-      </div>
-
-    </div> 
-    -->
-
-    <!-- <FooterCards>
-    </FooterCards> -->
 
 
   </v-layout>
@@ -141,9 +105,24 @@
 
 <script>
 
+// interactjs
 // based and adapted from : https://www.josephharveyangeles.com/blog/2019/kittynder
+// interactjs docs & help 
+// cf : https://dev.to/josephharveyangeles/creating-a-tinder-like-swipe-ui-on-vue-4aa4
+// cf : https://css-tricks.com/swipeable-card-stack-using-vue-js-and-interact-js/
+// cf : https://interactjs.io/
+// cf : https://github.com/kimuraz/vue-interact
 
-import { mapState, mapGetters, mapActions } from 'vuex'
+// transitions : http://animista.net/play/basic/rotate
+// cf : https://github.com/sdras/page-transitions-travelapp
+// cf : https://css-tricks.com/native-like-animations-for-page-transitions-on-the-web/
+// cf : https://vuejs.org/v2/guide/transitions.html#Transition-Classes
+// cf : https://blog.pusher.com/demystifying-page-transitions-nuxt/
+// cf : https://nuxtjs.org/examples/routes-transitions/
+// cf : https://nuxtjs.org/api/pages-transition/
+// cf : https://codesandbox.io/embed/2xovlqpv9n
+
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
 import { Vue2InteractDraggable, InteractEventBus } from 'vue2-interact'
 import CardData from '~/components/UX-components/CardData'
@@ -160,30 +139,19 @@ export default {
   },
 
   props: [
-    'cardsArray',
-    'dsId',
-    'cardId'
+    // 'cardsArray',
+    // 'dsId',
+    // 'cardId'
   ],
 
   mounted: function() {
     console.log("C-SwipeableCards / mounted....")
-
-    // this.onResize()
-    // window.addEventListener('resize', this.onResize, { passive: true })
-
-    this.cards = this.cardsArray
-    this.cardsLength = this.cardsArray.length
   },
-
-  // beforeDestroy () {
-  //   if (typeof window !== 'undefined') {
-  //     window.removeEventListener('resize', this.onResize, { passive: true })
-  //   }
-  // },
 
   data() {
     return {
       
+      // UI data
       breakPointCode : undefined,
       windowWidth : 0,
   
@@ -196,10 +164,17 @@ export default {
         footer: "4vh"
       },
 
+      // cards iteration variables
       isVisible: true,
-      index: 0,
+
+      // cards: [],
+      // cardsLength: 0,
+      // index: 0,
 
       getPrevious: false,
+
+
+      // interactjs
 
       // interactEventBus: {
       //   draggedRight: EVENTS.SKIP,
@@ -213,8 +188,7 @@ export default {
         draggedUp: INTERACT_EVENTS.INTERACT_DRAGGED_UP
       },      
 
-      cards: [],
-      cardsLength: 0,
+
       
     }
   },
@@ -225,6 +199,15 @@ export default {
       log : state => state.log, 
       locale : state => state.locale,
 
+      dsId : state => state.cards.currentDsId,
+      cards : state => state.cards.currentCardsArrray,
+      cardId : state => state.cards.currentCardId,
+      index : state => state.cards.currentCardIndex,
+
+    }),
+
+    ...mapGetters({
+      cardsLength : 'cards/getCardsArrrayLength',
     }),
 
     current() {
@@ -246,6 +229,13 @@ export default {
   },
 
   methods: {
+
+    ...mapMutations({
+      setCurrentDsId: 'cards/setCurrentDsId',
+      setCurrentCardsArrray: 'cards/setCurrentCardsArrray',
+      setCurrentCardId: 'cards/setCurrentCardId',
+      setCurrentCardIndex: 'cards/setCurrentCardIndex',
+    }),
 
     // compute card width
     cardWidth ( widthPercent ) {
@@ -276,16 +266,16 @@ export default {
       InteractEventBus.$emit(EVENTS.SKIP)
       // this.emitAndNext('skip')
     },
-    match() {
-      console.log("C-SwipeableCards / match ..." )
-      // InteractEventBus.$emit(EVENTS.MATCH)
-      this.emitAndNext('match')
-    },
-    reject() {
-      console.log("C-SwipeableCards / reject ..." )
-      // InteractEventBus.$emit(EVENTS.REJECT)
-      this.emitAndNext('reject')
-    },
+    // match() {
+    //   console.log("C-SwipeableCards / match ..." )
+    //   // InteractEventBus.$emit(EVENTS.MATCH)
+    //   this.emitAndNext('match')
+    // },
+    // reject() {
+    //   console.log("C-SwipeableCards / reject ..." )
+    //   // InteractEventBus.$emit(EVENTS.REJECT)
+    //   this.emitAndNext('reject')
+    // },
 
     emitAndNext(event) {
 
@@ -317,28 +307,26 @@ export default {
         }
 
         if ( newIndex < 0 ){
-          newIndex = this.cardsLength -1
+          newIndex = this.cardsLength - 1
         }
         console.log("C-SwipeableCards-emitAndNext / newIndex (B) :", newIndex )
         
-        // let newPreviousIndex = newIndex -1 
+        // let newPreviousIndex = newIndex - 1 
 
         // reset deck if no more cards
         if ( newIndex >= this.cardsLength - 1  ){
-          this.index = 0
+          // this.index = 0
+          this.setCurrentCardIndex( 0 )
         } 
         else {
-          this.index = newIndex
+          // this.index = newIndex
+          this.setCurrentCardIndex( newIndex )
         }
 
         this.isVisible = true
         this.getPrevious = false
 
       }, 400 )
-
-      // setTimeout(() => {
-      //   this.getPrevious = false
-      // }, 300)
 
     },
 
@@ -347,12 +335,14 @@ export default {
 
 
     shiftCard() {
+      
       setTimeout(() => {
         this.isShowing = false;
       }, 200);
+
       setTimeout(() => {
-        this.isShowing = true;
-      }, 1000);
+          this.isShowing = true;
+        }, 1000);
     },
 
 

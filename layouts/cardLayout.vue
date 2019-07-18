@@ -16,9 +16,8 @@
     </v-content>
 
     <!-- FOOTER CARDS -->
-    <FooterCards
-      >
-    </FooterCards>
+    <!-- <FooterCards>
+    </FooterCards> -->
 
 
   </v-app>
@@ -29,7 +28,7 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 import Navbar from '~/components/NAV-components/navbar.vue'
-import FooterCards from '~/components/NAV-components/footer-cards'
+// import FooterCards from '~/components/NAV-components/footer-cards'
 
 export default {
 
@@ -37,7 +36,7 @@ export default {
 
   components: {
     Navbar,
-    FooterCards
+    // FooterCards
   },
 
   props: [

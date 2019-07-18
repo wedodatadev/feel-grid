@@ -1,5 +1,6 @@
 <template>
 
+  <div>
   <v-layout 
     fill-height
     row wrap 
@@ -11,27 +12,41 @@
       md6 offset-md3
       >
 
-      <SwipeableCards
+      <!-- <SwipeableCards
         :cardsArray="cardsArray"
         :dsId="dsId"
         :cardId="cardId"
+        > -->
+      <SwipeableCards
         >
+        <!-- :dsId="currentDsId"
+        :cardsArray="currentCardsArrray"
+        :cardId="currentCardId" -->
       </SwipeableCards>
 
     </v-flex>
 
   </v-layout>
 
+  <FooterCards
+    class="fixed-bottom"
+    @reloadPreviousItem="reloadPreviousItem()"
+    >
+  </FooterCards>
+
+  </div>
+
 </template>
 
 
 <script>
 
-import { mapState, mapGetters, mapActions } from 'vuex'
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
 import ArrayShuffler from '~/utils/shuffler.js'
 
 import SwipeableCards from '~/components/UX-components/SwipeableCards'
+import FooterCards from '~/components/NAV-components/footer-cards'
 
 export default {
 
@@ -42,6 +57,7 @@ export default {
 
   components: {
     SwipeableCards,
+    FooterCards
   },
 
   middleware : [
@@ -66,6 +82,7 @@ export default {
       let isDsId = this.datasets.find( ds => { return ds.dsId === currentDsId })
       this.dsId = (isDsId)? currentDsId : firstDatasetId
     }
+    this.setCurrentDsId( this.dsId )
 
     // get dataset corresponding to dsId
     let cardsDataset = this.getOneDataset('datasets', this.dsId)
@@ -88,6 +105,9 @@ export default {
     let currentCard = randomizedCards.find( item => { return currentCardId === String(item[ idField ]) } )
     console.log( "P-CardsPage / currentCard : ", currentCard )
     if ( currentCardId ) {
+
+      this.setCurrentCardId( currentCardId )
+
       // put card on top of the deck 
       randomizedCards = randomizedCards.filter( item => { return item !== currentCard })
       randomizedCards.unshift( currentCard )
@@ -97,6 +117,7 @@ export default {
     // set data stack locally
     // this.cardsArray = cardsArray
     this.cardsArray = randomizedCards
+    this.setCurrentCardsArrray( randomizedCards )
 
   },
 
@@ -104,7 +125,7 @@ export default {
     return {
 
       cardsArray: undefined,
-      dsId: 'aces-contents',
+      dsId: undefined,
       cardId : undefined,
 
     }
@@ -124,6 +145,11 @@ export default {
       correspondanceDicts : state => state.data.correspondanceDicts,
       dataTypes : state => state.data.dataTypes,
 
+      currentDsId : state => state.cards.currentDsId,
+      currentCardsArrray : state => state.cards.currentCardsArrray,
+      currentCardId : state => state.cards.currentCardId,
+      // currentCardIndex : state => state.cards.currentCardIndex,
+      
     }),
 
     ...mapGetters({
@@ -133,9 +159,23 @@ export default {
       currentIdField: 'data/getCurrentIdField',
 
     }),
+
+
   },
 
   methods: {
+
+    ...mapMutations({
+      setCurrentDsId: 'cards/setCurrentDsId',
+      setCurrentCardsArrray: 'cards/setCurrentCardsArrray',
+      setCurrentCardId: 'cards/setCurrentCardId',
+      // setCurrentCardIndex: 'cards/setCurrentCardIndex',
+    }),
+
+    reloadPreviousItem(){
+      console.log( "P-CardsPage-reloadPreviousItem... " )
+    },
+
 
 
     handleCardAccepted() {
@@ -160,6 +200,15 @@ export default {
 
   .skip-navbar-more{
     margin-top: 75px;
+  }
+
+  .fixed-bottom{
+    position: fixed;
+    bottom: 0;
+    left:0;
+    bottom:0;
+    width: 100%;
+    text-align: center;
   }
 
 </style>

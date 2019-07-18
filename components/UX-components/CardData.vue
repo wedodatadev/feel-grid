@@ -44,6 +44,7 @@
             class="headline font-weight-bold text-xs-center px-5"
             >
 
+            <!-- currentDsId : {{ currentDsId }}<br> -->
             {{ itemData && getContentByLocale('mainContent') }}
             <br>
 
@@ -205,16 +206,19 @@ export default {
   props: [
 
     'itemData',
-    'dsId',
+    // 'dsId',
 
     // debug
     'cardWidth',
     'breakPoint',
-    'cardHeights'
+    'cardHeights',
+
+    'currentDsId'
   ],
 
   beforeMount() {
     console.log("C-CardData / beforeMount....")
+    console.log("C-CardData / beforeMount / this.currentDsId : ", this.currentDsId )
     this.idField = this.currentIdField( this.dsId )
     this.resourcesList = this.getCardResourcesFields( this.dsId )
   },
@@ -242,6 +246,8 @@ export default {
 
       log : state => state.log, 
       locale : state => state.locale,
+
+      dsId : state => state.cards.currentDsId,
 
       contentFields : state => state.data.contentFields,
 

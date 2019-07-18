@@ -158,7 +158,7 @@
             </v-icon>
           </v-btn>
         </div>
-
+        
         <v-divider
           v-show="!isDrawerLeft"
           >
@@ -291,6 +291,7 @@ export default {
       locales : state => state.locales,
 
       mainLogoUrl : state => state.mainLogoUrl, 
+
     }),
 
     ...mapGetters({

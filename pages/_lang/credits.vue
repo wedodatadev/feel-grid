@@ -6,6 +6,8 @@
 
     <v-flex 
       xs10 offset-xs1
+      md8 offset-md2
+      lg6 offset-lg3
       >
       
       <h1 class="text-xs-center">
