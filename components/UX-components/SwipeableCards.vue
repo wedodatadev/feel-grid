@@ -34,6 +34,11 @@
 
         interact-block-drag-down
 
+        :interact-block-drag-up="pauseInteract"
+        :interact-block-drag-right="pauseInteract"
+        :interact-block-drag-left="pauseInteract"
+
+
         @draggedRight="emitAndNext('skip')"
         @draggedLeft="emitAndNext('skip')"
         @draggedUp="emitAndNext('skip')"
@@ -178,6 +183,8 @@ export default {
 
       // interactjs
 
+      pauseInteract : false,
+
       // interactEventBus: {
       //   draggedRight: EVENTS.SKIP,
       //   draggedLeft: EVENTS.SKIP,
@@ -281,6 +288,7 @@ export default {
 
     pauseInteract( isPause ){
       console.log("C-SwipeableCards-pauseInteract / isPause :", isPause )
+      this.pauseInteract = isPause
     },
 
     emitAndNext(event) {
