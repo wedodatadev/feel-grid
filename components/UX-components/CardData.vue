@@ -45,7 +45,8 @@
             >
 
             <!-- currentDsId : {{ currentDsId }}<br> -->
-            cookieContent : {{ cookieContent.locale }}
+            cookieContent : {{ cookieContent.locale }} <br>
+            locale (store) : {{ locale }}
             <hr>
 
             {{ itemData && getContentByLocale('mainContent') }}
@@ -285,8 +286,9 @@ export default {
     },
 
     cookieContent(){
-      console.log("C-CardData-cookieContent / document.cookie :", document.cookie)
-      return document.cookie
+      let parsed = cookieparser.parse(document.cookie)
+      console.log("C-CardData-cookieContent / parsed :", parsed)
+      return parsed
     }
 
   },
