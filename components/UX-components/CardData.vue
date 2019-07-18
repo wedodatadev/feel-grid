@@ -17,8 +17,8 @@
 
       <v-card-title 
         ref="cardTitle"
-        class="justify-center pa-0"
-        :style="`height:${ cardHeights['title'] }`"
+        class="justify-center pa-0 absolutePos"
+        :style="`max-height:${ cardHeights['title'] };height:${ cardHeights['title'] }`"
         >
         <h2 class="text-xs-center mb-0">
           xxx AFD LOGO xxx
@@ -30,14 +30,15 @@
 
       <!-- TEXT CONTENTS -->
       <transition name="slide">
+
       <v-layout 
         ref="cardContent"
         v-show="!findMoreActive"
         align-center
         justify-center
-        :class="`${ findMoreActive ? '' : '' }`"
+        :class="`absolutePos ${ findMoreActive ? '' : '' }`"
+        :style="`height:${ cardHeights['content'] }; max-height:${ cardHeights['content'] }`"
         >
-        <!-- :style="`height:${ cardHeights['content'] }`" -->
 
           <v-card-text 
             v-show="!findMoreActive"
@@ -47,7 +48,7 @@
             <!-- currentDsId : {{ currentDsId }}<br> -->
             <!-- cookieContent : {{ cookieContent.locale }} <br> -->
             <!-- locale (store) : {{ locale }}<br> -->
-            triggerFav : {{ triggerFav }}<br>
+            triggerFav : <code>{{ triggerFav }}</code><br>
             <br>
 
             <p>
@@ -82,118 +83,123 @@
       <!-- RESSOURCES CONTENTS -->
       <v-layout 
         ref="cardMore"
-        justify-center
-        :style="`z-index: 5; height:${ cardHeights['more'] }`"
-        :class="`${ findMoreActive ? '' : '' }`"
+        :class="`absolutePos ${ findMoreActive ? '' : '' }`"
+        :style="`z-index: 5; max-height:${ cardHeights['more'] }; height:${ cardHeights['more'] }`"
         row wrap
         >
 
         <!-- FIND MORE TITLE -->
         <v-flex 
+          justify-center
           xs12 
           class="text-uppercase text-xs-center"
           >
-          {{ $t('cards.findMore') }}
-        </v-flex>
-
-        <!-- BTN OPEN/CLOSE -->
-        <v-flex xs12
-          :class="`text-xs-center`"
-          >
+          <p class="mb-0">
+            {{ $t('cards.findMore') }}
+          </p>
           <v-btn 
             flat
             icon
             @click=" findMoreActive = !findMoreActive "
-            :class="`${ findMoreActive? 'close-to-plus-out' : 'close-to-plus-in roll-in' }`"
+            :class="`ma-0 ${ findMoreActive? 'close-to-plus-out' : 'close-to-plus-in roll-in' }`"
             >
             <v-icon
               >
               close
             </v-icon>
           </v-btn>
+
         </v-flex>
+
+        <!-- BTN OPEN/CLOSE -->
+        <!-- <v-flex xs12
+          :class="`text-xs-center`"
+          >
+        </v-flex> -->
         
+      </v-layout>
 
-        <!-- FAVORITES FOOTER -->
-          <!-- fixed -->
-        <!-- <v-content
-          > -->
-          <v-layout
-            color="transparent" 
-            class="px-2"
-            :style="`z-index: 4; height:${ cardHeights['footer'] }`"
-            ref="cardFooter"
-            align-center
-            justify-end
+      <!-- FAVORITES FOOTER -->
+      <v-footer
+        fixed
+        floating
+        color="transparent" 
+        class="px-2 absolutePos"
+        :style="`z-index:4; max-height:${ cardHeights['footer'] }; height:${ cardHeights['footer'] }`"
+        ref="cardFooter"
+        >
+        <v-layout
+          align-center
+          justify-end
+          >
+          <v-btn 
+            icon
+            flat
+            outline
+            dark
+            @click="switchFavorite()"
             >
-            <v-btn 
-              icon
-              flat
-              outline
-              dark
-              @click="switchFavorite()"
+            <v-icon
+              :color="isFavorite ? 'pink' : 'white' "
               >
-              <v-icon
-                :color="isFavorite ? 'pink' : 'white' "
-                >
-                favorite
-              </v-icon>
-            </v-btn>
-          </v-layout>
-        <!-- </v-content> -->
-      
-        <!-- CONTENT RESOURCES -->
-        <transition name="slide">
-          <v-flex xs12
-            :style="`height:${ cardHeights['content'] }`"
-            v-show="findMoreActive"
+              favorite
+            </v-icon>
+          </v-btn>
+        </v-layout>
+      </v-footer>
+    
+      <!-- CONTENT RESOURCES -->
+      <transition name="slide">
+        <v-flex xs12
+          class="absolutePos"
+          :style="`height:${ cardHeights['content'] }`"
+          v-show="findMoreActive"
+          >
+          <v-card-text
             >
-            <v-card-text
-              class=""
+            <v-divider></v-divider>
+
+            <div 
+              :class="`mt-4 limited-height`"
+              :style="`max-height:${ cardHeights['resources'] }`"
               >
-              <v-divider></v-divider>
 
-              <div 
-                :class="`mt-4 limited-height`"
-                :style="`max-height:${ cardHeights['resources'] }`"
+              <v-list-tile
+                v-for="favField in resourcesList.favFields"
+                :key="favField.textFieldCode"
+                style="z-index: 25"
+                class="text-xs-center"
                 >
-
-                <v-list-tile
-                  v-for="favField in resourcesList.favFields"
-                  :key="favField.textFieldCode"
-                  style="z-index: 25"
-                  class="text-xs-center"
+                
+                <v-list-tile-action
+                  class="near-icon"
                   >
-                  
-                  <v-list-tile-action
-                    class="near-icon"
-                    >
-                    <v-icon small>
-                      fas fa-arrow-right
-                    </v-icon>
-                  </v-list-tile-action>
+                  <v-icon small>
+                    fas fa-arrow-right
+                  </v-icon>
+                </v-list-tile-action>
 
-                  <v-list-tile-content>
-                    <v-list-tile-title>
-                      <a 
-                        class="white--text"
-                        :href="itemData[ favField.linkFieldCode ]"
-                        >
-                        {{ itemData[ favField.textFieldCode ] }}
-                      </a>
-                    </v-list-tile-title>
-                  </v-list-tile-content>
+                <v-list-tile-content>
+                  <v-list-tile-title>
+                    <a 
+                      class="white--text"
+                      :href="itemData[ favField.linkFieldCode ]"
+                      >
+                      {{ itemData[ favField.textFieldCode ] }}
+                    </a>
+                  </v-list-tile-title>
+                </v-list-tile-content>
 
 
-                </v-list-tile>
+              </v-list-tile>
 
 
-              </div>
+            </div>
 
-            </v-card-text>
+          </v-card-text>
 
-          </v-flex>
-        </transition>
+        </v-flex>
+      </transition>
 
 
 
@@ -392,6 +398,10 @@ export default {
 
 <style lang="scss" scoped>
 
+.absolutePos{
+  // position: absolute;
+  // left: 50vw;
+}
 .rounded-borders {
   border-radius: 12px;
 }

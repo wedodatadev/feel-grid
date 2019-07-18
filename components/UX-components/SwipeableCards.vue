@@ -155,7 +155,7 @@ export default {
       breakPointCode : undefined,
       windowWidth : 0,
   
-      cardHeight: "80vh",
+      cardHeight: "75vh",
       cardHeights: {
         title: "10vh",
         content: "50vh",
