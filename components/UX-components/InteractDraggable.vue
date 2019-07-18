@@ -166,7 +166,10 @@ export default {
         else if (cardPositionY < -interactYThreshold) this.interactDraggedUp();
         else this.interactResetCardPosition();
       },
-    });
+    })
+    .on('tap', function (event){
+      console.log('C-InteractDraggable-on-tap / event : ', event)
+    })
   },
 
   beforeDestroy() {
