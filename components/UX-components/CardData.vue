@@ -50,6 +50,20 @@
             triggerFav : {{ triggerFav }}<br>
             <hr>
 
+            <v-btn 
+              icon
+              flat
+              outline
+              dark
+              @click="switchFavorite()"
+              >
+              <v-icon
+                :color="isFavorite ? 'pink' : 'white' "
+                >
+                favorite
+              </v-icon>
+            </v-btn>
+            
             {{ itemData && getContentByLocale('mainContent') }}
             <br>
 
