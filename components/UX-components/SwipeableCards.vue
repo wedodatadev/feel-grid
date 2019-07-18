@@ -157,7 +157,7 @@ export default {
   ],
   mounted: function() {
     console.log("C-SwipeableCards / mounted....")
-    const draggable = interact('.vue-interact-animated').ignoreFrom('btn')
+    const draggable = interact('.vue-interact-animated').ignoreFrom('button')
   },
   data() {
     return {

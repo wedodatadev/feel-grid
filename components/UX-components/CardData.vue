@@ -51,7 +51,7 @@
               <!-- cookieContent : {{ cookieContent.locale }} <br> -->
               <!-- locale (store) : {{ locale }}<br> -->
               isPauseInteractParent : <code>{{ isPauseInteractParent }}</code><br>
-              device : <code>{{ $device }}</code><br>
+              <!-- device : <code>{{ $device }}</code><br> -->
               isPauseInteract : <code>{{ isPauseInteract }}</code><br>
               triggerFav : <code>{{ triggerFav }}</code><br>
 
@@ -328,17 +328,17 @@ export default {
       return this.itemData[ fieldByLocale ]
     },
     computeContentHeight(){
-      console.log("C-CardData-computeContentHeight..." )
-      console.log("C-CardData-computeContentHeight / this.$refs :", this.$refs )
+      // console.log("C-CardData-computeContentHeight..." )
+      // console.log("C-CardData-computeContentHeight / this.$refs :", this.$refs )
       // if ( this.cardData != {} ){
         let heightCard = this.$refs.currentCard.clientHeight
         let heightTitle = this.$refs.cardTitle.clientHeight
         let heightFooter = this.$refs.cardFooter.clientHeight
-        console.log("C-CardData-computeContentHeight / heightCard :", heightCard )
-        console.log("C-CardData-computeContentHeight / heightTitle :", heightTitle )
-        console.log("C-CardData-computeContentHeight / heightFooter :", heightFooter )
+        // console.log("C-CardData-computeContentHeight / heightCard :", heightCard )
+        // console.log("C-CardData-computeContentHeight / heightTitle :", heightTitle )
+        // console.log("C-CardData-computeContentHeight / heightFooter :", heightFooter )
         let heightContent = heightCard - ( heightTitle + heightFooter )
-        console.log("C-CardData-computeContentHeight / heightContent :", heightContent )
+        // console.log("C-CardData-computeContentHeight / heightContent :", heightContent )
     
         return heightContent
       // } else {
