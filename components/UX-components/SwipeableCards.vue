@@ -157,6 +157,7 @@ export default {
   ],
   mounted: function() {
     console.log("C-SwipeableCards / mounted....")
+    const draggable = interact('.vue-interact-animated').ignoreFrom('btn')
   },
   data() {
     return {
@@ -270,9 +271,11 @@ export default {
     //   // InteractEventBus.$emit(EVENTS.REJECT)
     //   this.emitAndNext('reject')
     // },
-    stopPropagation(event){
+    stopPropagation(e){
       console.log("C-SwipeableCards-stopPropagation / event : ", event )
-      event.stopPropagation()
+      e.stopImmediatePropagation()
+      e.stopPropagation()
+      e.preventDefault()
     },
     pauseInteract( isPause ){
       console.log("C-SwipeableCards-pauseInteract / isPause :", isPause )
