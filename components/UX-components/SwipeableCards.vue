@@ -25,7 +25,7 @@
         id="mainDraggableCard"
         class="full-height"
 
-        :interact-out-of-sight-x-coordinate="500"
+        :interact-out-of-sight-x-coordinate="700"
         :interact-max-rotation="15"
         :interact-x-threshold="200"
         :interact-y-threshold="200"
@@ -38,6 +38,9 @@
         :interact-block-drag-right="needPauseInteract"
         :interact-block-drag-left="needPauseInteract"
 
+        :interact-lock-swipe-up="needPauseInteract"
+        :interact-lock-swipe-right="needPauseInteract"
+        :interact-lock-swipe-left="needPauseInteract"
 
         @draggedRight="emitAndNext('skip')"
         @draggedLeft="emitAndNext('skip')"
@@ -244,7 +247,8 @@ export default {
     // cf : https://codesandbox.io/s/5wo373kqwk
     skip() {
       console.log("C-SwipeableCards / skip ..." )
-      InteractEventBus.$emit(EVENTS.SKIP)
+      // InteractEventBus.$emit(EVENTS.SKIP)
+      InteractEventBus.$emit(INTERACT_EVENTS.INTERACT_DRAGGED_RIGHT)
       // this.emitAndNext('skip')
     },
     // match() {
