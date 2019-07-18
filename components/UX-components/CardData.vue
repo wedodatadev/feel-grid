@@ -1,7 +1,7 @@
 <template>
 
     <v-card
-      color="primary"
+      :color="'primary'"
       class="full-height rounded-borders"
       ref="currentCard"
       dark
@@ -30,68 +30,94 @@
 
       <!-- TEXT CONTENTS -->
       <transition name="slide">
+        <v-layout 
+          ref="cardContent"
+          v-show="!findMoreActive"
+          :class="`absolutePos ${ findMoreActive ? '' : '' }`"
+          :style="`height:${ cardHeights['content'] }; max-height:${ cardHeights['content'] }`"
+          align-center
+          justify-center
+          >
 
-      <v-layout 
-        ref="cardContent"
-        v-show="!findMoreActive"
-        align-center
-        justify-center
-        :class="`absolutePos ${ findMoreActive ? '' : '' }`"
-        :style="`height:${ cardHeights['content'] }; max-height:${ cardHeights['content'] }`"
-        >
-
-          <v-card-text 
+          <v-flex
             v-show="!findMoreActive"
-            class="headline font-weight-bold text-xs-center px-5"
+            class="text-xs-center px-5"
             >
+            <!-- <v-card-text 
+              > -->
 
-            <!-- currentDsId : {{ currentDsId }}<br> -->
-            <!-- cookieContent : {{ cookieContent.locale }} <br> -->
-            <!-- locale (store) : {{ locale }}<br> -->
-            triggerFav : <code>{{ triggerFav }}</code><br>
-            <br>
+              <p class="caption">
+              <!-- currentDsId : {{ currentDsId }}<br> -->
+              <!-- cookieContent : {{ cookieContent.locale }} <br> -->
+              <!-- locale (store) : {{ locale }}<br> -->
+              triggerHover : <code>{{ triggerHover }}</code><br>
+              triggerFav : <code>{{ triggerFav }}</code><br>
+              </p>
 
-            <p>
-              {{ itemData && getContentByLocale('mainContent') }}
-            </p>
+              <br>
 
-            <p>
-              <v-btn 
-                icon
-                flat
-                outline
-                dark
-                @click.native="switchFavorite"
-                >
-                <v-icon
-                  :color="isFavorite ? 'pink' : 'white' "
+              <p class="headline font-weight-bold ">
+                {{ itemData && getContentByLocale('mainContent') }}
+              </p>
+
+              <!-- <p>
+                <v-btn 
+                  icon
+                  flat
+                  outline
+                  dark
+                  @click.native="switchFavorite"
                   >
-                  favorite
-                </v-icon>
-              </v-btn>
-            </p>
+                  <v-icon
+                    :color="isFavorite ? 'pink' : 'white' "
+                    >
+                    favorite
+                  </v-icon>
+                </v-btn>
+              </p> -->
 
-            <br>
+            <!-- </v-card-text> -->
+          </v-flex> 
 
-          </v-card-text>
-
-      </v-layout> 
+        </v-layout> 
       </transition>
 
+
+      <!-- <v-container fluid grid-list-xl> -->
+
+        <!-- <v-layout row>
+
+          <v-flex xs8 offset-xs2 justify-center>
+            <v-card dark color="secondary">
+              <v-card-text>two</v-card-text>
+            </v-card>
+          </v-flex>
+
+          <v-flex xs2>
+            <v-card dark color="accent">
+              <v-card-text>three</v-card-text>
+            </v-card>
+          </v-flex>
+
+        </v-layout> -->
+        
+      <!-- </v-container> -->
 
 
       <!-- RESSOURCES CONTENTS -->
       <v-layout 
         ref="cardMore"
-        :class="`absolutePos ${ findMoreActive ? '' : '' }`"
-        :style="`z-index: 5; max-height:${ cardHeights['more'] }; height:${ cardHeights['more'] }`"
-        row wrap
+        :class="`pb-3 absolutePos ${ findMoreActive ? '' : '' }`"
+        :style="`z-index: 6; max-height:${ cardHeights['more'] }; height:${ cardHeights['more'] }`"
+        row
+        align-end
         >
 
         <!-- FIND MORE TITLE -->
         <v-flex 
           justify-center
-          xs12 
+          align-center
+          xs8 offset-xs2
           class="text-uppercase text-xs-center"
           >
           <p class="mb-0">
@@ -111,6 +137,34 @@
 
         </v-flex>
 
+          <!-- :style="`z-index:4; max-height:${ cardHeights['footer'] }; height:${ cardHeights['footer'] }`" -->
+        <v-flex
+          xs2
+          color="transparent" 
+          class="pr-2 absolutePos "
+          ref="cardFooter"
+          >
+          <v-layout
+            align-center
+            justify-end
+            >
+            <v-btn 
+              icon
+              flat
+              outline
+              dark
+              @click="switchFavorite()"
+              @mouseover="switchHover()"
+              >
+              <v-icon
+                :color="isFavorite ? 'pink' : 'white' "
+                >
+                favorite
+              </v-icon>
+            </v-btn>
+          </v-layout>
+        </v-flex>
+
         <!-- BTN OPEN/CLOSE -->
         <!-- <v-flex xs12
           :class="`text-xs-center`"
@@ -120,11 +174,11 @@
       </v-layout>
 
       <!-- FAVORITES FOOTER -->
-      <v-footer
-        fixed
-        floating
+        <!-- fixed
+        floating -->
+      <!-- <v-flex
         color="transparent" 
-        class="px-2 absolutePos"
+        class="px-2 absolutePos "
         :style="`z-index:4; max-height:${ cardHeights['footer'] }; height:${ cardHeights['footer'] }`"
         ref="cardFooter"
         >
@@ -146,7 +200,7 @@
             </v-icon>
           </v-btn>
         </v-layout>
-      </v-footer>
+      </v-flex> -->
     
       <!-- CONTENT RESOURCES -->
       <transition name="slide">
@@ -269,7 +323,8 @@ export default {
 
       findMoreActive: false,
 
-      // debug cookies
+      // debug cookies - btns - mobile
+      triggerHover : false,
       triggerFav : false,
 
     }
@@ -312,6 +367,10 @@ export default {
         'itemId': String(itemId),
       }
       return this.isInFavorites( itemPayload )
+    },
+
+    chooseBackground() {
+      
     },
 
     cookieContent(){
@@ -372,6 +431,10 @@ export default {
       // } else {
       //   return 
       // }
+    },
+
+    switchHover(){
+      this.triggerHover = !this.triggerHover
     },
 
     switchFavorite(){
