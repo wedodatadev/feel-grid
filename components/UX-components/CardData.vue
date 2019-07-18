@@ -50,7 +50,7 @@
               <!-- currentDsId : {{ currentDsId }}<br> -->
               <!-- cookieContent : {{ cookieContent.locale }} <br> -->
               <!-- locale (store) : {{ locale }}<br> -->
-              triggerHover : <code>{{ triggerHover }}</code><br>
+              isPauseInteract : <code>{{ isPauseInteract }}</code><br>
               triggerFav : <code>{{ triggerFav }}</code><br>
               </p>
 
@@ -81,27 +81,6 @@
 
         </v-layout> 
       </transition>
-
-
-      <!-- <v-container fluid grid-list-xl> -->
-
-        <!-- <v-layout row>
-
-          <v-flex xs8 offset-xs2 justify-center>
-            <v-card dark color="secondary">
-              <v-card-text>two</v-card-text>
-            </v-card>
-          </v-flex>
-
-          <v-flex xs2>
-            <v-card dark color="accent">
-              <v-card-text>three</v-card-text>
-            </v-card>
-          </v-flex>
-
-        </v-layout> -->
-        
-      <!-- </v-container> -->
 
 
       <!-- RESSOURCES CONTENTS -->
@@ -137,6 +116,7 @@
 
         </v-flex>
 
+        <!-- FAVORITES FOOTER -->
           <!-- :style="`z-index:4; max-height:${ cardHeights['footer'] }; height:${ cardHeights['footer'] }`" -->
         <v-flex
           xs2
@@ -154,7 +134,8 @@
               outline
               dark
               @click.native="switchFavorite()"
-              @mouseover="switchHover()"
+              @mouseenter="switchHover()"
+              @mouseleave="switchHover()"
               >
               <v-icon
                 :color="isFavorite ? 'pink' : 'white' "
@@ -164,43 +145,10 @@
             </v-btn>
           </v-layout>
         </v-flex>
-
-        <!-- BTN OPEN/CLOSE -->
-        <!-- <v-flex xs12
-          :class="`text-xs-center`"
-          >
-        </v-flex> -->
         
       </v-layout>
 
-      <!-- FAVORITES FOOTER -->
-        <!-- fixed
-        floating -->
-      <!-- <v-flex
-        color="transparent" 
-        class="px-2 absolutePos "
-        :style="`z-index:4; max-height:${ cardHeights['footer'] }; height:${ cardHeights['footer'] }`"
-        ref="cardFooter"
-        >
-        <v-layout
-          align-center
-          justify-end
-          >
-          <v-btn 
-            icon
-            flat
-            outline
-            dark
-            @click="switchFavorite()"
-            >
-            <v-icon
-              :color="isFavorite ? 'pink' : 'white' "
-              >
-              favorite
-            </v-icon>
-          </v-btn>
-        </v-layout>
-      </v-flex> -->
+
     
       <!-- CONTENT RESOURCES -->
       <transition name="slide">
@@ -324,7 +272,7 @@ export default {
       findMoreActive: false,
 
       // debug cookies - btns - mobile
-      triggerHover : false,
+      isPauseInteract : false,
       triggerFav : false,
 
     }
@@ -434,7 +382,9 @@ export default {
     },
 
     switchHover(){
-      this.triggerHover = !this.triggerHover
+      console.log("C-CardData-switchHover..." )
+      this.isPauseInteract = !this.isPauseInteract
+      this.$emit('pauseInteract', this.isPauseInteract)
     },
 
     switchFavorite(){
@@ -444,6 +394,7 @@ export default {
       // debug cookies mobile 
       this.triggerFav = !this.triggerFav
 
+
       // InteractEventBus.$emit(EVENTS.MATCH)
       let payload = {
         item : this.itemData,
@@ -452,7 +403,7 @@ export default {
       }
       // this.$store.dispatch('users/switchFavorite', this.cardData)
       this.$store.dispatch('users/switchFavorite', payload )
-
+      
     },
 
   }

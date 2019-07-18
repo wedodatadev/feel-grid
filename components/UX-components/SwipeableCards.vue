@@ -22,6 +22,7 @@
 
       <Vue2InteractDraggable
         v-if="isVisible"
+        id="mainDraggableCard"
         class="full-height"
 
         :interact-out-of-sight-x-coordinate="500"
@@ -34,7 +35,7 @@
         interact-block-drag-down
 
         @draggedRight="emitAndNext('skip')"
-        @draggedLeft="emitAndNext('previous')"
+        @draggedLeft="emitAndNext('skip')"
         @draggedUp="emitAndNext('skip')"
 
         >
@@ -60,6 +61,7 @@
 
           :cardWidth="cardWidth( .9 )"
           :breakPoint="this.$vuetify.breakpoint.name"
+          @pauseInteract="pauseInteract"
           >
         </CardData>
 
@@ -277,13 +279,17 @@ export default {
     //   this.emitAndNext('reject')
     // },
 
+    pauseInteract( isPause ){
+      console.log("C-SwipeableCards-pauseInteract / isPause :", isPause )
+    },
+
     emitAndNext(event) {
 
       console.log("C-SwipeableCards-emitAndNext / event :", event )
       console.log("C-SwipeableCards-emitAndNext / this.index (A) :", this.index )
 
       // emit event to parent
-      this.$emit(event, this.index)
+      // this.$emit(event, this.index)
 
       // make card disappear
       setTimeout(() => {
