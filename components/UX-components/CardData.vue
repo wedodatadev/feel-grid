@@ -50,9 +50,11 @@
               <!-- currentDsId : {{ currentDsId }}<br> -->
               <!-- cookieContent : {{ cookieContent.locale }} <br> -->
               <!-- locale (store) : {{ locale }}<br> -->
-              <!-- isPauseInteractParent : <code>{{ isPauseInteractParent }}</code><br> -->
+              isPauseInteractParent : <code>{{ isPauseInteractParent }}</code><br>
+              device : <code>{{ $device }}</code><br>
               isPauseInteract : <code>{{ isPauseInteract }}</code><br>
               triggerFav : <code>{{ triggerFav }}</code><br>
+
               </p>
 
               <br>
@@ -140,7 +142,7 @@
               
               @click.native="switchFavorite()"
               >
-              <!-- v-touch:tap="switchFavorite()" -->
+              <!-- v-touch:tap="switchFavorite('tap')" -->
               <v-icon
                 :color="isFavorite ? 'pink' : 'white' "
                 >
@@ -226,9 +228,14 @@
 // based and adapted from : https://www.josephharveyangeles.com/blog/2019/kittynder
 var cookieparser = require('cookieparser')
 import Cookie from 'js-cookie'
+
 import { mapState, mapGetters, mapActions } from 'vuex'
+
+import interact from 'interact.js'
 import { InteractEventBus } from 'vue2-interact'
+
 import { EVENTS, INTERACT_EVENTS } from "~/config/interactEvents.js"
+
 export default {
   name: 'CardData',
   components: { 
@@ -238,7 +245,7 @@ export default {
     // 'dsId',
     
     // debug
-    // 'isPauseInteractParent',
+    'isPauseInteractParent',
 
     'cardWidth',
     'breakPoint',
@@ -343,8 +350,11 @@ export default {
       this.isPauseInteract = !this.isPauseInteract
       this.$emit('needPauseInteract', this.isPauseInteract)
     },
-    switchFavorite(){
+
+    switchFavorite( clickType=undefined ){
+
       console.log("C-CardData-addAsFavorite..." )
+      console.log("C-CardData-addAsFavorite / clickType :", clickType )
       // debug cookies mobile 
       this.triggerFav = !this.triggerFav
       // InteractEventBus.$emit(EVENTS.MATCH)

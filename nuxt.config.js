@@ -212,6 +212,8 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
 
+    'nuxt-device-detect',
+
   ],
 
   devModules: [

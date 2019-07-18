@@ -70,11 +70,12 @@
           :cardWidth="cardWidth( .9 )"
           :breakPoint="this.$vuetify.breakpoint.name"
 
+          :isPauseInteractParent="isPauseInteract"
 
           @needPauseInteract="pauseInteract"
+          @click="stopPropagation"
           >
         </CardData>
-          <!-- :isPauseInteractParent="isPauseInteract" -->
 
       </Vue2InteractDraggable>
 
@@ -223,12 +224,14 @@ export default {
     },
   },
   methods: {
+
     ...mapMutations({
       setCurrentDsId: 'cards/setCurrentDsId',
       setCurrentCardsArrray: 'cards/setCurrentCardsArrray',
       setCurrentCardId: 'cards/setCurrentCardId',
       setCurrentCardIndex: 'cards/setCurrentCardIndex',
     }),
+
     // compute card width
     cardWidth ( widthPercent ) {
       let maxWidth = 100
@@ -267,6 +270,10 @@ export default {
     //   // InteractEventBus.$emit(EVENTS.REJECT)
     //   this.emitAndNext('reject')
     // },
+    stopPropagation(event){
+      console.log("C-SwipeableCards-stopPropagation / event : ", event )
+      event.stopPropagation()
+    },
     pauseInteract( isPause ){
       console.log("C-SwipeableCards-pauseInteract / isPause :", isPause )
       this.isPauseInteract = isPause
