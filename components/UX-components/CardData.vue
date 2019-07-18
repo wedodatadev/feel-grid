@@ -105,11 +105,11 @@
           <p class="mb-0">
             {{ $t('cards.findMore') }}
           </p>
-          <v-btn 
+          <v-btn
             flat
             icon
             @click=" findMoreActive = !findMoreActive "
-            :class="`ma-0 ${ findMoreActive? 'close-to-plus-out' : 'close-to-plus-in roll-in' }`"
+            :class="`card-button ma-0 ${ findMoreActive? 'close-to-plus-out' : 'close-to-plus-in roll-in' }`"
             >
             <v-icon
               >
@@ -132,6 +132,7 @@
             justify-end
             >
             <v-btn 
+              class="card-button"
               icon
               flat
               outline

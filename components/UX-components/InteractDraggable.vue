@@ -129,7 +129,7 @@ export default {
 
     interact(element).draggable({
 
-      ignoreFrom : 'button',
+      ignoreFrom : '.card-button',
 
       onstart: () => {
         this.interactIsAnimating = false;
