@@ -20,9 +20,10 @@
       :style="`z-index: 3; width:${ cardWidth( .9 )}; height:${ cardHeight }`"
       >
 
-      <Vue2InteractDraggable
+      <InteractDraggable
         v-if="isVisible"
         id="mainDraggableCard"
+        ref="mainDraggableCard"
         class="full-height"
 
         :interact-out-of-sight-x-coordinate="700"
@@ -77,7 +78,7 @@
           >
         </CardData>
 
-      </Vue2InteractDraggable>
+      </InteractDraggable>
 
     </v-flex>
 
@@ -138,17 +139,21 @@
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
 import interact from 'interact.js'
-import { Vue2InteractDraggable, InteractEventBus } from 'vue2-interact'
+// import { Vue2InteractDraggable, InteractEventBus } from 'vue2-interact'
+import { InteractEventBus } from 'vue2-interact'
 
 import CardData from '~/components/UX-components/CardData'
+import InteractDraggable from '~/components/UX-components/InteractDraggable'
+
 
 import { EVENTS, INTERACT_EVENTS } from "~/config/interactEvents.js"
 
 export default {
   name: 'SwipeableCards',
   components: { 
-    Vue2InteractDraggable,
-    CardData
+    CardData,
+    InteractDraggable,
+    // Vue2InteractDraggable,
   },
   props: [
     // 'cardsArray',
@@ -157,7 +162,7 @@ export default {
   ],
   mounted: function() {
     console.log("C-SwipeableCards / mounted....")
-    interact('.vue-interact-animated').draggable({ ignoreFrom : 'button' })
+    // interact('.vue-interact-animated').draggable({ ignoreFrom : 'button' })
   },
   data() {
     return {
