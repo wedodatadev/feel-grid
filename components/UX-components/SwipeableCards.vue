@@ -34,9 +34,9 @@
 
         interact-block-drag-down
 
-        :interact-block-drag-up="pauseInteract"
-        :interact-block-drag-right="pauseInteract"
-        :interact-block-drag-left="pauseInteract"
+        :interact-block-drag-up="needPauseInteract"
+        :interact-block-drag-right="needPauseInteract"
+        :interact-block-drag-left="needPauseInteract"
 
 
         @draggedRight="emitAndNext('skip')"
@@ -66,7 +66,10 @@
 
           :cardWidth="cardWidth( .9 )"
           :breakPoint="this.$vuetify.breakpoint.name"
-          @pauseInteract="pauseInteract"
+
+          :isPauseInteractParent="isPauseInteract"
+
+          @needPauseInteract="pauseInteract"
           >
         </CardData>
 
@@ -111,7 +114,6 @@
 
 
 <script>
-
 // interactjs
 // based and adapted from : https://www.josephharveyangeles.com/blog/2019/kittynder
 // interactjs docs & help 
@@ -128,33 +130,24 @@
 // cf : https://nuxtjs.org/examples/routes-transitions/
 // cf : https://nuxtjs.org/api/pages-transition/
 // cf : https://codesandbox.io/embed/2xovlqpv9n
-
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
-
 import { Vue2InteractDraggable, InteractEventBus } from 'vue2-interact'
 import CardData from '~/components/UX-components/CardData'
-
 import { EVENTS, INTERACT_EVENTS } from "~/config/interactEvents.js"
-
 export default {
-
   name: 'SwipeableCards',
-
   components: { 
     Vue2InteractDraggable,
     CardData
   },
-
   props: [
     // 'cardsArray',
     // 'dsId',
     // 'cardId'
   ],
-
   mounted: function() {
     console.log("C-SwipeableCards / mounted....")
   },
-
   data() {
     return {
       
@@ -170,21 +163,14 @@ export default {
         resources: "39vh",
         // footer: "8vh"
       },
-
       // cards iteration variables
       isVisible: true,
-
       // cards: [],
       // cardsLength: 0,
       // index: 0,
-
       getPrevious: false,
-
-
       // interactjs
-
-      pauseInteract : false,
-
+      isPauseInteract : false,
       // interactEventBus: {
       //   draggedRight: EVENTS.SKIP,
       //   draggedLeft: EVENTS.SKIP,
@@ -196,29 +182,21 @@ export default {
         draggedLeft: INTERACT_EVENTS.INTERACT_DRAGGED_LEFT,
         draggedUp: INTERACT_EVENTS.INTERACT_DRAGGED_UP
       },      
-
-
       
     }
   },
-
   computed: {
-
     ...mapState({
       log : state => state.log, 
       locale : state => state.locale,
-
       dsId : state => state.cards.currentDsId,
       cards : state => state.cards.currentCardsArrray,
       cardId : state => state.cards.currentCardId,
       index : state => state.cards.currentCardIndex,
-
     }),
-
     ...mapGetters({
       cardsLength : 'cards/getCardsArrrayLength',
     }),
-
     current() {
       return this.cards && this.cards[ this.index ]
     },
@@ -234,18 +212,14 @@ export default {
         return this.cards && this.cards[ -1 ]
       }
     },
-
   },
-
   methods: {
-
     ...mapMutations({
       setCurrentDsId: 'cards/setCurrentDsId',
       setCurrentCardsArrray: 'cards/setCurrentCardsArrray',
       setCurrentCardId: 'cards/setCurrentCardId',
       setCurrentCardIndex: 'cards/setCurrentCardIndex',
     }),
-
     // compute card width
     cardWidth ( widthPercent ) {
       let maxWidth = 100
@@ -259,7 +233,6 @@ export default {
         case 'xl': return ( zWidth - (step * 7) ) + 'vw'
       }
     },
-
     getNexCard(){
       if ( !this.getPrevious ){
         return this.next
@@ -267,8 +240,7 @@ export default {
         return this.previous
       }
     },
-
-    // WARNING ! careful to study thius before
+    // WARNING ! careful to study this before
     // cf : https://codesandbox.io/s/5wo373kqwk
     skip() {
       console.log("C-SwipeableCards / skip ..." )
@@ -285,20 +257,15 @@ export default {
     //   // InteractEventBus.$emit(EVENTS.REJECT)
     //   this.emitAndNext('reject')
     // },
-
     pauseInteract( isPause ){
       console.log("C-SwipeableCards-pauseInteract / isPause :", isPause )
-      this.pauseInteract = isPause
+      this.isPauseInteract = isPause
     },
-
     emitAndNext(event) {
-
       console.log("C-SwipeableCards-emitAndNext / event :", event )
       console.log("C-SwipeableCards-emitAndNext / this.index (A) :", this.index )
-
       // emit event to parent
       // this.$emit(event, this.index)
-
       // make card disappear
       setTimeout(() => {
         console.log("C-SwipeableCards-emitAndNext / setTimeout disappear..." )
@@ -307,26 +274,21 @@ export default {
           this.getPrevious = true
         }
       }, 300)
-
       // show next card by adding +1 to index
       setTimeout(() => {
         console.log("C-SwipeableCards-emitAndNext / setTimeout reappear..." )
-
         let newIndex = this.index
-
         if ( event === 'previous' ){
           newIndex -= 1
         } else {
           newIndex += 1
         }
-
         if ( newIndex < 0 ){
           newIndex = this.cardsLength - 1
         }
         console.log("C-SwipeableCards-emitAndNext / newIndex (B) :", newIndex )
         
         // let newPreviousIndex = newIndex - 1 
-
         // reset deck if no more cards
         if ( newIndex >= this.cardsLength - 1  ){
           // this.index = 0
@@ -336,87 +298,60 @@ export default {
           // this.index = newIndex
           this.setCurrentCardIndex( newIndex )
         }
-
         this.isVisible = true
         this.getPrevious = false
-
       }, 400 )
-
     },
-
-
-
-
-
     shiftCard() {
       
       setTimeout(() => {
         this.isShowing = false;
       }, 200);
-
       setTimeout(() => {
           this.isShowing = true;
         }, 1000);
     },
-
-
-
     // draggedDown() {
     //   console.log("dragged down!");
     //   this.shiftCard();
     // },
-
     draggedLeft() {
       console.log("dragged left!");
       this.shiftCard();
     },
-
     draggedRight() {
       console.log("dragged right!");
       this.shiftCard();
     },
-
     draggedUp() {
       console.log("dragged up!");
       this.shiftCard();
     },
-
-
-
     // dragDown() {
     //   InteractEventBus.$emit(INTERACT_EVENTS.INTERACT_DRAGGED_DOWN);
     // },
-
     dragLeft() {
       InteractEventBus.$emit(INTERACT_EVENTS.INTERACT_DRAGGED_LEFT);
     },
-
     dragRight() {
       InteractEventBus.$emit(INTERACT_EVENTS.INTERACT_DRAGGED_RIGHT);
     },
-
     dragUp() {
       InteractEventBus.$emit(INTERACT_EVENTS.INTERACT_DRAGGED_UP);
     },
-
-
-
   }
 }
 </script>
 
 <style lang="scss" scoped>
-
 .full-height{
   height: 100%;
 }
-
 // .container {
 //   // background: #eceff1;
 //   width: 100%;
 //   height: 100vh;
 // }
-
 // .header {
 //   width: 100%;
 //   height: 60vh;
@@ -443,7 +378,6 @@ export default {
 //     padding: 24px;
 //   }
 // }
-
 // .footer {
 //   width: 77vw;
 //   bottom: 0;
@@ -454,7 +388,6 @@ export default {
 //   justify-content: space-around;
 //   align-items: center;
 // }
-
 // .btn {
 //   position: relative;
 //   width: 50px;
@@ -495,7 +428,6 @@ export default {
 //     color: green;
 //   }
 // }
-
 // .flex {
 //   display: flex;
 //   &--center {
@@ -503,7 +435,6 @@ export default {
 //     justify-content: center;
 //   }
 // }
-
 .fixed {
   position: fixed;
   &--center {
@@ -515,19 +446,16 @@ export default {
 // .rounded-borders {
 //   border-radius: 12px;
 // }
-
 .card {
   // height: 70vh;
   // height: 85%;
   // color: black;
-
   // img {
     //   object-fit: cover;
   //   display: block;
   //   width: 100%;
   //   height: 100%;
   // }
-
   &--one {
     // width: 80vw;
     // width: 100%;
@@ -553,7 +481,6 @@ export default {
     transform: translate(-50%, -54%);
     // box-shadow: 0 10px 13px -6px rgba(0,0,0,.2), 0 20px 31px 3px rgba(0,0,0,.14), 0 8px 38px 7px rgba(0,0,0,.12);
   }
-
   // .text {
   //   position: absolute;
   //   bottom: 0;
@@ -568,11 +495,9 @@ export default {
   //   }
   // }
 }
-
 .transition {
   animation: appear 400ms ease-in;
 }
-
 @keyframes appear {
   from {
     transform: translate(-50%, -47%);

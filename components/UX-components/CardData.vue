@@ -47,17 +47,18 @@
               > -->
 
               <p class="caption">
-              <!-- currentDsId : {{ currentDsId }}<br> -->
+              <!-- currentDsId : {{ currentDsId }}<br> -->
               <!-- cookieContent : {{ cookieContent.locale }} <br> -->
-              <!-- locale (store) : {{ locale }}<br> -->
+              <!-- locale (store) : {{ locale }}<br> -->
+              isPauseInteractParent : <code>{{ isPauseInteractParent }}</code><br>
               isPauseInteract : <code>{{ isPauseInteract }}</code><br>
-              triggerFav : <code>{{ triggerFav }}</code><br>
+              triggerFav : <code>{{ triggerFav }}</code><br>
               </p>
 
               <br>
 
               <p class="headline font-weight-bold ">
-                {{ itemData && getContentByLocale('mainContent') }}
+                {{ itemData && getContentByLocale('mainContent') }}
               </p>
 
               <!-- <p>
@@ -100,7 +101,7 @@
           class="text-uppercase text-xs-center"
           >
           <p class="mb-0">
-            {{ $t('cards.findMore') }}
+            {{ $t('cards.findMore') }}
           </p>
           <v-btn 
             flat
@@ -187,7 +188,7 @@
                       class="white--text"
                       :href="itemData[ favField.linkFieldCode ]"
                       >
-                      {{ itemData[ favField.textFieldCode ] }}
+                      {{ itemData[ favField.textFieldCode ] }}
                     </a>
                   </v-list-tile-title>
                 </v-list-tile-content>
@@ -219,182 +220,129 @@
 
 
 <script>
-
 // based and adapted from : https://www.josephharveyangeles.com/blog/2019/kittynder
 var cookieparser = require('cookieparser')
 import Cookie from 'js-cookie'
-
 import { mapState, mapGetters, mapActions } from 'vuex'
 import { InteractEventBus } from 'vue2-interact'
-
 import { EVENTS, INTERACT_EVENTS } from "~/config/interactEvents.js"
-
-
 export default {
-
   name: 'CardData',
-
   components: { 
   },
-
   props: [
-
     'itemData',
     // 'dsId',
-
+    
     // debug
+    'isPauseInteractParent',
+
     'cardWidth',
     'breakPoint',
     'cardHeights',
-
     'currentDsId'
   ],
-
   beforeMount() {
     console.log("C-CardData / beforeMount....")
     console.log("C-CardData / beforeMount / this.currentDsId : ", this.currentDsId )
     this.idField = this.currentIdField( this.dsId )
     this.resourcesList = this.getCardResourcesFields( this.dsId )
   },
-
   mounted: function() {
     console.log("C-CardData / mounted....")
   },
-
   data() {
-
     return {
       
       contentHeight: 0,
       idField: undefined,
       resourcesList: undefined,
-
       findMoreActive: false,
-
       // debug cookies - btns - mobile
       isPauseInteract : false,
       triggerFav : false,
-
     }
   },
-
   computed: {
-
     ...mapState({
-
       log : state => state.log, 
       locale : state => state.locale,
-
       dsId : state => state.cards.currentDsId,
-
       contentFields : state => state.data.contentFields,
-
       // itemIdField : state => state.users.itemIdField,
-
       favorites : state => state.users.favorites
-
     }),
-
     ...mapGetters({
-
       // favorites : 'users/getFavorites',
       currentIdField: 'data/getCurrentIdField',
       getContentField: 'data/getContentField',
       getCardResourcesFields: 'data/getCardResourcesFields',
       isInFavorites: 'users/isInFavorites',
-
     }),
-
     isFavorite(){
-
       // console.log("C-CardData-isFavorite / this.idField : ", this.idField)
       let itemId = this.itemData[ this.idField ]
-
       let itemPayload = {
         'itemDsId': this.dsId,
         'itemId': String(itemId),
       }
       return this.isInFavorites( itemPayload )
     },
-
     chooseBackground() {
       
     },
-
     cookieContent(){
       let parsed = cookieparser.parse(document.cookie)
       console.log("C-CardData-cookieContent / parsed :", parsed)
       return parsed
     }
-
   },
-
   methods: {
-
     getContentByLocale( fieldCode ){
-
       // console.log("C-CardData-getContentByLocale..." )
-
       let currentLocale = this.locale
       // let contentFieldsObject = this.contentFields.find( fieldObj => {
       //   return this.dsId == fieldObj.dsId
       // }) 
       // let contentFields = contentFieldsObject.contentsFields
       // // console.log("C-CardData-getContentByLocale / contentFields : ", contentFields )
-
       // let contentColName = contentFields.find( field => {
       //   return fieldCode === field.itemAppFieldCode
       // })
       // let fieldByLocale = contentColName && contentColName[ currentLocale ]
       // console.log("C-CardData-getContentByLocale / fieldByLocale :", fieldByLocale)
-
       let fieldByLocale = this.getContentField( this.dsId, currentLocale, fieldCode )
       console.log("C-CardData-getContentByLocale / fieldByLocale :", fieldByLocale)
-
       // find correct field code
       return this.itemData[ fieldByLocale ]
     },
-
     computeContentHeight(){
-
       console.log("C-CardData-computeContentHeight..." )
-
       console.log("C-CardData-computeContentHeight / this.$refs :", this.$refs )
-
       // if ( this.cardData != {} ){
-
         let heightCard = this.$refs.currentCard.clientHeight
         let heightTitle = this.$refs.cardTitle.clientHeight
         let heightFooter = this.$refs.cardFooter.clientHeight
-
         console.log("C-CardData-computeContentHeight / heightCard :", heightCard )
         console.log("C-CardData-computeContentHeight / heightTitle :", heightTitle )
         console.log("C-CardData-computeContentHeight / heightFooter :", heightFooter )
-
         let heightContent = heightCard - ( heightTitle + heightFooter )
         console.log("C-CardData-computeContentHeight / heightContent :", heightContent )
     
         return heightContent
-
       // } else {
       //   return 
       // }
     },
-
     switchHover(){
       console.log("C-CardData-switchHover..." )
       this.isPauseInteract = !this.isPauseInteract
-      this.$emit('pauseInteract', this.isPauseInteract)
+      this.$emit('needPauseInteract', this.isPauseInteract)
     },
-
     switchFavorite(){
-
       console.log("C-CardData-addAsFavorite..." )
-
       // debug cookies mobile 
       this.triggerFav = !this.triggerFav
-
-
       // InteractEventBus.$emit(EVENTS.MATCH)
       let payload = {
         item : this.itemData,
@@ -405,13 +353,11 @@ export default {
       this.$store.dispatch('users/switchFavorite', payload )
       
     },
-
   }
 }
 </script>
 
 <style lang="scss" scoped>
-
 .absolutePos{
   // position: absolute;
   // left: 50vw;
@@ -422,16 +368,13 @@ export default {
 .full-height{
   height: 100%;
 }
-
 .limited-height{
   // max-height: 55vh;
   overflow-y: auto;
 }
-
 .close-to-plus-in{
   transform: rotate(45deg)
 }
-
 @keyframes rollin {
   0% { transform: rotate(0); }
   100% { transform: rotate(45deg); }
@@ -446,8 +389,6 @@ export default {
 .roll-out { 
   animation: rollout .5s cubic-bezier(0.55, 0.085, 0.68, 0.53) ; 
 }
-
-
 .slide-enter-active {
    -moz-transition-duration: 0.3s;
    -webkit-transition-duration: 0.3s;
@@ -458,7 +399,6 @@ export default {
    -o-transition-timing-function: ease-in;
    transition-timing-function: ease-in;
 }
-
 .slide-leave-active {
    -moz-transition-duration: 0.3s;
    -webkit-transition-duration: 0.3s;
@@ -469,20 +409,15 @@ export default {
    -o-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
    transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
 }
-
 .slide-enter-to, .slide-leave {
    max-height: 100px;
    overflow: hidden;
 }
-
 .slide-enter, .slide-leave-to {
    overflow: hidden;
    max-height: 0;
 }
-
 .near-icon{
   min-width: 30px;
 }
-
-
 </style>
