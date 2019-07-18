@@ -127,7 +127,9 @@ export default {
   mounted() {
     this.interactSetEventBusEvents();
 
-    const element = this.$refs.interactElement;
+    const element = this.$refs.interactElement
+
+    let IsMobileOrTablet = this.$device.isMobileOrTablet
 
     interact(element).draggable({
 
@@ -171,18 +173,20 @@ export default {
 
     })
     .on('tap', function(event) {
-      event.preventDefault()
-      event.stopImmediatePropagation()
-      console.log('C-InteractDraggable-on-tap / event.target : ', event.target)
-      event.target.__vue__.$el.click()
-    }, false )
-    
-    .on('click', function(event) {
-      event.preventDefault()
-      event.stopImmediatePropagation()
-      console.log('C-InteractDraggable-on-click / event.target : ', event.target)
-      event.target.__vue__.$el.click()
-    }, false )
+      if ( IsMobileOrTablet ){
+        event.preventDefault()
+        event.stopImmediatePropagation()
+        console.log('C-InteractDraggable-on-tap / event.target : ', event.target)
+        event.target.__vue__.$el.click()
+      }
+    }, true )
+
+    // .on('click', function(event) {
+    //   event.preventDefault()
+    //   event.stopImmediatePropagation()
+    //   console.log('C-InteractDraggable-on-click / event.target : ', event.target)
+    //   event.target.__vue__.$el.click()
+    // }, true )
   },
 
   beforeDestroy() {

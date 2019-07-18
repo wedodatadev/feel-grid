@@ -51,7 +51,7 @@
               <!-- cookieContent : {{ cookieContent.locale }} <br> -->
               <!-- locale (store) : {{ locale }}<br> -->
               isPauseInteractParent : <code>{{ isPauseInteractParent }}</code><br>
-              <!-- device : <code>{{ $device }}</code><br> -->
+              device : <code>{{ $device }}</code><br>
               isPauseInteract : <code>{{ isPauseInteract }}</code><br>
               triggerFav : <code>{{ triggerFav }}</code><br>
 
@@ -138,7 +138,6 @@
               outline
               dark
 
-              
               @click.prevent.stop="switchFavorite()"
               
               >
