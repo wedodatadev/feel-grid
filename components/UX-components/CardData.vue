@@ -35,9 +35,9 @@
         v-show="!findMoreActive"
         align-center
         justify-center
-        :style="`height:${ cardHeights['content'] }`"
         :class="`${ findMoreActive ? '' : '' }`"
         >
+        <!-- :style="`height:${ cardHeights['content'] }`" -->
 
           <v-card-text 
             v-show="!findMoreActive"
@@ -45,26 +45,31 @@
             >
 
             <!-- currentDsId : {{ currentDsId }}<br> -->
-            cookieContent : {{ cookieContent.locale }} <br>
-            locale (store) : {{ locale }}<br>
+            <!-- cookieContent : {{ cookieContent.locale }} <br> -->
+            <!-- locale (store) : {{ locale }}<br> -->
             triggerFav : {{ triggerFav }}<br>
-            <hr>
+            <br>
 
-            <v-btn 
-              icon
-              flat
-              outline
-              dark
-              @click.native="switchFavorite()"
-              >
-              <v-icon
-                :color="isFavorite ? 'pink' : 'white' "
+            <p>
+              {{ itemData && getContentByLocale('mainContent') }}
+            </p>
+
+            <p>
+              <v-btn 
+                icon
+                flat
+                outline
+                dark
+                @click.native="switchFavorite"
                 >
-                favorite
-              </v-icon>
-            </v-btn>
+                <v-icon
+                  :color="isFavorite ? 'pink' : 'white' "
+                  >
+                  favorite
+                </v-icon>
+              </v-btn>
+            </p>
 
-            {{ itemData && getContentByLocale('mainContent') }}
             <br>
 
           </v-card-text>
@@ -111,13 +116,13 @@
 
         <!-- FAVORITES FOOTER -->
           <!-- fixed -->
-        <v-content
-          color="transparent" 
-          class="px-2"
-          :style="`z-index: 4; height:${ cardHeights['footer'] }`"
-          ref="cardFooter"
-          >
+        <!-- <v-content
+          > -->
           <v-layout
+            color="transparent" 
+            class="px-2"
+            :style="`z-index: 4; height:${ cardHeights['footer'] }`"
+            ref="cardFooter"
             align-center
             justify-end
             >
@@ -135,7 +140,7 @@
               </v-icon>
             </v-btn>
           </v-layout>
-        </v-content>
+        <!-- </v-content> -->
       
         <!-- CONTENT RESOURCES -->
         <transition name="slide">

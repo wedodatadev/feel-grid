@@ -158,10 +158,10 @@ export default {
       cardHeight: "80vh",
       cardHeights: {
         title: "10vh",
-        content: "56vh",
+        content: "50vh",
         more: "10vh",
-        resources: "42vh",
-        footer: "4vh"
+        resources: "34vh",
+        footer: "10vh"
       },
 
       // cards iteration variables
