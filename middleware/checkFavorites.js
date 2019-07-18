@@ -7,7 +7,7 @@ export default function ({ req, store, app, redirect }) {
   let parsed = undefined 
 
   if (process.server) {
-    console.log('-MW-checkFavorites : process.server == TRUE ')
+    // console.log('-MW-checkFavorites : process.server == TRUE ')
     if (req.headers.cookie) {
       let cookie = req.headers.cookie
       parsed = cookieparser.parse(cookie)
@@ -15,17 +15,17 @@ export default function ({ req, store, app, redirect }) {
   }
 
   else {
-    console.log('-MW-checkFavorites : process.server == FALSE ')
+    // console.log('-MW-checkFavorites : process.server == FALSE ')
     let cookie = document.cookie
     parsed = cookieparser.parse(cookie)
   }
 
-  console.log('-MW-checkFavorites / parsed :', parsed)
+  // console.log('-MW-checkFavorites / parsed :', parsed)
 
   let cookieRawFavorites = parsed.favorites
   if ( cookieRawFavorites ){
     let parsedFavorites = JSON.parse(cookieRawFavorites)
-    console.log('-MW-checkFavorites / parsedFavorites :', parsedFavorites)
+    // console.log('-MW-checkFavorites / parsedFavorites :', parsedFavorites)
 
     store.commit('users/setFavorites', parsedFavorites)
   }

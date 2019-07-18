@@ -34,13 +34,13 @@
 
         interact-block-drag-down
 
-        :interact-block-drag-up="needPauseInteract"
-        :interact-block-drag-right="needPauseInteract"
-        :interact-block-drag-left="needPauseInteract"
+        :interact-block-drag-up="isPauseInteract"
+        :interact-block-drag-right="isPauseInteract"
+        :interact-block-drag-left="isPauseInteract"
 
-        :interact-lock-swipe-up="needPauseInteract"
-        :interact-lock-swipe-right="needPauseInteract"
-        :interact-lock-swipe-left="needPauseInteract"
+        :interact-lock-swipe-up="isPauseInteract"
+        :interact-lock-swipe-right="isPauseInteract"
+        :interact-lock-swipe-left="isPauseInteract"
 
         @draggedRight="emitAndNext('skip')"
         @draggedLeft="emitAndNext('skip')"
@@ -70,11 +70,11 @@
           :cardWidth="cardWidth( .9 )"
           :breakPoint="this.$vuetify.breakpoint.name"
 
-          :isPauseInteractParent="isPauseInteract"
 
           @needPauseInteract="pauseInteract"
           >
         </CardData>
+          <!-- :isPauseInteractParent="isPauseInteract" -->
 
       </Vue2InteractDraggable>
 
@@ -133,10 +133,16 @@
 // cf : https://nuxtjs.org/examples/routes-transitions/
 // cf : https://nuxtjs.org/api/pages-transition/
 // cf : https://codesandbox.io/embed/2xovlqpv9n
+
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
+
+import interact from 'interact.js'
 import { Vue2InteractDraggable, InteractEventBus } from 'vue2-interact'
+
 import CardData from '~/components/UX-components/CardData'
+
 import { EVENTS, INTERACT_EVENTS } from "~/config/interactEvents.js"
+
 export default {
   name: 'SwipeableCards',
   components: { 

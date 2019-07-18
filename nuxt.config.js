@@ -198,6 +198,7 @@ export default {
     // '~/plugins/vuetify.js',
     '~/plugins/i18n.js',
     // '~/plugins/loadGSheetData',
+    '~/plugins/vue-touch-events.js',
   ],
 
   /*
@@ -230,13 +231,13 @@ export default {
   */
   vuetify: {
     theme: {
-        primary: configApp.UI_config.colors.primary,
-        secondary: configApp.UI_config.colors.secondary,
-        accent: configApp.UI_config.colors.accent,
-        error: configApp.UI_config.colors.error,
-        warning: configApp.UI_config.colors.warning,
-        info: configApp.UI_config.colors.info,
-        success: configApp.UI_config.colors.success
+      primary: configApp.UI_config.colors.primary,
+      secondary: configApp.UI_config.colors.secondary,
+      accent: configApp.UI_config.colors.accent,
+      error: configApp.UI_config.colors.error,
+      warning: configApp.UI_config.colors.warning,
+      info: configApp.UI_config.colors.info,
+      success: configApp.UI_config.colors.success
     }
   },
 

@@ -50,7 +50,7 @@
               <!-- currentDsId : {{ currentDsId }}<br> -->
               <!-- cookieContent : {{ cookieContent.locale }} <br> -->
               <!-- locale (store) : {{ locale }}<br> -->
-              isPauseInteractParent : <code>{{ isPauseInteractParent }}</code><br>
+              <!-- isPauseInteractParent : <code>{{ isPauseInteractParent }}</code><br> -->
               isPauseInteract : <code>{{ isPauseInteract }}</code><br>
               triggerFav : <code>{{ triggerFav }}</code><br>
               </p>
@@ -84,7 +84,7 @@
       </transition>
 
 
-      <!-- RESSOURCES CONTENTS -->
+      <!-- RESSOURCES && FAVORITES CONTENTS -->
       <v-layout 
         ref="cardMore"
         :class="`pb-3 absolutePos ${ findMoreActive ? '' : '' }`"
@@ -134,10 +134,13 @@
               flat
               outline
               dark
-              @click.native="switchFavorite()"
+
               @mouseenter="switchHover()"
               @mouseleave="switchHover()"
+              
+              @click.native="switchFavorite()"
               >
+              <!-- v-touch:tap="switchFavorite()" -->
               <v-icon
                 :color="isFavorite ? 'pink' : 'white' "
                 >
@@ -235,7 +238,7 @@ export default {
     // 'dsId',
     
     // debug
-    'isPauseInteractParent',
+    // 'isPauseInteractParent',
 
     'cardWidth',
     'breakPoint',
@@ -258,6 +261,7 @@ export default {
       idField: undefined,
       resourcesList: undefined,
       findMoreActive: false,
+      
       // debug cookies - btns - mobile
       isPauseInteract : false,
       triggerFav : false,

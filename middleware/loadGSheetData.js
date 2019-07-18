@@ -18,7 +18,7 @@ export default function ({ isHMR, app, store, route, params, error, redirect }) 
 
   // let storeDataTypes = store.getters['data/getDatasets']('dataTypes')
   let storeDataTypes = store.getters['data/getConcatenatedDataTypes']
-  console.log('MW-loadGSheetData / storeDataTypes :', storeDataTypes)
+  // console.log('MW-loadGSheetData / storeDataTypes :', storeDataTypes)
 
   let isDatasets = ( storeDatasets.length === 0 )? false : true 
   let isCorrespDicts = ( storeCorrespDict.length === 0 )? false : true 
@@ -29,18 +29,18 @@ export default function ({ isHMR, app, store, route, params, error, redirect }) 
 
   // LOAD DATASETS
   if ( gSheetConfigsData && !isDatasets ){
-    console.log('MW-loadGSheetData / needs GSheetLoading / datasets ...')
+    // console.log('MW-loadGSheetData / needs GSheetLoading / datasets ...')
     for (let gsConfig of gSheetConfigsData) {
       let gsData = loadGoogleSheet( gsConfig, storeDataTypes )
       gsData.then( resp => {
-        console.log(".then() => datasets ...")
-        console.log(".then() => resp : ", resp)
+        // console.log(".then() => datasets ...")
+        // console.log(".then() => resp : ", resp)
         let datasetInfos = {
           data : resp,
           datasetStoreKey : 'datasets'
         }
         store.commit('data/setDatasets', datasetInfos)
-        console.log("...")
+        // console.log("...")
       })
       promisesArray.push( gsData )
     }
@@ -48,22 +48,22 @@ export default function ({ isHMR, app, store, route, params, error, redirect }) 
     isDataLoaded = true
   }
 
-  console.log("")
+  // console.log("")
 
   // LOAD CORRESP DICTS
   if ( gSheetConfigsCorrDicts && !isCorrespDicts ){
-    console.log('MW-loadGSheetData / needs GSheetLoading / correspDicts ...')
+    // console.log('MW-loadGSheetData / needs GSheetLoading / correspDicts ...')
     for (let gsConfig of gSheetConfigsCorrDicts) {
       let gsData = loadGoogleSheet( gsConfig, storeDataTypes )
       gsData.then( resp => {
-        console.log(".then() => correspondanceDicts ...")
-        console.log(".then() => resp : ", resp)
+        // console.log(".then() => correspondanceDicts ...")
+        // console.log(".then() => resp : ", resp)
         let datasetInfos = {
           data : resp,
           datasetStoreKey : 'correspondanceDicts'
         }
         store.commit('data/setDatasets', datasetInfos)
-        console.log("...")
+        // console.log("...")
       })
       promisesArray.push( gsData )
     }
@@ -71,7 +71,7 @@ export default function ({ isHMR, app, store, route, params, error, redirect }) 
     isCorrespDictsLoaded = true
   }
 
-  console.log("")
+  // console.log("")
 
 
   // load promises 
