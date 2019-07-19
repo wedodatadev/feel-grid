@@ -14,11 +14,12 @@
       <v-btn 
         v-for="(btn, indexBtn) in footerBtns"
         round
-        outline
-        color="white"
+        class="btn-gradient white--text"
         :key="indexBtn"
         :to="btn.to"
         >
+        <!-- color="white" -->
+        <!-- outline -->
         {{ $t('links.' + btn.textCode) }}
       </v-btn>
 

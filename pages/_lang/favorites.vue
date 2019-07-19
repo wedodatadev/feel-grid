@@ -195,7 +195,7 @@ export default {
       let fieldByLocale = this.getContentField( dsId, currentLocale, fieldCode)
       console.log("P-FavoritesPage-getFavoriteText / fieldByLocale : ", fieldByLocale )
 
-      return itemData[ fieldByLocale ]
+      return itemData && itemData[ fieldByLocale ]
     }
 
 
