@@ -358,10 +358,10 @@ export default {
       
       setTimeout(() => {
         this.isShowing = false;
-      }, 200);
+      }, 200)
       setTimeout(() => {
-          this.isShowing = true;
-        }, 1000);
+        this.isShowing = true;
+      }, 1000)
     },
 
 
