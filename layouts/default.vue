@@ -4,8 +4,8 @@
     <!-- class="splashscreen-gradient" -->
 
     <!-- NAVBAR & DRAWERS-->
-    <Navbar>
-    </Navbar>
+<!--     <Navbar>
+    </Navbar> -->
 
     <!-- CONTENTS -->
     <v-content>
@@ -15,8 +15,8 @@
     </v-content>
 
     <!-- FOOTER INDEX -->
-    <FooterIndex>
-    </FooterIndex>
+<!--     <FooterIndex>
+    </FooterIndex> -->
 
   </v-app>
 </template>

@@ -102,7 +102,7 @@ export default {
 
   name: "FavoritesPage",
 
-  layout : "staticContents",
+  // layout : "staticContents",
   transition: 'static',
 
   // TO DO 

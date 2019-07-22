@@ -20,9 +20,9 @@
         class="justify-center pa-0 absolutePos"
         :style="`max-height:${ cardHeights['title'] };height:${ cardHeights['title'] }`"
         >
-        <h2 class="text-xs-center mb-0">
+        <!-- <h2 class="text-xs-center mb-0">
           xxx AFD LOGO xxx
-        </h2>
+        </h2> -->
       </v-card-title>
       <!-- </v-layout>  -->
 
@@ -46,38 +46,25 @@
             <!-- <v-card-text 
               > -->
 
-              <!-- <p class="caption"> -->
+              <p class="caption">
                 <!-- currentDsId : {{ currentDsId }}<br> -->
                 <!-- cookieContent : {{ cookieContent.locale }} <br> -->
                 <!-- locale (store) : {{ locale }}<br> -->
                 <!-- isPauseInteractParent : <code>{{ isPauseInteractParent }}</code><br> -->
-                <!-- device : <code>{{ $device }}</code><br> -->
+                device : <code>{{ $device }}</code><br>
                 <!-- isPauseInteract : <code>{{ isPauseInteract }}</code><br> -->
                 <!-- triggerFav : <code>{{ triggerFav }}</code><br> -->
-              <!-- </p> -->
-              <!-- <br> -->
+              </p>
+              <br>
 
               <p class="headline font-weight-bold ">
                 {{ itemData && getContentByLocale('mainContent') }}
               </p>
 
-              <!-- <p>
-                <v-btn 
-                  icon
-                  flat
-                  outline
-                  dark
-                  @click.native="switchFavorite"
-                  >
-                  <v-icon
-                    :color="isFavorite ? 'pink' : 'white' "
-                    >
-                    favorite
-                  </v-icon>
-                </v-btn>
-              </p> -->
+              <p class="caption">
+                itemData : <pre><code>{{ itemData }}</code></pre>
+              </p>
 
-            <!-- </v-card-text> -->
           </v-flex> 
 
         </v-layout> 

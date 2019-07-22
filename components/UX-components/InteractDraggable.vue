@@ -172,6 +172,8 @@ export default {
       },
 
     })
+
+    // very important to avoid errors on mobiles 
     .on('tap', function(event) {
       if ( IsMobileOrTablet ){
         event.preventDefault()
@@ -181,12 +183,6 @@ export default {
       }
     }, true )
 
-    // .on('click', function(event) {
-    //   event.preventDefault()
-    //   event.stopImmediatePropagation()
-    //   console.log('C-InteractDraggable-on-click / event.target : ', event.target)
-    //   event.target.__vue__.$el.click()
-    // }, true )
   },
 
   beforeDestroy() {
@@ -251,22 +247,18 @@ export default {
       if (this.interactEventBusEvents) {
 
         if (this.interactEventBusEvents.draggedDown) {
-          // InteractEventBus.$on(this.interactEventBusEvents.draggedDown, this.interactDraggedDown);
           this.$bus.$on(this.interactEventBusEvents.draggedDown, this.interactDraggedDown);
         };
 
         if (this.interactEventBusEvents.draggedLeft) {
-          // InteractEventBus.$on(this.interactEventBusEvents.draggedLeft, this.interactDraggedLeft);
           this.$bus.$on(this.interactEventBusEvents.draggedLeft, this.interactDraggedLeft);
         };
 
         if (this.interactEventBusEvents.draggedRight) {
-          // InteractEventBus.$on(this.interactEventBusEvents.draggedRight, this.interactDraggedRight);
           this.$bus.$on(this.interactEventBusEvents.draggedRight, this.interactDraggedRight);
         };
 
         if (this.interactEventBusEvents.draggedUp) {
-          // InteractEventBus.$on(this.interactEventBusEvents.draggedUp, this.interactDraggedUp);
           this.$bus.$on(this.interactEventBusEvents.draggedUp, this.interactDraggedUp);
         };
       }
@@ -290,22 +282,18 @@ export default {
     interactUnsetEventBusEvents() {
       if (this.interactEventBusEvents) {
         if (this.interactEventBusEvents.draggedDown) {
-          // InteractEventBus.$off(this.interactEventBusEvents.draggedDown, this.draggedDown);
           this.$bus.$off(this.interactEventBusEvents.draggedDown, this.draggedDown);
         };
 
         if (this.interactEventBusEvents.draggedLeft) {
-          // InteractEventBus.$off(this.interactEventBusEvents.draggedLeft, this.draggedLeft);
           this.$bus.$off(this.interactEventBusEvents.draggedLeft, this.draggedLeft);
         };
 
         if (this.interactEventBusEvents.draggedRight) {
-          // InteractEventBus.$off(this.interactEventBusEvents.draggedRight, this.draggedRight);
           this.$bus.$off(this.interactEventBusEvents.draggedRight, this.draggedRight);
         };
 
         if (this.interactEventBusEvents.draggedUp) {
-          // InteractEventBus.$off(this.interactEventBusEvents.draggedUp, this.draggedUp);
           this.$bus.$off(this.interactEventBusEvents.draggedUp, this.draggedUp);
         };
       }

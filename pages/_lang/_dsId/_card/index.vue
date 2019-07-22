@@ -12,27 +12,20 @@
       md6 offset-md3
       >
 
-      <!-- <SwipeableCards
-        :cardsArray="cardsArray"
-        :dsId="dsId"
-        :cardId="cardId"
-        > -->
       <SwipeableCards
         >
-        <!-- :dsId="currentDsId"
-        :cardsArray="currentCardsArrray"
-        :cardId="currentCardId" -->
       </SwipeableCards>
 
     </v-flex>
 
   </v-layout>
 
+  <!--   
   <FooterCards
     class="fixed-bottom"
     @reloadPreviousItem="reloadPreviousItem()"
     >
-  </FooterCards>
+  </FooterCards> -->
 
   </div>
 

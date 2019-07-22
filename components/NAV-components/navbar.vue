@@ -269,15 +269,8 @@ export default {
     items: [
 
       { titleCode: 'homepage', icon: 'home', to:"/" },
-      { titleCode: 'cards', icon: 'card', to:"/cards" },
       { titleCode: 'favorites', icon: 'favorite', to:"/favorites" },
-
-      { titleCode: '', icon: '', to:"/", isDivider: true },
-
-      { titleCode: 'about', icon: 'question_answer', to:"/about" },
-      { titleCode: 'credits', icon: 'question_answer', to:"/credits" },
       
-
     ],
 
   }),

@@ -15,9 +15,6 @@
       </v-container>
     </v-content>
 
-    <!-- FOOTER CARDS -->
-    <!-- <FooterCards>
-    </FooterCards> -->
 
 
   </v-app>
@@ -49,15 +46,7 @@ export default {
   data() {
 
     return {
-      footerBtnsLeft: [
-        { textCode: "twitter", icon: "fab fa-twitter", to: "/about" },
-        { textCode: "facebook", icon: "fab fa-facebook", to: "/credits" },
-        { textCode: "screenshot", icon: "fas fa-camera", to: "/credits" },
-      ],
-
-      footerBtnsRight : [
-        { textCode: "favorite", icon: "favorite", to: "/favorites" },
-      ]
+      
     }
 
   },
