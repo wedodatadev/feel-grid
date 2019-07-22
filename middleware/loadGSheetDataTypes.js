@@ -15,19 +15,19 @@ export default function ({ isHMR, app, store, route, params, error, redirect }) 
 
   // LOAD DATATYPES DICTS
   if ( gSheetConfigsDataTypes && !isDataTypes ){
-    console.log('MW-loadGSheetDataTypes / needs GSheetLoading / dataTypes ...')
+    // console.log('MW-loadGSheetDataTypes / needs GSheetLoading / dataTypes ...')
     for (let gsConfig of gSheetConfigsDataTypes) {
       let gsData = loadGoogleSheet( gsConfig )
       gsData
       .then( resp => {
-        console.log(".then(1) => dataTypes ...")
-        console.log(".then(1) => resp : ", resp)
+        // console.log(".then(1) => dataTypes ...")
+        // console.log(".then(1) => resp : ", resp)
         let datasetInfos = {
           data : resp,
           datasetStoreKey : 'dataTypes'
         }
         store.commit('data/setDatasets', datasetInfos)
-        console.log("...")
+        // console.log("...")
       })
       promisesArray.push( gsData )
     }

@@ -174,7 +174,7 @@
 <script>
 
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
-import { InteractEventBus } from 'vue2-interact'
+// import { InteractEventBus } from 'vue2-interact'
 
 import { EVENTS, INTERACT_EVENTS } from "~/config/interactEvents.js"
 
@@ -213,11 +213,11 @@ export default {
 
       showNextBreakpoints : [ 'xl' ],
       
-      interactEventBus: {
-        draggedRight: EVENTS.SKIP,
-        draggedLeft: EVENTS.SKIP,
-        draggedUp: EVENTS.SKIP
-      },   
+      // interactEventBus: {
+      //   draggedRight: EVENTS.SKIP,
+      //   draggedLeft: EVENTS.SKIP,
+      //   draggedUp: EVENTS.SKIP
+      // },
 
     }
 
@@ -269,7 +269,9 @@ export default {
 
       if ( isNext ){
         // swipe to next
-        InteractEventBus.$emit(INTERACT_EVENTS.INTERACT_DRAGGED_RIGHT);
+        // InteractEventBus.$emit(INTERACT_EVENTS.INTERACT_DRAGGED_RIGHT);
+        this.$bus.$emit(INTERACT_EVENTS.INTERACT_DRAGGED_RIGHT);
+        // this.$bus.$emit('skip');
       } else {
         // reload previous
         // InteractEventBus.$emit(INTERACT_EVENTS.INTERACT_DRAGGED_LEFT);

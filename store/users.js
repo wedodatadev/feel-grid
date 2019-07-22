@@ -17,6 +17,12 @@ export const state = () => ({
 export const getters = {
 
   getFavorites : state => {
+    console.log("S-users-G-getFavorites / state.favorites : ", state.favorites)
+    // return state.favorites.filter( dsFav => {
+    //   return dsFav.favorites.filter( fav => {
+    //     return fav !== 'undefined' 
+    //   })
+    // })
     return state.favorites
   },
 
@@ -71,13 +77,15 @@ export const mutations = {
     console.log("S-users-M-appendToFavorites / itemDsId : ", itemDsId)
     let dsFavorites = state.favorites.find( dsFavs => { return dsFavs.dsId === itemDsId } )
 
+    let isItemIdDefined = itemId !== "undefined"
+
     // existing ds fav list
-    if ( dsFavorites ) {
+    if ( isItemIdDefined && dsFavorites ) {
       let dsFavList = dsFavorites.favorites.push( itemId )
     } 
 
     // new ds fav list
-    else {
+    else if ( isItemIdDefined && !dsFavorites ) {
       let newDsFavs = {
         dsId : itemDsId,
         favorites : [ itemId ]
@@ -85,6 +93,7 @@ export const mutations = {
       state.favorites.push(newDsFavs)
 
     }
+
   },
 
   deleteFromFavorites (state, { itemDsId, itemId } ) {
@@ -96,7 +105,7 @@ export const mutations = {
       return dsFavs.dsId === itemDsId
     })
     let newArray = dsFavorites.favorites.filter( item => {
-      return item !== itemId
+      return item !== itemId && item !== "undefined"
     })
     
     // temporarily delete whole dsId favs

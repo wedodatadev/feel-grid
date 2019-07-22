@@ -14,7 +14,7 @@ export default function ({ isHMR, app, store, route, params, error, redirect }) 
   if ( !isTypesApplied  ) {
 
     let storeDataTypes = store.getters['data/getDatasets']('dataTypes')
-    console.log('MW-applyDataTypes / storeDataTypes :', storeDataTypes)
+    // console.log('MW-applyDataTypes / storeDataTypes :', storeDataTypes)
     
     if ( storeDataTypes.length > 0  ) {
     
