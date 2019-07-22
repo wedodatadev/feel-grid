@@ -171,14 +171,20 @@ export default {
       breakPointCode : undefined,
       windowWidth : 0,
   
-      cardHeight: "75vh",
-      cardHeights: {
-        title: "10vh",
-        content: "54vh",
-        more: "12vh",
-        resources: "39vh",
-        // footer: "8vh"
+      window: {
+        width: 0,
+        height: 0
       },
+
+      // cardHeight: "75vh",
+      // cardHeights: {
+      //   title: "10vh",
+      //   content: "54vh",
+      //   more: "12vh",
+      //   resources: "39vh",
+      //   // footer: "8vh"
+      // },
+
       // cards iteration variables
       isVisible: true,
 
@@ -207,6 +213,15 @@ export default {
 
     }
   },
+
+  created() {
+    window.addEventListener('resize', this.handleResize)
+    this.handleResize()
+  },
+  destroyed() {
+    window.removeEventListener('resize', this.handleResize)
+  },
+
   computed: {
     ...mapState({
       log : state => state.log, 
@@ -222,7 +237,21 @@ export default {
     current() {
       return this.cards && this.cards[ this.index ]
     },
-    
+
+
+    cardHeight() { 
+      return ( this.window.height * .75 ) + "px" 
+    },
+    cardHeights() {
+      return {
+        title: ( this.window.height * .10) + "px",
+        content: ( this.window.height * .54 ) + "px",
+        more: ( this.window.height * .12 ) + "px",
+        resources: ( this.window.height * .39 ) + "px",
+        // footer: "8vh"
+      }
+    },
+
     next() {
       return this.cards && this.cards[ this.index + 1 ]
     },
@@ -236,7 +265,17 @@ export default {
     },
   },
   methods: {
-    
+
+    handleResize() {
+      if ( this.$ua.isFromAndroidOs() ) {
+        this.window.width = window.innerHeight 
+        this.window.height = window.innerWidth
+      } else {
+        this.window.width = window.innerWidth
+        this.window.height = window.innerHeight
+      }
+    },
+
     getClickSignal(event){
       console.log("C-SwipeableCards-getClickSignal / event : ", event )
       e.stopImmediatePropagation()
@@ -254,14 +293,21 @@ export default {
     // compute card width
     cardWidth ( widthPercent ) {
       let maxWidth = 100
-      let zWidth = maxWidth * widthPercent
+      let zWidth = maxWidth * widthPercent / 100
       let step = 10
       switch (this.$vuetify.breakpoint.name) {
-        case 'xs': return zWidth + 'vw'
-        case 'sm': return ( zWidth - (step * 4) ) + 'vw'
-        case 'md': return ( zWidth - (step * 5) ) + 'vw'
-        case 'lg': return ( zWidth - (step * 6) ) + 'vw'
-        case 'xl': return ( zWidth - (step * 7) ) + 'vw'
+
+        // case 'xs': return zWidth + 'vw'
+        // case 'sm': return ( zWidth - (step * 4) ) + 'vw'
+        // case 'md': return ( zWidth - (step * 5) ) + 'vw'
+        // case 'lg': return ( zWidth - (step * 6) ) + 'vw'
+        // case 'xl': return ( zWidth - (step * 7) ) + 'vw'
+
+        case 'xs': return Math.round(( zWidth * this.window.width )) + 'px'
+        case 'sm': return Math.round(( ( zWidth - (step * 4) ) * this.window.width )) + 'px'
+        case 'md': return Math.round(( ( zWidth - (step * 5) ) * this.window.width )) + 'px'
+        case 'lg': return Math.round(( ( zWidth - (step * 6) ) * this.window.width )) + 'px'
+        case 'xl': return Math.round(( ( zWidth - (step * 7) ) * this.window.width )) + 'px'
       }
     },
     getNexCard(){
@@ -563,9 +609,11 @@ export default {
 }
 @keyframes appear {
   from {
-    transform: translate(-50%, -47%);
+    transform: scaleY(.85);
+    transform: translate(-50%, -57%);
   }
   to {
+    transform: scaleY(.9);
     transform: translate(-50%, -60%);
   }
 }

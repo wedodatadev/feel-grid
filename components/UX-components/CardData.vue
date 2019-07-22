@@ -61,6 +61,17 @@
                 {{ itemData && getContentByLocale('mainContent') }}
               </p>
 
+              <p>
+                Width: {{ window.width }},
+                Height: {{ window.height }} 
+                <br>
+
+                <br> $device.isMobileOrTablet : {{ $device.isMobileOrTablet }} <br>
+
+                <br> $ua.browser() : {{ $ua.browser() }}
+                <br> $ua.isFromAndroidOs() : {{ $ua.isFromAndroidOs() }} <br>
+              </p>
+
               <!-- <p>
                 <v-btn 
                   icon
@@ -236,6 +247,8 @@ import { InteractEventBus } from 'vue2-interact'
 
 import { EVENTS, INTERACT_EVENTS } from "~/config/interactEvents.js"
 
+// cf : https://codepen.io/sethdavis512/pen/EvNKWw
+
 export default {
   name: 'CardData',
   components: { 
@@ -272,7 +285,20 @@ export default {
       // debug cookies - btns - mobile
       isPauseInteract : false,
       triggerFav : false,
+
+      window: {
+        width: 0,
+        height: 0
+      },
+
     }
+  },
+  created() {
+    window.addEventListener('resize', this.handleResize)
+    this.handleResize();
+  },
+  destroyed() {
+    window.removeEventListener('resize', this.handleResize)
   },
   computed: {
 
@@ -314,6 +340,12 @@ export default {
     }
   },
   methods: {
+
+    handleResize() {
+      this.window.width = window.innerWidth;
+      this.window.height = window.innerHeight;
+    },
+
     getContentByLocale( fieldCode ){
       // console.log("C-CardData-getContentByLocale..." )
       let currentLocale = this.locale

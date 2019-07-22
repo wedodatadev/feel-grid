@@ -24,7 +24,9 @@
     "node-sass": "^4.12.0",
     "nuxt": "^2.0.0",
     "nuxt-device-detect": "^1.1.5",
+    "nuxt-user-agent": "^1.2.1",
     "sass-loader": "^7.1.0",
+    "vh-for-mobile": "^1.0.1",
     "vue-i18n": "^8.11.2",
     "vue2-interact": "0.0.3",
     "vue2-touch-events": "^2.0.0"
