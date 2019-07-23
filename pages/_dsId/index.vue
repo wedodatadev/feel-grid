@@ -1,4 +1,4 @@
 <script>
-import dsIdPage from '~/pages/_lang/cards/_dsId/index'
+import dsIdPage from '~/pages/_lang/_dsId/index'
 export default dsIdPage
 </script>

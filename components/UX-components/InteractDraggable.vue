@@ -125,6 +125,7 @@ export default {
   },
 
   mounted() {
+    
     this.interactSetEventBusEvents();
 
     const element = this.$refs.interactElement

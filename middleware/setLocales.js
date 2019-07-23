@@ -1,5 +1,8 @@
 export default function ({ req, store, app, redirect }) {
 
+
+
+	
   let hasLocales = store.state.locales 
 
   if ( !hasLocales ){
